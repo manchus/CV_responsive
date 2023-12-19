@@ -1,0 +1,12 @@
+{
+  "profile": "Profil",
+  "skills": "Compétences Informatique",
+  "experience": "Expérience Professionnelle",
+  "volunteering": "Implication Sociale",
+  "study": "Education",
+  "bar": "Bar Fr",
+  "dashboard": {
+    "title": "Dashboard Title Fr",
+    "desc": "Dashboard Desc Fr"
+  }
+}

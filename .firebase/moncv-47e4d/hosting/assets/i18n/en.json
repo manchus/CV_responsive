@@ -1,0 +1,12 @@
+{
+  "profile": "Profile",
+  "skills": "Skills",
+  "experience": "Experience",
+  "volunteering": "Volunteering",
+  "study": "Studies",
+  "bar": "Bar",
+  "dashboard": {
+    "title": "Dashboard Title",
+    "desc": "Dashboard Desc"
+  }
+}

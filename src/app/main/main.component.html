@@ -1,0 +1,94 @@
+<body class=" overflow-hidden">
+  <div class="about">
+    <h2 class="title2"><ng-container *transloco="let t">  {{ t('profile') }} </ng-container></h2>
+    <span *ngFor="let prof of profile">
+      <p class="text-justify">{{prof.sentence}}</p>
+    </span>
+  </div>
+  <div class="about">
+    <h2 class="title2"><ng-container *transloco="let t"> {{ t('skills') }}</ng-container></h2>
+    <ul  class="list-inline" *ngFor="let skill of skills">
+      <li class="text-justify">{{skill.p}}</li>
+    </ul>
+  </div>
+
+  <h2 class="title2"><ng-container *transloco="let t"> {{ t('experience') }} </ng-container></h2>
+  <div class="box" *ngFor="let experience of experiences">
+    <div  class="list-inline" >
+      <h4 class="text-justify">{{experience.job}}</h4>
+      <div class="year_company">
+        <h5 class="text-justify">{{experience.cia}}</h5>
+        <h5 class="text-justify">{{experience.year}}</h5>
+        <h5 class="text-justify">{{experience.city}}</h5>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="fa-solid fa-flag-checkered"></i>
+        </button>
+      </div>
+      <p></p>
+      <app-experience
+      [detailsExperience]="experiencePath+experience.id"/>
+    </div>
+  </div>
+
+    <h2 class="title2"><ng-container *transloco="let t"> {{ t('volunteering') }} </ng-container></h2>
+    <div class="box">
+      <div class="list-inline" *ngFor="let v of volunt">
+        <h4 class="text-justify">{{v.job}}</h4>
+        <h5 class="text-justify">{{v.cia}}</h5>
+        <h5 class="text-justify">{{v.year}}</h5>
+        <h5 class="text-justify">{{v.city}}</h5>
+      </div>
+      <ul  class="list-inline" *ngFor="let v of voluntDetail">
+        <li class="text-justify">{{v.d}}</li>
+      </ul>
+
+
+    </div>
+
+  <div class="about skills">
+    <h2 class="title2">Professional Skills</h2>
+  <!--
+    <div class="box">
+        <h4>Html</h4>
+        <div class="percent">
+            <div style="width: 70%;"></div>
+        </div>
+    </div>
+    <div class="box">
+        <h4>CSS</h4>
+        <div class="percent">
+            <div style="width: 80%;"></div>
+        </div>
+    </div>
+    <div class="box">
+        <h4>Html</h4>
+        <div class="percent">
+            <div style="width: 70%;"></div>
+        </div>
+    </div>
+    <div class="box">
+        <h4>Javascript</h4>
+        <div class="percent">
+            <div style="width: 50%;"></div>
+        </div>
+    </div>
+    <div class="box">
+        <h4>Java</h4>
+        <div class="percent">
+            <div style="width: 60%;"></div>
+        </div>
+    </div>
+    -->
+  </div>
+  <div class="about interest">
+    <h2 class="title2">Interest</h2>
+    <ul  class="list-inline">
+        <li><i class="fa fa-book" aria-hidden="true"></i> Reading</li>
+        <li><i class="fa fa-cutlery" aria-hidden="true"></i> Cooking</li>
+   <!--     <li><i class="fa fa-gamepad" aria-hidden="true"></i> Gaming</li>
+    -->
+    <li><i class="fa fa-language" aria-hidden="true"></i> Language</li>
+    </ul>
+  </div>
+  </body>
+
