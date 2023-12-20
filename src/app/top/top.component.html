@@ -1,29 +1,59 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
   <div class="container">
+
     <a class="navbar-brand" href="#">German Herrera</a>
+
     <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="sidebar offcanvas offcanvas-start row" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+
       <div class="offcanvas-header text-white border-bottom">
 				<h5 class="offcanvas-title" id="offcanvasNavbarLabel">German Herrera</h5>
 				<button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-			  </div>
-        		  <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0 row justify-content-between">
-			   <div class="d-block d-sm-block d-md-block d-lg-none">
-			   <div class="profileText">
-                    <div class="imgBx">
-                        <img src="assets/img/pic.jpg">
-                    </div>
-                    <h2>German Herrera<br><span>Web Developer</span></h2>
-                </div>
-				</div>
-          <div class="d-flex flex-row flex-lg-row justify-content-center align-items-center gap-3">
-            <a href="#" (click)="mnuLang('en')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-primary bg-darken-xs" data-tor="hover:bg(light)">EN</a>
-            <a href="#" (click)="mnuLang('fr')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-danger bg-darken-xs" data-tor="hover:bg(light)">FR</a>
-            <a href="#" (click)="mnuLang('es')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-warning bg-darken-xs" data-tor="hover:bg(light)">ES</a>
+      </div>
+
+      <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
+
+        <div class="d-block d-sm-block d-md-block d-lg-none">
+			    <div class="profileText">
+            <div class="imgBx">
+              <img src="assets/img/pic.jpg">
+            </div>
+            <h2 class="text-light">Web Developer</h2>
           </div>
+				</div>
+
+        <ul class="list-inline text-light justify-content-center align-items-center fs-5 flex-grow-1 pe-3 d-block d-sm-block d-md-block d-lg-none">
+          <li class="nav-item mx-2">
+            <span class="icon"><i class="fa-solid fa-phone"></i></span>&nbsp;
+            <span class="text">+1 438 408 1220</span>
+          </li>
+          <li class="nav-item mx-2">
+            <span class="icon"><i class="fa-solid fa-envelope"></i></span>&nbsp;
+            <span class="text">germanherrera75&#64;hotmail.com</span>
+          </li>
+          <li class="nav-item mx-2">
+            <span class="icon"><i class="fa-solid fa-globe"></i></span>&nbsp;
+            <span class="text">germanherrera.co</span>
+          </li>
+          <li class="nav-item mx-2">
+            <span class="icon"><i class="fa-brands fa-linkedin"></i></span>&nbsp;
+            <span class="text"><a class="text-decoration-none text-light " target="_blank" href="https://www.linkedin.com/in/german-herrera/">/in/german-herrera/</a></span>
+          </li>
+          <li class="nav-item mx-2">
+            <span class="icon"><i class="fa-solid fa-location-dot"></i></span>&nbsp;
+            <span class="text">Montreal, Canada</span>
+            </li>
+        </ul>
+
+        <div class="d-flex flex-row flex-lg-row justify-content-end align-items-center gap-3">
+          <a href="#" (click)="mnuLang('en')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-primary bg-darken-xs" data-tor="hover:bg(light)">EN</a>
+          <a href="#" (click)="mnuLang('fr')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-danger bg-darken-xs" data-tor="hover:bg(light)">FR</a>
+          <a href="#" (click)="mnuLang('es')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-warning bg-darken-xs" data-tor="hover:bg(light)">ES</a>
+        </div>
+      </div>
     </div>
-  </div>
 
 

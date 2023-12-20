@@ -3,9 +3,13 @@
 
 body{
 	/*background: url('./../images/images.png') rgba(0,0,0,0.3); */
-	background: rgba(32,32,32,0.1);
+	background: rgba(0,0,0,0.8);
 	background-blend-mode: multiply;
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
+}
+.sidebar{
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
 }

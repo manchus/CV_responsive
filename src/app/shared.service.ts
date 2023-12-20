@@ -62,6 +62,11 @@ export class SharedService {
     return collectionData(q,{idField:'id'});
   }
 
+  getStudy(lng : string){
+    let studyCollection = collection(this.fs, lng+"/studies/study");
+    const q = query(studyCollection, orderBy("n"))
+    return collectionData( q ,{idField:'id'});
+   }
 
   addSkill(desc:string){
     let data = {detail:desc};
