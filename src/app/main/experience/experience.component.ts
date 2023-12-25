@@ -16,7 +16,6 @@ export class ExperienceComponent {
   ngOnInit() {
     this.service.getDetailsExperience( this.detailsExperience ).subscribe((res) => (this.detailsExperiences = res));
   }
-
   constructor(
     private service: SharedService
   ) {}

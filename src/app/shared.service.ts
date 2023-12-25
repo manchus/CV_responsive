@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collectionData, docData, orderBy } from '@angular/fire/firestore';
 import { addDoc, collection, deleteDoc, doc,  query, where, getDocs } from '@firebase/firestore';
+import { Subject } from 'rxjs';
 
 
 
@@ -9,10 +10,19 @@ import { addDoc, collection, deleteDoc, doc,  query, where, getDocs } from '@fir
 })
 export class SharedService {
 
+
+  private countdownEndSource = new Subject<void>();
+  public countdownEnd$ = this.countdownEndSource.asObservable();
+
+  workHit :string="";
+
   constructor(private fs:Firestore) { }
 
   skillsRef = collection(this.fs, "skills.profile.p1");
 
+  getWorkHit( ){
+    return this.workHit;
+  }
 
   getProfile(lng : string){
     let profileCollection = collection(this.fs, lng+"/profile/profile");

@@ -6,50 +6,85 @@ import { MainComponent } from './main/main.component';
 import { LeftBarComponent } from './left-bar/left-bar.component';
 import { TopComponent } from './top/top.component';
 
-import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import {
+  TranslocoModule,
+  TranslocoService,
+  TRANSLOCO_SCOPE,
+} from '@ngneat/transloco';
 import { SharedService } from './shared.service';
+
+declare var $: any;
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MainComponent, LeftBarComponent, TopComponent,TranslocoModule,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    MainComponent,
+    LeftBarComponent,
+    TopComponent,
+    TranslocoModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-
 })
 export class AppComponent {
-
-  constructor(private readonly translocoService: TranslocoService, private service: SharedService) {}
+  constructor(
+    private readonly translocoService: TranslocoService,
+    private service: SharedService
+  ) {}
   ngOnInit() {
     this.refreshSkills();
-}
+    console.log('Ejecuta ngOnInit');
+  }
+
+  ngOnChange() {
+    console.log('Ejecuta ngOnChange');
+  }
+
   title = 'personal';
-  lngActive: string = "en";
-  skills: any=[];
-  qSkills: any=[];
+  lngActive: string = 'en';
+  skills: any = [];
+  qSkills: any = [];
+  currentHit: string = '';
+  hits: any = [];
+  lngHit: string="HITS";
 
- refreshSkills(){
-  this.service.getSkills(this.lngActive).subscribe((res)=>this.skills=res);
- }
+  refreshSkills() {
+    this.service
+      .getSkills(this.lngActive)
+      .subscribe((res) => (this.skills = res));
+  }
 
- addSkill(newSkill : string){
-  this.service.addSkill(newSkill).then((res)=>{
-    console.log(res);
-    this.refreshSkills();
-  })
- }
+  addSkill(newSkill: string) {
+    this.service.addSkill(newSkill).then((res) => {
+      console.log(res);
+      this.refreshSkills();
+    });
+  }
 
-deleteSkill(id : string){
-  this.service.deleteSkill(id).then((res)=>{
-    console.log(res);
-    this.refreshSkills();
-  })
- }
+  deleteSkill(id: string) {
+    this.service.deleteSkill(id).then((res) => {
+      console.log(res);
+      this.refreshSkills();
+    });
+  }
 
- setLang(lngActive :string){
-  this.lngActive = lngActive;
-  this.translocoService.setActiveLang(this.lngActive);
- }
+  setLang(lngActive: string) {
+    this.lngActive = lngActive;
+    this.translocoService.setActiveLang(this.lngActive);
+  }
+
+  public hitDetail($event: any): void {
+    this.currentHit = $event;
+    var words = this.currentHit.split('-');
+    this.hits = words;
+    switch (this.lngActive){
+      case "en": this.lngHit="HITS"; break;
+      case "es": this.lngHit="LOGROS"; break;
+      case "fr": this.lngHit="SUCCÈS"; break;
+      }
+    }
 
 }

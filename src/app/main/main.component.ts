@@ -1,4 +1,4 @@
-import { Component,  Input, OnInit, OnChanges } from '@angular/core';
+import { Component,  Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience/experience.component';
 
@@ -8,8 +8,13 @@ import {
   TRANSLOCO_SCOPE,
 } from '@ngneat/transloco';
 
+
+
 import { SharedService } from './../shared.service';
 import { NgSwitch, NgSwitchCase } from '@angular/common';
+import { doc } from '@angular/fire/firestore';
+
+declare var $: any;
 
 @Component({
   selector: 'app-main',
@@ -24,13 +29,19 @@ export class MainComponent implements OnInit, OnChanges{
     private service: SharedService
   ) {}
 
-  profile: any =[]
+  @Output() hitDetail = new EventEmitter<string>();
+
+
+  profile: any =[];
   skills: any = [];
   experiences: any = [];
   experiencePath :string="";
   volunt :any=[];
   voluntDetail :any=[];
   @Input() lngActivate: string="";
+  target: string="";
+
+
 
 
   ngOnInit() {
@@ -39,9 +50,26 @@ export class MainComponent implements OnInit, OnChanges{
 
   ngOnChanges(){
     this.refreshSkills();
+
+  }
+
+  test(activeHit : string){
+    this.hitDetail.emit(activeHit);
   }
 
   refreshSkills() {
+
+    // this.service.workHit ="asdasdaasd eerewr";
+    // var testVar ="German Herrera";
+    // console.log("Binding test: ",this.target);
+    // testVar = this.target;
+    // $('button').click(function () {
+    //   console.log('READY', testVar);
+
+
+    //  $('.modal-body').html('<b>jQuery used in angular by installation.'+testVar+' </b>');
+    // });
+
     this.service.getProfile("hv_"+this.lngActivate).subscribe((res) => (this.profile = res));
     this.service.getSkills("hv_"+this.lngActivate).subscribe((res) => (this.skills = res));
     this.service.getExperience("hv_"+this.lngActivate).subscribe((res) => (this.experiences = res));

@@ -28,18 +28,10 @@
   </div>
   <div class="contactInfo text-white">
       <h3 class="title"><ng-container *transloco="let t"> {{ t('study') }} </ng-container></h3>
-      <ul  class="list-inline">
-          <li>
-             <h5>2023</h5>
-             <h4>AEC Gestion Informatique</h4>
-             <h4>Institute Teccart</h4>
-          </li>
-          <li>
-             <h5>2023</h5>
-             <h4>Bachelor Degree in Computer Science</h4>
-             <h4>University National of Colombia</h4>
-          </li>
-      </ul>
+        <ul  class="list-inline" *ngFor="let study of studies">
+          <li><h4>&nbsp;{{study.level}}&nbsp;- &nbsp;<span>{{study.name}}</span></h4></li>
+          <li><h5>{{study.place}}&nbsp;<span>({{study.year}})</span></h5></li>
+        </ul>
   </div>
   <div class="contactInfo language">
       <h3 class="title">Languages</h3>

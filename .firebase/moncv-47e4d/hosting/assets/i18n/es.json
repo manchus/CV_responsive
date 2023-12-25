@@ -1,12 +1,12 @@
 {
-  "profile": "Profil",
-  "skills": "Compétences Informatique",
-  "experience": "Expérience Professionnelle",
-  "volunteering": "Implication Sociale",
-  "study": "Education",
-  "bar": "Bar Fr",
+  "profile": "Perfil Profesional",
+  "skills": "Competencias",
+  "experience": "Experiencia",
+  "volunteering": "Trabajo Voluntario",
+  "study": "Formación Académica",
+  "bar": "Bar Esp",
   "dashboard": {
-    "title": "Dashboard Title Fr",
-    "desc": "Dashboard Desc Fr"
+    "title": "Dashboard Titulo",
+    "desc": "Dashboard Desc Esp"
   }
 }

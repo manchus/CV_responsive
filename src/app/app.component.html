@@ -1,34 +1,44 @@
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+
 <!-- <body class="vh-100 overflow-hidden"> -->
 <body class="overflow-hidden">
   <!-- <div class="container"> -->
     <app-top (setLang)="setLang($event)" />
-
     <div class="row">
       <div class="col-sm-0 col-md-0 col-lg-3 col-xl-3 d-none d-sm-none d-md-none d-lg-block">
-        <app-left-bar />
+        <app-left-bar [lngActivate]="lngActive" />
       </div>
       <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
-        <app-main [lngActivate]="lngActive" />
+        <app-main [lngActivate]="lngActive" (hitDetail)="hitDetail($event)"/>
       </div>
     </div>
   <!-- </div> -->
-
-
 
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-flag-checkered"></i></h5>
+          <h5 class="modal-title" id="exampleModalLabel">&nbsp;<i class="fa-solid fa-flag-checkered"></i>&nbsp;&nbsp;{{lngHit}}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">...</div>
-        <!--  <div class="modal-footer">
+        <div class="modal-body">
+          <ul *ngFor="let hit of hits">
+            <li>{{hit}}</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-        </div> -->
+        <!--  <button type="button" class="btn btn-primary">Save changes</button>-->
+        </div>
       </div>
     </div>
   </div>
 </body>
+
+
+
+

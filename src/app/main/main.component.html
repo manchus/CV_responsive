@@ -15,20 +15,22 @@
 
     <h2 class="title2"><ng-container *transloco="let t"> {{ t('experience') }} </ng-container></h2>
     <div class="box" *ngFor="let experience of experiences">
-      <div  class="list-inline" >
-        <h4 class="text-justify">{{experience.job}}</h4>
-        <div class="year_company">
-          <h5 class="text-justify">{{experience.cia}}</h5>
-          <h5 class="text-justify">{{experience.year}}</h5>
-          <h5 class="text-justify">{{experience.city}}</h5>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <div class="row">
+        <div class="h3 col">{{experience.job}}</div>
+        <div class="h4 col text-right">{{experience.year}}
+          <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" (click)="test(experience.hit)" data-bs-target="#exampleModal">
             <i class="fa-solid fa-flag-checkered"></i>
           </button>
         </div>
-        <p></p>
+      </div>
+      <div class=" h5">{{experience.cia}}</div>
+      <div class="row">
+        <div class="col h5">{{experience.city}}</div>
+      <div  class="list-inline" >
         <app-experience
         [detailsExperience]="experiencePath+experience.id"/>
       </div>
+    </div>
     </div>
 
       <h2 class="title2"><ng-container *transloco="let t"> {{ t('volunteering') }} </ng-container></h2>
