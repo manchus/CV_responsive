@@ -12,7 +12,7 @@
         <app-left-bar [lngActivate]="lngActive" />
       </div>
       <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
-        <app-main [lngActivate]="lngActive" (hitDetail)="hitDetail($event)"/>
+        <app-main [lngActivate]="lngActive" (hitDetail)="hitDetail($event)" (projectDetail)="projectDetail($event)"/>
       </div>
     </div>
   <!-- </div> -->
@@ -29,6 +29,32 @@
           <ul *ngFor="let hit of hits">
             <li>{{hit}}</li>
           </ul>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!--  <button type="button" class="btn btn-primary">Save changes</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">&nbsp;<i class="fa-solid fa-gears"></i>&nbsp;&nbsp;{{detailProject.nom}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+            <p><i class="fa-solid fa-circle-info"></i>&nbsp;{{detailProject.description}}</p>
+            <p><i class="fa-regular fa-file-code"></i>&nbsp;{{detailProject.lang}}</p>
+            <p><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;{{detailProject.tools}}</p>
+            <p><a class="text-decoration-none text-dark" target="_blank" href="https://{{detailProject.repos}}"><i class="fa-brands fa-github"></i>&nbsp;{{detailProject.repos}}</a></p>
+            <p><a class="text-decoration-none text-dark " target="_blank" href="https://{{detailProject.deploy}}"><i class="fa-regular fa-window-restore"></i>&nbsp;{{detailProject.deploy}}</a></p>
+
+
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

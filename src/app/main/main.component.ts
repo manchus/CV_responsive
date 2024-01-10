@@ -30,9 +30,11 @@ export class MainComponent implements OnInit, OnChanges{
   ) {}
 
   @Output() hitDetail = new EventEmitter<string>();
+  @Output() projectDetail = new EventEmitter<string>();
 
 
   profile: any =[];
+  projects: any =[];
   skills: any = [];
   experiences: any = [];
   experiencePath :string="";
@@ -53,8 +55,12 @@ export class MainComponent implements OnInit, OnChanges{
 
   }
 
-  test(activeHit : string){
+  detailSkills(activeHit : string){
     this.hitDetail.emit(activeHit);
+  }
+
+  detailProject(activeProject : string){
+    this.projectDetail.emit(activeProject);
   }
 
   refreshSkills() {
@@ -71,6 +77,7 @@ export class MainComponent implements OnInit, OnChanges{
     // });
 
     this.service.getProfile("hv_"+this.lngActivate).subscribe((res) => (this.profile = res));
+    this.service.getProjects("hv_"+this.lngActivate).subscribe((res) => (this.projects = res));
     this.service.getSkills("hv_"+this.lngActivate).subscribe((res) => (this.skills = res));
     this.service.getExperience("hv_"+this.lngActivate).subscribe((res) => (this.experiences = res));
     this.experiencePath="hv_"+this.lngActivate+"/experiences/experience/";

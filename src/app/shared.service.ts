@@ -42,6 +42,19 @@ export class SharedService {
     return collectionData( q ,{idField:'id'});
    }
 
+  getProjects(lng : string){
+    let experienceCollection = collection(this.fs, lng+"/projects/project");
+    const q = query(experienceCollection, orderBy("n"))
+    return collectionData( q ,{idField:'id'});
+   }
+
+  getProject(lng : string, item: string){
+    console.log("Ruta :",lng+"/projects/project","    ID: ",item)
+    let docRef = doc(this.fs,lng+'/projects/project/'+item);
+    console.log("Documento : ",docRef);
+    return docData(docRef);
+   }
+
   getDetailsExperience(idExp: string){
     let experienceCollection = collection(this.fs, idExp+"/details");
    // const q = query(experienceCollection, orderBy("id"))

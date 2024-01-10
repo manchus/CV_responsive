@@ -88,6 +88,11 @@
     display: block;
     margin-top: 5px;
 }
+
+.contactInfo.language .text
+{
+  color: #fff;
+}
 .contactInfo.language .percent div
 {
     position: absolute;

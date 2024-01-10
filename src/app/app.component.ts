@@ -48,13 +48,28 @@ export class AppComponent {
   skills: any = [];
   qSkills: any = [];
   currentHit: string = '';
+  currentProject: string = '';
   hits: any = [];
+  hitsProject: any = [];
+  detailProject :any={
+    n: "",
+    nom: "",
+    lang: "",
+    tools: "",
+    repos: "",
+    deploy: "",
+    description: "",
+  };
+
+
   lngHit: string="HITS";
 
   refreshSkills() {
     this.service
       .getSkills(this.lngActive)
       .subscribe((res) => (this.skills = res));
+
+
   }
 
   addSkill(newSkill: string) {
@@ -80,6 +95,20 @@ export class AppComponent {
     this.currentHit = $event;
     var words = this.currentHit.split('-');
     this.hits = words;
+    switch (this.lngActive){
+      case "en": this.lngHit="HITS"; break;
+      case "es": this.lngHit="LOGROS"; break;
+      case "fr": this.lngHit="SUCCÈS"; break;
+      }
+    }
+
+  public projectDetail($event: any): void {
+    this.currentProject = $event;
+    console.log("Project ID : ", $event)
+    this.service.getProject("hv_"+this.lngActive,this. currentProject).subscribe((res) => {this.detailProject = res;
+      console.log("Detalle Promesa : ",this.detailProject)});
+    var wordsProject = this.currentHit;
+    this.hitsProject = wordsProject;
     switch (this.lngActive){
       case "en": this.lngHit="HITS"; break;
       case "es": this.lngHit="LOGROS"; break;
