@@ -10,7 +10,7 @@ import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@ngneat/transl
 })
 export class TopComponent {
   @Output() setLang = new EventEmitter<string>();
-  public lngActive : string ="";
+  public lngActive : string ="en";
   constructor(private readonly translocoService: TranslocoService){}
 
   mnuLang(lang:string){
