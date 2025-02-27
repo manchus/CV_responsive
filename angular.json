@@ -104,6 +104,23 @@
               "node_modules/@fortawesome/fontawesome-free/js/all.js"
             ]
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "responsive:build:production",
+              "serveTarget": "responsive:serve:production"
+            },
+            "development": {
+              "buildTarget": "responsive:build:development",
+              "serveTarget": "responsive:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

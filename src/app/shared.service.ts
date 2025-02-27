@@ -10,7 +10,6 @@ import { Subject } from 'rxjs';
 })
 export class SharedService {
 
-
   private countdownEndSource = new Subject<void>();
   public countdownEnd$ = this.countdownEndSource.asObservable();
 
@@ -75,7 +74,6 @@ export class SharedService {
 
   get(lng : string){
     let skillsCollection = collection(this.fs, lng+"/volunteering/volunteering");
-    //const q = query(skillsCollection, orderBy("n"))
     return collectionData(skillsCollection,{idField:'id'});
   }
 

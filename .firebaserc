@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "moncv-47e4d"
+  },
+  "targets": {
+    "moncv-47e4d": {
+      "hosting": {
+        "responsive": [
+          "moncv-47e4d"
+        ]
+      }
+    }
   }
 }

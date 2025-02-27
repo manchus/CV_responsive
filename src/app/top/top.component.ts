@@ -1,21 +1,37 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  TranslocoModule,
+  TranslocoService,
+  TRANSLOCO_SCOPE,
+} from '@ngneat/transloco';
+import { VisitCounterService } from './../visit-counter.service';
 
 @Component({
   selector: 'app-top',
   standalone: true,
   imports: [TranslocoModule],
   templateUrl: './top.component.html',
-  styleUrl: './top.component.css'
+  styleUrl: './top.component.css',
 })
-export class TopComponent {
-  @Output() setLang = new EventEmitter<string>();
-  public lngActive : string ="en";
-  constructor(private readonly translocoService: TranslocoService){}
+export class TopComponent implements OnInit {
+  visitCount: number = 0;
 
-  mnuLang(lang:string){
+  @Output() setLang = new EventEmitter<string>();
+  public lngActive: string = 'en';
+
+  constructor(
+    private readonly translocoService: TranslocoService,
+    private visitCounterService: VisitCounterService
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+
+    this.visitCount = await this.visitCounterService.getCounter();
+
+    await this.visitCounterService.incrementCounter();
+  }
+  mnuLang(lang: string) {
     this.lngActive = lang;
     this.setLang.emit(this.lngActive);
-}
-
+  }
 }
