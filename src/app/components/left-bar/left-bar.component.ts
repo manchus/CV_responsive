@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@ngneat/transloco';
 
-import { SharedService } from './../shared.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-left-bar',

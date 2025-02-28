@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-import { MainComponent } from './main/main.component';
-import { LeftBarComponent } from './left-bar/left-bar.component';
-import { TopComponent } from './top/top.component';
+import { MainComponent } from './components/main/main.component';
+import { LeftBarComponent } from './components/left-bar/left-bar.component';
+import { TopComponent } from './components/top/top.component';
 
 import {
   TranslocoModule,
   TranslocoService,
   TRANSLOCO_SCOPE,
 } from '@ngneat/transloco';
-import { SharedService } from './shared.service';
+import { SharedService } from './services/shared.service';
 
 declare var $: any;
 

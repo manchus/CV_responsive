@@ -1,0 +1,7 @@
+<form (ngSubmit)="onSubmit()">
+  <input [(ngModel)]="post.title" name="title" placeholder="Título" required>
+  <textarea [(ngModel)]="post.content" name="content" placeholder="Contenido" required></textarea>
+  <input [(ngModel)]="post.author" name="author" placeholder="Autor" required>
+  <button type="submit">Publicar</button>
+</form>
+

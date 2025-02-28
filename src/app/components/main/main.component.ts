@@ -9,8 +9,7 @@ import {
 } from '@ngneat/transloco';
 
 
-
-import { SharedService } from './../shared.service';
+import { SharedService } from '../../services/shared.service';
 import { NgSwitch, NgSwitchCase } from '@angular/common';
 import { doc } from '@angular/fire/firestore';
 

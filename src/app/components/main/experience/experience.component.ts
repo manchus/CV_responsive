@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedService } from './../../shared.service';
+import { SharedService } from '../../../services/shared.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-experience',
   standalone: true,
-  imports: [CommonModule,],
+  imports: [CommonModule,RouterModule],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.css'
 })

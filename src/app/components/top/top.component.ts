@@ -4,7 +4,7 @@ import {
   TranslocoService,
   TRANSLOCO_SCOPE,
 } from '@ngneat/transloco';
-import { VisitCounterService } from './../visit-counter.service';
+import { VisitCounterService } from '../../services/visit-counter.service';
 
 @Component({
   selector: 'app-top',
