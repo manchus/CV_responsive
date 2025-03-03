@@ -1,6 +1,7 @@
 import { Component,  Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience/experience.component';
+import { ActivatedRoute } from '@angular/router';
 
 import {
   TranslocoModule,
@@ -19,13 +20,14 @@ declare var $: any;
   selector: 'app-main',
   standalone: true,
   imports: [TranslocoModule, CommonModule, ExperienceComponent ],
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.css',
+  templateUrl: './resume.component.html',
+  styleUrl: './resume.component.css',
 })
-export class MainComponent implements OnInit, OnChanges{
+export class ResumeComponent implements OnInit, OnChanges{
   constructor(
     private readonly translocoService: TranslocoService,
-    private service: SharedService
+    private service: SharedService,
+    private route: ActivatedRoute
   ) {}
 
   @Output() hitDetail = new EventEmitter<string>();
@@ -46,7 +48,11 @@ export class MainComponent implements OnInit, OnChanges{
 
 
   ngOnInit() {
+
+    this.lngActivate = this.route.snapshot.data['lngActivate2'];
     this.refreshSkills();
+    console.log(this.route.snapshot.data);
+
   }
 
   ngOnChanges(){
@@ -56,10 +62,12 @@ export class MainComponent implements OnInit, OnChanges{
 
   detailSkills(activeHit : string){
     this.hitDetail.emit(activeHit);
+    this.service.hitDetailNew.emit(activeHit);
   }
 
   detailProject(activeProject : string){
     this.projectDetail.emit(activeProject);
+    this.service.projectDetailNew.emit(activeProject);
   }
 
   refreshSkills() {

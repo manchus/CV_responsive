@@ -13,6 +13,7 @@
       </div>
       <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9">
         <app-main [lngActivate]="lngActive" (hitDetail)="hitDetail($event)" (projectDetail)="projectDetail($event)"/>
+        <router-outlet></router-outlet>
       </div>
     </div>
   <!-- </div> -->

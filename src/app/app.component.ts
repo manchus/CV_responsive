@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-import { MainComponent } from './components/main/main.component';
+import { ResumeComponent } from './components/resume/resume.component';
 import { LeftBarComponent } from './components/left-bar/left-bar.component';
 import { TopComponent } from './components/top/top.component';
 
@@ -21,7 +21,7 @@ declare var $: any;
   imports: [
     CommonModule,
     RouterOutlet,
-    MainComponent,
+    ResumeComponent,
     LeftBarComponent,
     TopComponent,
     TranslocoModule,
