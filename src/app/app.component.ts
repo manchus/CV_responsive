@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { SharedService } from './services/shared.service';
 
-import { MainComponent } from './components/main/main.component';
+import { ResumeComponent } from './components/resume/resume.component';
 import { LeftBarComponent } from './components/left-bar/left-bar.component';
 import { TopComponent } from './components/top/top.component';
 
@@ -11,7 +12,6 @@ import {
   TranslocoService,
   TRANSLOCO_SCOPE,
 } from '@ngneat/transloco';
-import { SharedService } from './services/shared.service';
 
 declare var $: any;
 
@@ -21,7 +21,7 @@ declare var $: any;
   imports: [
     CommonModule,
     RouterOutlet,
-    MainComponent,
+    ResumeComponent,
     LeftBarComponent,
     TopComponent,
     TranslocoModule,
@@ -34,14 +34,6 @@ export class AppComponent {
     private readonly translocoService: TranslocoService,
     private service: SharedService
   ) {}
-  ngOnInit() {
-    this.refreshSkills();
-    console.log('Ejecuta ngOnInit');
-  }
-
-  ngOnChange() {
-    console.log('Ejecuta ngOnChange');
-  }
 
   title = 'personal';
   lngActive: string = 'en';
@@ -51,25 +43,79 @@ export class AppComponent {
   currentProject: string = '';
   hits: any = [];
   hitsProject: any = [];
-  detailProject :any={
-    n: "",
-    nom: "",
-    lang: "",
-    tools: "",
-    repos: "",
-    deploy: "",
-    description: "",
+  detailProject: any = {
+    n: '',
+    nom: '',
+    lang: '',
+    tools: '',
+    repos: '',
+    deploy: '',
+    description: '',
   };
 
+  lngHit: string = 'HITS';
 
-  lngHit: string="HITS";
+  ngOnInit() {
+    console.log('Hits OnInit', this.hits);
+    this.service.currentLanguage$.subscribe((language) => {
+      this.lngActive = language;
+      this.refreshSkills();
+    });
+
+    this.service.hitDetailNew.subscribe((event) => {
+      console.log('Evento Recibido Hit', event);
+      //this.hits = event;
+      this.currentHit = event;
+      var words = this.currentHit.split('-');
+      this.hits = words;
+      switch (this.lngActive) {
+        case 'en':
+          this.lngHit = 'HITS';
+          break;
+        case 'es':
+          this.lngHit = 'LOGROS';
+          break;
+        case 'fr':
+          this.lngHit = 'SUCCÈS';
+          break;
+      }
+    });
+    this.service.projectDetailNew.subscribe((event) => {
+      console.log('Evento Recibido Project', event);
+
+      this.currentProject = event;
+      console.log('Project ID : ', event);
+      this.service
+        .getProject('hv_' + this.lngActive, this.currentProject)
+        .subscribe((res) => {
+          this.detailProject = res;
+          console.log('Detalle Promesa : ', this.detailProject);
+        });
+      var wordsProject = this.currentHit;
+      this.hitsProject = wordsProject;
+      switch (this.lngActive) {
+        case 'en':
+          this.lngHit = 'HITS';
+          break;
+        case 'es':
+          this.lngHit = 'LOGROS';
+          break;
+        case 'fr':
+          this.lngHit = 'SUCCÈS';
+          break;
+      }
+    });
+    console.log('Ejecuta ngOnInit');
+  }
+
+  ngOnChange() {
+    console.log('Ejecuta ngOnChange');
+  }
 
   refreshSkills() {
     this.service
       .getSkills(this.lngActive)
       .subscribe((res) => (this.skills = res));
-
-
   }
 
   addSkill(newSkill: string) {
@@ -91,29 +137,46 @@ export class AppComponent {
     this.translocoService.setActiveLang(this.lngActive);
   }
 
+  /*
   public hitDetail($event: any): void {
     this.currentHit = $event;
     var words = this.currentHit.split('-');
     this.hits = words;
-    switch (this.lngActive){
-      case "en": this.lngHit="HITS"; break;
-      case "es": this.lngHit="LOGROS"; break;
-      case "fr": this.lngHit="SUCCÈS"; break;
-      }
+    switch (this.lngActive) {
+      case 'en':
+        this.lngHit = 'HITS';
+        break;
+      case 'es':
+        this.lngHit = 'LOGROS';
+        break;
+      case 'fr':
+        this.lngHit = 'SUCCÈS';
+        break;
     }
+  }
 
   public projectDetail($event: any): void {
     this.currentProject = $event;
-    console.log("Project ID : ", $event)
-    this.service.getProject("hv_"+this.lngActive,this. currentProject).subscribe((res) => {this.detailProject = res;
-      console.log("Detalle Promesa : ",this.detailProject)});
+    console.log('Project ID : ', $event);
+    this.service
+      .getProject('hv_' + this.lngActive, this.currentProject)
+      .subscribe((res) => {
+        this.detailProject = res;
+        console.log('Detalle Promesa : ', this.detailProject);
+      });
     var wordsProject = this.currentHit;
     this.hitsProject = wordsProject;
-    switch (this.lngActive){
-      case "en": this.lngHit="HITS"; break;
-      case "es": this.lngHit="LOGROS"; break;
-      case "fr": this.lngHit="SUCCÈS"; break;
-      }
+    switch (this.lngActive) {
+      case 'en':
+        this.lngHit = 'HITS';
+        break;
+      case 'es':
+        this.lngHit = 'LOGROS';
+        break;
+      case 'fr':
+        this.lngHit = 'SUCCÈS';
+        break;
     }
-
+  }
+    */
 }

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Firestore, collectionData, docData, orderBy } from '@angular/fire/firestore';
 import { addDoc, collection, deleteDoc, doc,  query, where, getDocs } from '@firebase/firestore';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 
 
@@ -12,6 +12,17 @@ export class SharedService {
 
   private countdownEndSource = new Subject<void>();
   public countdownEnd$ = this.countdownEndSource.asObservable();
+  hitDetailNew = new EventEmitter<string>();
+  projectDetailNew = new EventEmitter<string>();
+
+  private languageSubject = new BehaviorSubject<string>('en');
+  currentLanguage$ = this.languageSubject.asObservable();
+
+  setLanguage(language: string) {
+    this.languageSubject.next(language);
+  }
+
+
 
   workHit :string="";
 

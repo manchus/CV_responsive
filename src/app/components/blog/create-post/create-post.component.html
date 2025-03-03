@@ -1,7 +1,15 @@
-<form (ngSubmit)="onSubmit()">
-  <input [(ngModel)]="post.title" name="title" placeholder="Título" required>
-  <textarea [(ngModel)]="post.content" name="content" placeholder="Contenido" required></textarea>
-  <input [(ngModel)]="post.author" name="author" placeholder="Autor" required>
-  <button type="submit">Publicar</button>
+<!-- <form (ngSubmit)="onSubmit()"> -->
+  <form>
+
+<!-- </form> (ngSubmit)="createPost(title,content,author)"> -->
+  <input [(ngModel)]="title" name="title" placeholder="Título" required>
+  <textarea [(ngModel)]="content" name="content" placeholder="Contenido" required></textarea>
+  <input [(ngModel)]="author" name="author" placeholder="Autor" required>
+  <input type="file" (change)="onFileSelected($event)" accept="image/*">
+  <button (click)="uploadImage()">Subir Imagen</button>
+  <p *ngIf="imageUrl">Imagen subida: {{ imageUrl }}</p>
+
+  <button (click)="createPost(title,content,author)">Publicar</button>
+  <!-- <button type="submit">Publicar</button> -->
 </form>
 

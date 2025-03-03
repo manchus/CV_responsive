@@ -1,5 +1,6 @@
 <div *ngFor="let post of posts">
   <h2>{{ post.title }}</h2>
+  <p>{{post.createdAt | date }}</p>
   <p>{{ post.content | slice:0:100 }}...</p>
   <a [routerLink]="['/post', post.id]">Leer más</a>
 </div>
