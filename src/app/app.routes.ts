@@ -7,13 +7,13 @@ import { PostDetailComponent } from './components/blog/post-detail/post-detail.c
 import { CreatePostComponent } from './components/blog/create-post/create-post.component';
 
 const resolveLngActivate = () => {
-  const lngActive = 'es'; // Aquí puedes obtener los datos que necesitas
-  //return { lngActivate2: lngActive };
+  const lngActive = 'en';
   return lngActive ;
 };
 
 export const routes: Routes = [
-  { path: '', component: ResumeComponent, resolve:{ lngActivate2:resolveLngActivate} },
+  //{ path: '', component: ResumeComponent, resolve:{ lngActivate:resolveLngActivate} },
+  { path: '', component: ResumeComponent },
   { path: 'posts', component: PostListComponent },
   { path: 'post/:id', component: PostDetailComponent },
   { path: 'create', component: CreatePostComponent },

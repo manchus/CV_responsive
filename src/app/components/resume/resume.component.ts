@@ -1,4 +1,4 @@
-import { Component,  Input, OnInit, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component,  Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience/experience.component';
 import { ActivatedRoute } from '@angular/router';
@@ -17,13 +17,13 @@ import { doc } from '@angular/fire/firestore';
 declare var $: any;
 
 @Component({
-  selector: 'app-main',
+  selector: 'app-resume',
   standalone: true,
   imports: [TranslocoModule, CommonModule, ExperienceComponent ],
   templateUrl: './resume.component.html',
   styleUrl: './resume.component.css',
 })
-export class ResumeComponent implements OnInit, OnChanges{
+export class ResumeComponent implements OnInit{
   constructor(
     private readonly translocoService: TranslocoService,
     private service: SharedService,
@@ -41,23 +41,17 @@ export class ResumeComponent implements OnInit, OnChanges{
   experiencePath :string="";
   volunt :any=[];
   voluntDetail :any=[];
-  @Input() lngActivate: string="";
+  lngActivate: string="";
   target: string="";
 
 
 
 
   ngOnInit() {
-
-    this.lngActivate = this.route.snapshot.data['lngActivate2'];
-    this.refreshSkills();
-    console.log(this.route.snapshot.data);
-
-  }
-
-  ngOnChanges(){
-    this.refreshSkills();
-
+    this.service.currentLanguage$.subscribe(language =>  {
+      this.lngActivate=language;
+      this.refreshSkills();
+    });
   }
 
   detailSkills(activeHit : string){
@@ -72,17 +66,6 @@ export class ResumeComponent implements OnInit, OnChanges{
 
   refreshSkills() {
 
-    // this.service.workHit ="asdasdaasd eerewr";
-    // var testVar ="German Herrera";
-    // console.log("Binding test: ",this.target);
-    // testVar = this.target;
-    // $('button').click(function () {
-    //   console.log('READY', testVar);
-
-
-    //  $('.modal-body').html('<b>jQuery used in angular by installation.'+testVar+' </b>');
-    // });
-
     this.service.getProfile("hv_"+this.lngActivate).subscribe((res) => (this.profile = res));
     this.service.getProjects("hv_"+this.lngActivate).subscribe((res) => (this.projects = res));
     this.service.getSkills("hv_"+this.lngActivate).subscribe((res) => (this.skills = res));
@@ -91,7 +74,6 @@ export class ResumeComponent implements OnInit, OnChanges{
     this.service.getVolunt("hv_"+this.lngActivate).subscribe((res) => (this.volunt = res));
     this.service.getVoluntDetail("hv_"+this.lngActivate).subscribe((res) => (this.voluntDetail = res));
 
-    //this.service.getSkillsByQuery('es').subscribe((res)=>this.qSkills=res);
   }
 
 

@@ -5,6 +5,7 @@ import {
   TRANSLOCO_SCOPE,
 } from '@ngneat/transloco';
 import { VisitCounterService } from '../../services/visit-counter.service';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-top',
@@ -16,12 +17,12 @@ import { VisitCounterService } from '../../services/visit-counter.service';
 export class TopComponent implements OnInit {
   visitCount: number = 0;
 
-  @Output() setLang = new EventEmitter<string>();
   public lngActive: string = 'en';
 
   constructor(
     private readonly translocoService: TranslocoService,
-    private visitCounterService: VisitCounterService
+    private visitCounterService: VisitCounterService,
+    private sharedService: SharedService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -32,6 +33,7 @@ export class TopComponent implements OnInit {
   }
   mnuLang(lang: string) {
     this.lngActive = lang;
-    this.setLang.emit(this.lngActive);
+    this.sharedService.setLanguage(lang);
+
   }
 }
