@@ -1,0 +1,41 @@
+        /* Contenedor de la barra de búsqueda */
+        .search-container {
+          position: relative;
+          width: 220px;
+          transition: width 0.4s ease-in-out;
+      }
+
+      /* Input de búsqueda */
+      .search-input {
+          width: 100%;
+          padding: 8px 35px 8px 10px;
+          border: 2px solid #ccc;
+          border-radius: 20px;
+          outline: none;
+          transition: all 0.4s ease-in-out;
+      }
+
+      /* Ícono de búsqueda */
+      .search-icon {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #555;
+          cursor: pointer;
+          transition: color 0.3s ease-in-out;
+      }
+
+      /* Efecto al hacer foco */
+      .search-input:focus {
+          width: 280px;
+          border-color: #007bff;
+      }
+
+      .search-input:focus + .search-icon {
+          color: #007bff;
+      }
+
+.date-entry {
+  color:lightgray;
+}

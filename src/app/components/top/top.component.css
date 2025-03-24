@@ -40,3 +40,69 @@
   font-weight: 200px;
 }
 
+/* Estilos de prueba */
+ul {
+  list-style: none; /* Removes default bullets */
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.button-item {
+  display: block; /* Makes it behave like a button */
+  padding: 5px 10px; /* Adds spacing inside the button */
+  background-color: lightgray; /* Light grey background */
+  color: white; /* White text */
+  text-align: center; /* Centers the text */
+  border-radius: 12px; /* Rounds the corners */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+  transition: background 0.3s ease; /* Smooth hover effect */
+  width: 100px; /* Set a fixed width (optional) */
+  margin-bottom: 10px; /* Adds spacing between items */
+}
+
+.button-item:hover {
+  background-color: gray; /* Darker grey on hover */
+}
+
+/* @media (max-width: 420px) { */
+  .buttons{
+   margin-top:5px;
+   display: center; /* Makes it behave like a button */
+   justify-content:center;
+   gap: 20px;
+  }
+
+  .button-item-2 {
+    /* display: inline-flex; /*Makes it behave like a button */
+    margin-inline: 20px;
+    justify-content: center;
+    padding: 3px 10px; /* Adds spacing inside the button */
+    background-color: darkgray; /* Light grey background */
+    color: white; /* White text */
+    text-align: center; /* Centers the text */
+    border-radius: 12px; /* Rounds the corners */
+    cursor: pointer; /* Changes the cursor to indicate it's clickable */
+    transition: background 0.3s ease; /* Smooth hover effect */
+    width: min-width; /* Set a fixed width (optional) */
+    margin-bottom: 8px; /* Adds spacing between items */
+    /* margin-left: 5px; */
+  }
+
+  .button-item-2:hover {
+    background-color: gray; /* Darker grey on hover */
+  }
+/* }
+
+@media (min-width: 421px) {
+  .buttons{
+    margin-top: 10px;
+    display: none;
+    justify-content:space-around;
+  }
+   } */
+
+

@@ -7,8 +7,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.slide{
+  padding-top: 20px;
+  padding-bottom: 0px;
 }
 
 .profileText .imgBx
@@ -28,6 +33,11 @@
     height: 100%;
     object-fit: cover;
 }
+
+.carousel-item
+{
+  top: -10px;
+}
 .profileText h2
 {
   color: #fff;
@@ -44,16 +54,9 @@
   font-weight: 200px;
 }
 
-
-
-
-
-
-
-
 .contactInfo
 {
-    padding-top: 40px;
+    padding-top: 30px;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 1px;
@@ -102,3 +105,35 @@
     background: #ffc3df;
 
 }
+
+
+/* Estilos de prueba */
+ul {
+  list-style: none; /* Removes default bullets */
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.button-item {
+  display: block; /* Makes it behave like a button */
+  padding: 5px 10px; /* Adds spacing inside the button */
+  background-color: lightgray; /* Light grey background */
+  color: white; /* White text */
+  text-align: center; /* Centers the text */
+  border-radius: 12px; /* Rounds the corners */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+  transition: background 0.3s ease; /* Smooth hover effect */
+  width: 100px; /* Set a fixed width (optional) */
+  margin-bottom: 10px; /* Adds spacing between items */
+}
+
+.button-item:hover {
+  background-color: gray; /* Darker grey on hover */
+}
+
+/* Fin Estilos de prueba */
+

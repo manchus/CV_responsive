@@ -1,5 +1,39 @@
-<h1>{{ post?.title }}</h1>
-<p>{{ post?.content }}</p>
+<h3 class="date-entry">{{ post?.title }}</h3>
+<p> <small class="date-entry">{{post?.createdAt | date }}</small></p>
+<img class="image-post"
+  *ngIf="post?.imageUrl"
+  [src]="post?.imageUrl"
+  alt="{{ post?.title }}"
+/>
+<p class="date-entry">{{ post?.content }}</p>
+<!-- <p><strong>Categorías:</strong> {{ post.categories.join(', ') }}</p> -->
+<p  class="date-entry"><strong>Categorías:</strong> {{ post?.categories }}</p>
 <p><strong>Autor:</strong> {{ post?.author }}</p>
-<p><strong>Fecha:</strong> {{ post?.createdAt | date }}</p>
 
+<button class="text-white px-10 py-1 rounded-5 btn btn-secondary" (click)="likePost()"><i class="fa-solid fa-thumbs-up"></i> {{ likes }}</button>
+<span>&nbsp;&nbsp;</span>
+<button class="text-white px-10 py-1 rounded-5 btn btn-secondary"(click)="dislikePost()"><i class="fa-solid fa-thumbs-down"></i> {{ dislikes }}</button>
+
+
+<!-- <div>
+  <h1>Chat con OpenAI</h1>
+  <textarea [(ngModel)]="mensaje"></textarea>
+  <button (click)="obtenerRespuesta()">Enviar</button>
+  <p>Respuesta: {{ response }}</p>
+</div>
+
+<button (click)="obtenerRespuesta()" [disabled]="isLoading">
+  Analizar datos
+</button>
+
+<div *ngIf="isLoading">Cargando...</div>
+
+<div *ngIf="response">
+  <h3>Respuesta de DeepSeek:</h3>
+  <pre>{{ response | json }}</pre>
+</div>
+
+<div *ngIf="error">
+  <h3>Error:</h3>
+  <p>{{ error }}</p>
+</div> -->
