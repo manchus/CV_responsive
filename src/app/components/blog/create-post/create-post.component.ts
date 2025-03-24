@@ -8,6 +8,10 @@ import { Post } from '../../../models/post.model';
 
 import { lastValueFrom } from 'rxjs';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 @Component({
   selector: 'app-create-post',
   standalone: true,
@@ -16,10 +20,16 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent {
+<<<<<<< HEAD
   title: string = '';
   content: string = '';
   author: string = '';
   categories: string[] = [];
+=======
+  title: string ='';
+  content: string ='';
+  author: string ='';
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
   selectedFile: File | null = null;
   imageUrl: string | null = null;
 
@@ -28,17 +38,24 @@ export class CreatePostComponent {
     content: '',
     author: '',
     imageUrl: '', //this.imageUrl,
+<<<<<<< HEAD
     categories: [],
     likes: 0,
     dislikes: 0,
+=======
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
     createdAt: new Date(),
     updatedAt: new Date(),
   };
 
   nombre: string = ''; // Definir la propiedad
 
+<<<<<<< HEAD
   constructor(
     private blogService: BlogService,
+=======
+  constructor(private blogService: BlogService,
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
     private storageService: StorageService,
     private route: ActivatedRoute,
     private routes: Router,
@@ -47,7 +64,15 @@ export class CreatePostComponent {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+<<<<<<< HEAD
     console.log('Imagen seleccionada :', this.selectedFile);
+=======
+    console.log("Imagen seleccionada :", this.selectedFile);
+
+
+
+
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
   }
 
   uploadImage() {
@@ -68,6 +93,7 @@ export class CreatePostComponent {
     }
   }
 
+<<<<<<< HEAD
   async createPost(
     title: string,
     content: string,
@@ -99,7 +125,35 @@ export class CreatePostComponent {
 
   async onSubmit(): Promise<void> {
     this.createPost(this.title, this.content, this.author, this.categories);
+=======
+  async createPost(title: string, content: string, author: string) {
+    if (!this.imageUrl) {
+      alert('Por favor, sube una imagen');
+      return;
+    }
+
+    const post: Post = {
+      title,
+      content,
+      author,
+      imageUrl: this.imageUrl,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+    console.log("DaTo a Guardar",post);
+
+    await this.blogService.createPost(post);
+    alert('Post creado correctamente');
+    this.routes.navigate(['/posts'])
+
+  }
+
+
+  async onSubmit(): Promise<void> {
+    this.createPost(this.title, this.content, this.author)
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
     //await this.blogService.createPost(this.post);
     alert('Publicación creada exitosamente!');
   }
+
 }

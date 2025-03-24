@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 <div class="d-flex justify-content-center">
   <!-- Contenedor de búsqueda -->
   <div class="search-container">
       <input type="text"  class="form-control search-input"  [(ngModel)]="searchTerm"   (input)="filterPosts()" placeholder="Buscar..." aria-label="Buscar">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
   </div>
+=======
+<div *ngFor="let post of posts">
+  <h2>{{ post.title }}</h2>
+  <p>{{post.createdAt | date }}</p>
+  <p>{{ post.content | slice:0:100 }}...</p>
+  <a [routerLink]="['/post', post.id]">Leer más</a>
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 </div>
 
 <div *ngFor="let post of filteredPosts">

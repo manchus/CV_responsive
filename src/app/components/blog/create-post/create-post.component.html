@@ -5,6 +5,7 @@
   <input [(ngModel)]="title" name="title" placeholder="Título" required>
   <textarea [(ngModel)]="content" name="content" placeholder="Contenido" required></textarea>
   <input [(ngModel)]="author" name="author" placeholder="Autor" required>
+<<<<<<< HEAD
   <label for="categories">Categorías:</label>
   <select id="categories" [(ngModel)]="categories" name="categories" multiple>
     <option value="tecnologia">Tecnología</option>
@@ -12,11 +13,17 @@
     <option value="diseño">Diseño</option>
     <option value="educacion">Educación</option>
   </select>
+=======
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
   <input type="file" (change)="onFileSelected($event)" accept="image/*">
   <button (click)="uploadImage()">Subir Imagen</button>
   <p *ngIf="imageUrl">Imagen subida: {{ imageUrl }}</p>
 
+<<<<<<< HEAD
   <button (click)="createPost(title,content,author, categories)">Publicar</button>
+=======
+  <button (click)="createPost(title,content,author)">Publicar</button>
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
   <!-- <button type="submit">Publicar</button> -->
 </form>
 

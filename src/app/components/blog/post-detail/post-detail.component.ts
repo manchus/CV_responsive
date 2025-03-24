@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MyAIService } from '../../../services/my-ai.service';
+<<<<<<< HEAD
+=======
+
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 
 @Component({
   selector: 'app-post-detail',
@@ -14,6 +18,8 @@ import { MyAIService } from '../../../services/my-ai.service';
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.css'],
 })
+
+
 export class PostDetailComponent implements OnInit {
   post: Post | null = null;
 
@@ -22,9 +28,12 @@ export class PostDetailComponent implements OnInit {
   isLoading = false;
   error: string | null = null;
   tmpdate: Date = new Date();
+<<<<<<< HEAD
   likes = 0;
   dislikes = 0;
   optEnable = true;
+=======
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 
   constructor(
     private route: ActivatedRoute,
@@ -59,6 +68,7 @@ export class PostDetailComponent implements OnInit {
     }
   }
 
+<<<<<<< HEAD
   obtenerRespuesta() {
     this.isLoading = true;
     this.error = null;
@@ -78,4 +88,24 @@ export class PostDetailComponent implements OnInit {
       }
     );
   }
+=======
+  obtenerRespuesta( ) {
+    this.isLoading = true;
+    this.error = null;
+    const data = {
+      text: 'Este es un texto de ejemplo para analizar.'
+    };
+
+  this.myAIService.analyzeData( data).subscribe(( result ) =>{
+    this.response = result;
+    this.isLoading = false;
+    console.log('Respuesta de DeepSeek:', result);
+  },
+  (error) => {
+    console.error('Error al llamar a la API de DeepSeek:', error);
+    this.isLoading = false;
+  });
+    }
+
+>>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 }
