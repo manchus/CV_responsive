@@ -1,29 +1,78 @@
-<!-- <form (ngSubmit)="onSubmit()"> -->
-  <form>
 
-<!-- </form> (ngSubmit)="createPost(title,content,author)"> -->
-  <input [(ngModel)]="title" name="title" placeholder="Título" required>
-  <textarea [(ngModel)]="content" name="content" placeholder="Contenido" required></textarea>
-  <input [(ngModel)]="author" name="author" placeholder="Autor" required>
-<<<<<<< HEAD
-  <label for="categories">Categorías:</label>
-  <select id="categories" [(ngModel)]="categories" name="categories" multiple>
-    <option value="tecnologia">Tecnología</option>
-    <option value="programacion">Programación</option>
-    <option value="diseño">Diseño</option>
-    <option value="educacion">Educación</option>
-  </select>
-=======
->>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
-  <input type="file" (change)="onFileSelected($event)" accept="image/*">
-  <button (click)="uploadImage()">Subir Imagen</button>
-  <p *ngIf="imageUrl">Imagen subida: {{ imageUrl }}</p>
+<form>
+  <div class="form-group">
 
-<<<<<<< HEAD
-  <button (click)="createPost(title,content,author, categories)">Publicar</button>
-=======
-  <button (click)="createPost(title,content,author)">Publicar</button>
->>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
-  <!-- <button type="submit">Publicar</button> -->
+    <div class="h3 form-group row">
+      <label class="col-sm-2 col-form-label">Title</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control-plaintext mytxt" [(ngModel)]="title" name="title" placeholder="Title" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="h3" >Content</label>
+      <textarea class="form-control" rows="5" [(ngModel)]="content" name="content" placeholder="Contenido" required></textarea>
+    </div>
+
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="chkIsHtml" name="isHtml" [(ngModel)]="isHtml" (change)="is_Html()">
+      <label class="h3" for="chkIsHtml">HTML {{isHtml}} </label>
+    </div>
+
+
+    <div class="h3 form-group row">
+      <label class="col-sm-2 col-form-label">Autor</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control-plaintext mytxt" [(ngModel)]="author" name="author" placeholder="Author" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="h3" for="categoriesSelector">Categories</label>
+      <select multiple class="form-control" id="categoriesSelector" [(ngModel)]="categories" name="categories">
+        <option value="tecnologia">Tecnología</option>
+        <option value="programacion">Programación</option>
+        <option value="diseño">Diseño</option>
+        <option value="educacion">Educación</option>
+      </select>
+    </div>
+    <div class="h4 form-group">
+      <label class="" for="fileUpload">Example file input</label>
+      <input  class="btn btn-secondary" type="file" class="form-control-file" id="fileUpload"  (change)="onFileSelected($event)" accept="image/*">
+      <button  class="btn btn-secondary" (click)="uploadImage()">Subir Imagen</button>
+      <p *ngIf="imageUrl">Imagen subida: {{ imageUrl }}</p>
+    </div>
+    <button  class="btn btn-secondary" (click)="createPost(title,author, categories)">Publicar</button>
+  </div>
+
+
 </form>
+<!--
+<h3>Select Your Skills:</h3>
+
+<label *ngFor="let skill of skills">
+  <input type="checkbox" [(ngModel)]="selectedSkills[skill]" (change)="updateSelectedSkills()"> {{ skill }}
+</label>
+
+<!-- Display selected values
+ <p><strong>Selected Skills:</strong> {{ selectedSkillList }}</p> -->
+
+
+
+
+<!--
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-checkbox-example',
+  templateUrl: './checkbox-example.component.html'
+})
+export class CheckboxExampleComponent {
+  skills = ['Angular', 'React', 'Vue', 'Node.js'];
+  selectedSkills: { [key: string]: boolean } = {}; // Store checked values
+  selectedSkillList: string[] = [];
+
+  updateSelectedSkills() {
+    this.selectedSkillList = Object.keys(this.selectedSkills)
+      .filter(skill => this.selectedSkills[skill]);
+  }
+} -->
 

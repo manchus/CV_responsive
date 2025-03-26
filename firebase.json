@@ -16,7 +16,19 @@
       ],
       "frameworksBackend": {
         "region": "us-east1"
+      },
+
+
+      "site": "moncv-47e4d",
+      "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
+    ]
+
+
+
     },
     {
       "target": "responsive",
@@ -25,3 +37,5 @@
     }
   ]
 }
+
+

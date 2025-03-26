@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
 import { Post } from '../../../models/post.model';
@@ -6,10 +7,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MyAIService } from '../../../services/my-ai.service';
-<<<<<<< HEAD
-=======
-
->>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 
 @Component({
   selector: 'app-post-detail',
@@ -22,23 +19,39 @@ import { MyAIService } from '../../../services/my-ai.service';
 
 export class PostDetailComponent implements OnInit {
   post: Post | null = null;
+/*
+  post: Post = {
+    title: '',
+    content: '',
+    isHtml: false,
+    author: '',
+    imageUrl: '', //this.imageUrl,
+    categories: [],
+    likes: 0,
+    dislikes: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };*/
+
+
 
   mensaje = 'Hola Como estas?';
   response = '';
   isLoading = false;
+  tmp = '';
+  content: SafeHtml  ='';
   error: string | null = null;
   tmpdate: Date = new Date();
-<<<<<<< HEAD
   likes = 0;
   dislikes = 0;
   optEnable = true;
-=======
->>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
+
 
   constructor(
     private route: ActivatedRoute,
     private blogService: BlogService,
-    private myAIService: MyAIService
+    private myAIService: MyAIService,
+    private sanitizer: DomSanitizer
   ) {}
 
   private id = '';
@@ -48,7 +61,10 @@ export class PostDetailComponent implements OnInit {
       this.id = id;
       this.post = await this.blogService.getPostById(id);
       this.likes = this.post?.likes ? this.post?.likes : 0;
+      this.tmp = this.post?.content ?? '';
+      this.content= this.post?.isHtml ? this.sanitizer.bypassSecurityTrustHtml(this.tmp) : this.tmp;
       this.dislikes = this.post?.dislikes ? this.post?.dislikes : 0;
+      console.log("isHtml value:", this.post?.isHtml);
     }
   }
 
@@ -68,7 +84,6 @@ export class PostDetailComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
   obtenerRespuesta() {
     this.isLoading = true;
     this.error = null;
@@ -88,24 +103,5 @@ export class PostDetailComponent implements OnInit {
       }
     );
   }
-=======
-  obtenerRespuesta( ) {
-    this.isLoading = true;
-    this.error = null;
-    const data = {
-      text: 'Este es un texto de ejemplo para analizar.'
-    };
-
-  this.myAIService.analyzeData( data).subscribe(( result ) =>{
-    this.response = result;
-    this.isLoading = false;
-    console.log('Respuesta de DeepSeek:', result);
-  },
-  (error) => {
-    console.error('Error al llamar a la API de DeepSeek:', error);
-    this.isLoading = false;
-  });
-    }
-
->>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 }
+

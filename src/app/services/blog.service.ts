@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getFirestore, collection, addDoc, getDocs, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-<<<<<<< HEAD
 import { Timestamp, increment } from '@angular/fire/firestore';
-=======
-import { Timestamp } from '@angular/fire/firestore';
->>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 import { Post } from '../models/post.model';
 
 @Injectable({
@@ -80,7 +76,6 @@ export class BlogService {
   }
 
 
-<<<<<<< HEAD
   async likePost(id: string): Promise<void>{
     const postRef = doc(this.db, 'posts', id);
     await updateDoc(postRef, {
@@ -94,9 +89,6 @@ export class BlogService {
       dislikes: increment(1),
     });
   }
-=======
-
->>>>>>> e78c19d89bbdda8da7ab4257d4fb70045b4b10f5
 
 
 

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SharedService } from './services/shared.service';
 
-import { ResumeComponent } from './components/resume/resume.component';
 import { LeftBarComponent } from './components/left-bar/left-bar.component';
 import { TopComponent } from './components/top/top.component';
 
@@ -21,7 +20,6 @@ declare var $: any;
   imports: [
     CommonModule,
     RouterOutlet,
-    ResumeComponent,
     LeftBarComponent,
     TopComponent,
     TranslocoModule,

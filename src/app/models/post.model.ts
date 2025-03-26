@@ -4,6 +4,7 @@ export interface Post {
   id?: string;
   title: string;
   content: string;
+  isHtml: boolean;
   author: string;
   imageUrl?: string;
   categories: string[];

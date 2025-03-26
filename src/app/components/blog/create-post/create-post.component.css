@@ -1,0 +1,14 @@
+label {
+  color:lightgray;
+}
+
+.mytxt {
+  /* width: 100%;*/
+  background-color: aliceblue;
+  margin: 10px 2px 2px 2px;
+  padding: 2px 2px 2px 2px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.4s ease-in-out;
+}
