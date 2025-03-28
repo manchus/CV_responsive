@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SharedService } from './services/shared.service';
@@ -10,7 +10,8 @@ import {
   TranslocoModule,
   TranslocoService,
   TRANSLOCO_SCOPE,
-} from '@ngneat/transloco';
+} from '@jsverse/transloco';
+import { AvailableLanguages, AvailablesLanguages } from './transloco-config';
 
 declare var $: any;
 
@@ -51,14 +52,30 @@ export class AppComponent {
     description: '',
   };
 
+  private transloco = inject(TranslocoService);
+
+  public languajes: { code: AvailableLanguages; name: string}[] = [
+    { code: AvailableLanguages.EN, name: 'languajes.en'},
+    { code: AvailableLanguages.FR, name: 'languajes.fr'},
+    { code: AvailableLanguages.ES, name: 'languajes.es'},
+  ];
+
+  public changeLang(lang: AvailableLanguages){
+    this.transloco.setActiveLang(lang);
+  }
+
+  public getLanguage(){
+    return 'languages.' + this.transloco.getActiveLang();
+  }
+
   lngHit: string = 'HITS';
 
   ngOnInit() {
     console.log('Hits OnInit', this.hits);
-    this.service.currentLanguage$.subscribe((language) => {
+ /*   this.service.currentLanguage$.subscribe((language) => {
       this.lngActive = language;
       this.refreshSkills();
-    });
+    });*/
 
     this.service.hitDetailNew.subscribe((event) => {
       console.log('Evento Recibido Hit', event);

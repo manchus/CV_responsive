@@ -4,7 +4,7 @@ import {
   TranslocoModule,
   TranslocoService,
   TRANSLOCO_SCOPE,
-} from '@ngneat/transloco';
+} from '@jsverse/transloco';
 import { VisitCounterService } from '../../services/visit-counter.service';
 import { RouterLink } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
@@ -24,7 +24,9 @@ export class TopComponent implements OnInit {
   constructor(
     private readonly translocoService: TranslocoService,
     private visitCounterService: VisitCounterService,
+    /*  Unificacion idiomas
     private sharedService: SharedService
+    */
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -34,8 +36,13 @@ export class TopComponent implements OnInit {
     await this.visitCounterService.incrementCounter();
   }
   mnuLang(lang: string) {
+    this.translocoService.setActiveLang(lang)
+
+    /* Unificacion idiomas
     this.lngActive = lang;
     this.sharedService.setLanguage(lang);
-
+    localStorage.setItem('userLanguage', lang);
+    console.log("Lenguage activado Top", lang)
+    */
   }
 }

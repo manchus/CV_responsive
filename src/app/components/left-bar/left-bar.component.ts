@@ -1,6 +1,10 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@ngneat/transloco';
+//import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@ngneat/transloco';
+import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@jsverse/transloco';
+import { DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { RouterLink } from '@angular/router';
 
 import { SharedService } from '../../services/shared.service';
@@ -13,8 +17,19 @@ import { SharedService } from '../../services/shared.service';
   styleUrl: './left-bar.component.css'
 })
 export class LeftBarComponent implements OnInit, OnChanges {
+  private destroyRef = inject(DestroyRef);
+
   constructor(private readonly translocoService: TranslocoService,
-    private service: SharedService) {}
+    private service: SharedService) {
+      this.translocoService.langChanges$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(lang => {
+        // Manejar cambio de idioma
+
+          console.log('Transloco language changed to:', lang);
+          this.lngActivate = lang;
+      });
+    }
 
     studies: any =[];
     @Input() lngActivate: string="";

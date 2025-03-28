@@ -12,7 +12,7 @@ const resolveLngActivate = () => {
 };
 
 export const routes: Routes = [
-  //{ path: '', component: ResumeComponent, resolve:{ lngActivate:resolveLngActivate} },
+  //{ path: 'resume', component: ResumeComponent, resolve:{ lngActivate:resolveLngActivate} },
   { path: 'resume', component: ResumeComponent },
   { path: 'posts', component: PostListComponent },
   { path: 'post/:id', component: PostDetailComponent },
