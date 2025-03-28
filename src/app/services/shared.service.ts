@@ -2,7 +2,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Firestore, collectionData, docData, orderBy } from '@angular/fire/firestore';
 import { addDoc, collection, deleteDoc, doc,  query, where, getDocs } from '@firebase/firestore';
 import { Subject, BehaviorSubject } from 'rxjs';
-//import { TranslocoService } from '@ngneat/transloco';
 import { TranslocoService } from '@jsverse/transloco';
 
 
@@ -16,30 +15,11 @@ export class SharedService {
   hitDetailNew = new EventEmitter<string>();
   projectDetailNew = new EventEmitter<string>();
 
-  /* Unificacion cambio Idiomas
-  private languageSubject = new BehaviorSubject<string>(this.getInitialLanguage());
-
-  currentLanguage$ = this.languageSubject.asObservable();
-*/
   workHit :string="";
 
   constructor(private fs:Firestore,
     private translocoService: TranslocoService,
   ) { }
-
-/*  Unificacion cambio Idiomas
-  setLanguage(language: string) {
-   // this.languageSubject.next(language);
-    this.translocoService.setActiveLang(language);
-    localStorage.setItem('userLanguage', language);
-  //  console.log("Lenguaje Seleccionado en servicio :", this.languageSubject);
-  }
-
-  private getInitialLanguage(): string {
-    // Puedes obtenerlo de localStorage o usar 'en' como default
-    return localStorage.getItem('userLanguage') || 'en';
-  }
-*/
 
   skillsRef = collection(this.fs, "skills.profile.p1");
 

@@ -35,7 +35,7 @@ export class AppComponent {
   ) {}
 
   title = 'personal';
-  lngActive: string = 'en';
+  //lngActive: string = 'en';
   skills: any = [];
   qSkills: any = [];
   currentHit: string = '';
@@ -72,10 +72,7 @@ export class AppComponent {
 
   ngOnInit() {
     console.log('Hits OnInit', this.hits);
- /*   this.service.currentLanguage$.subscribe((language) => {
-      this.lngActive = language;
-      this.refreshSkills();
-    });*/
+
 
     this.service.hitDetailNew.subscribe((event) => {
       console.log('Evento Recibido Hit', event);
@@ -83,7 +80,7 @@ export class AppComponent {
       this.currentHit = event;
       var words = this.currentHit.split('-');
       this.hits = words;
-      switch (this.lngActive) {
+      switch (this.transloco.getActiveLang()) {
         case 'en':
           this.lngHit = 'HITS';
           break;
@@ -101,14 +98,16 @@ export class AppComponent {
       this.currentProject = event;
       console.log('Project ID : ', event);
       this.service
-        .getProject('hv_' + this.lngActive, this.currentProject)
+        //.getProject('hv_' + this.lngActive, this.currentProject)
+        .getProject('hv_' + this.transloco.getActiveLang(), this.currentProject)
         .subscribe((res) => {
           this.detailProject = res;
           console.log('Detalle Promesa : ', this.detailProject);
         });
       var wordsProject = this.currentHit;
       this.hitsProject = wordsProject;
-      switch (this.lngActive) {
+      //switch (this.lngActive) {
+      switch (this.transloco.getActiveLang()) {
         case 'en':
           this.lngHit = 'HITS';
           break;
@@ -129,8 +128,9 @@ export class AppComponent {
 
   refreshSkills() {
     this.service
-      .getSkills(this.lngActive)
-      .subscribe((res) => (this.skills = res));
+    //.getSkills(this.lngActive)
+    .getSkills(this.transloco.getActiveLang())
+    .subscribe((res) => (this.skills = res));
   }
 
   addSkill(newSkill: string) {
@@ -148,8 +148,11 @@ export class AppComponent {
   }
 
   setLang(lngActive: string) {
+    /*
     this.lngActive = lngActive;
     this.translocoService.setActiveLang(this.lngActive);
+    */
+       this.translocoService.setActiveLang(lngActive);
   }
 
   /*

@@ -26,14 +26,17 @@ export class LeftBarComponent implements OnInit, OnChanges {
       .subscribe(lang => {
         // Manejar cambio de idioma
 
-          console.log('Transloco language changed to:', lang);
+          console.log('Transloco language changed to:', this.translocoService.getActiveLang());
           this.lngActivate = lang;
       });
+
     }
 
     studies: any =[];
+    lngActivate: string="";
+    /* Actualizacion Lenguaje
     @Input() lngActivate: string="";
-
+*/
   ngOnInit() {
     this.refreshSkills();
   }
@@ -51,7 +54,10 @@ this.router.navigate
 */
 
   refreshSkills() {
+    /* Actualizacio9n Lenguaje
     this.service.getStudy("hv_"+this.lngActivate).subscribe((res) => (this.studies = res));
+    */
+    this.service.getStudy("hv_"+this.translocoService.getActiveLang()).subscribe((res) => (this.studies = res));
 
     //this.service.getSkillsByQuery('es').subscribe((res)=>this.qSkills=res);
   }

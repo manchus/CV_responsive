@@ -19,7 +19,7 @@ import { SharedService } from '../../services/shared.service';
 export class TopComponent implements OnInit {
   visitCount: number = 0;
 
-  public lngActive: string = 'en';
+  lngActive: string = this.translocoService.getActiveLang();
 
   constructor(
     private readonly translocoService: TranslocoService,
@@ -37,7 +37,7 @@ export class TopComponent implements OnInit {
   }
   mnuLang(lang: string) {
     this.translocoService.setActiveLang(lang)
-
+console.log("Lenguaje recien cambiado : ",this.translocoService.getActiveLang());
     /* Unificacion idiomas
     this.lngActive = lang;
     this.sharedService.setLanguage(lang);
