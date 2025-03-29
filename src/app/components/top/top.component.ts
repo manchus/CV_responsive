@@ -19,7 +19,7 @@ import { SharedService } from '../../services/shared.service';
 export class TopComponent implements OnInit {
   visitCount: number = 0;
 
-  lngActive: string = this.translocoService.getActiveLang();
+  currentLang: string = this.translocoService.getActiveLang();
 
   constructor(
     private readonly translocoService: TranslocoService,
@@ -34,15 +34,20 @@ export class TopComponent implements OnInit {
     this.visitCount = await this.visitCounterService.getCounter();
 
     await this.visitCounterService.incrementCounter();
+
+    this.translocoService.langChanges$.subscribe(lang => {
+      this.currentLang = lang;
+    });
+
   }
   mnuLang(lang: string) {
+
     this.translocoService.setActiveLang(lang)
 console.log("Lenguaje recien cambiado : ",this.translocoService.getActiveLang());
     /* Unificacion idiomas
     this.lngActive = lang;
     this.sharedService.setLanguage(lang);
-    localStorage.setItem('userLanguage', lang);
-    console.log("Lenguage activado Top", lang)
+
     */
   }
 }

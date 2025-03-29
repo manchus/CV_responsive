@@ -27,13 +27,14 @@ export class LeftBarComponent implements OnInit, OnChanges {
         // Manejar cambio de idioma
 
           console.log('Transloco language changed to:', this.translocoService.getActiveLang());
-          this.lngActivate = lang;
+          this.currentLang = lang;
+          this.refreshSkills();
       });
 
     }
 
     studies: any =[];
-    lngActivate: string="";
+    currentLang: string=this.translocoService.getActiveLang();
     /* Actualizacion Lenguaje
     @Input() lngActivate: string="";
 */

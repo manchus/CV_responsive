@@ -7,6 +7,17 @@ export enum AvailableLanguages {
 
 }
 
+/*export const translocoConfig: TranslocoConfig = {
+  availableLangs: ['en', 'es', 'fr'],
+  defaultLang: 'en',
+  reRenderOnLangChange: true,
+  fallbackLang: 'en',
+  // Añade persistencia del idioma
+  missingHandler: {
+    useFallbackTranslation: true,
+  },
+};*/
+
 export const AvailablesLanguages = [
   AvailableLanguages.EN,
   AvailableLanguages.FR,
@@ -16,8 +27,9 @@ export const AvailablesLanguages = [
 
 const config: TranslocoGlobalConfig = {
   langs: AvailablesLanguages,
-  defaultLang: AvailableLanguages.EN,
-  rootTranslationsPath: 'src/assets/i18n/'
+  defaultLang: AvailableLanguages.FR,
+  rootTranslationsPath: 'src/assets/i18n/',
+
 
 }
 

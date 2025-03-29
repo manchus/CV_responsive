@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SharedService } from './services/shared.service';
@@ -28,14 +28,16 @@ declare var $: any;
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent  implements OnInit{
+  private transloco = inject(TranslocoService);
   constructor(
-    private readonly translocoService: TranslocoService,
+  //  private readonly translocoService: TranslocoService,
     private service: SharedService
   ) {}
 
+  currentLang: string = this.transloco.getActiveLang();
+
   title = 'personal';
-  //lngActive: string = 'en';
   skills: any = [];
   qSkills: any = [];
   currentHit: string = '';
@@ -52,7 +54,12 @@ export class AppComponent {
     description: '',
   };
 
-  private transloco = inject(TranslocoService);
+  OnInit() {
+    // Escuchar cambios de idioma
+    this.transloco.langChanges$.subscribe(lang => {
+      this.currentLang = lang;
+    });
+  }
 
   public languajes: { code: AvailableLanguages; name: string}[] = [
     { code: AvailableLanguages.EN, name: 'languajes.en'},
@@ -60,6 +67,7 @@ export class AppComponent {
     { code: AvailableLanguages.ES, name: 'languajes.es'},
   ];
 
+  /*
   public changeLang(lang: AvailableLanguages){
     this.transloco.setActiveLang(lang);
   }
@@ -67,7 +75,7 @@ export class AppComponent {
   public getLanguage(){
     return 'languages.' + this.transloco.getActiveLang();
   }
-
+*/
   lngHit: string = 'HITS';
 
   ngOnInit() {
@@ -98,7 +106,6 @@ export class AppComponent {
       this.currentProject = event;
       console.log('Project ID : ', event);
       this.service
-        //.getProject('hv_' + this.lngActive, this.currentProject)
         .getProject('hv_' + this.transloco.getActiveLang(), this.currentProject)
         .subscribe((res) => {
           this.detailProject = res;
@@ -106,7 +113,6 @@ export class AppComponent {
         });
       var wordsProject = this.currentHit;
       this.hitsProject = wordsProject;
-      //switch (this.lngActive) {
       switch (this.transloco.getActiveLang()) {
         case 'en':
           this.lngHit = 'HITS';
@@ -146,55 +152,10 @@ export class AppComponent {
       this.refreshSkills();
     });
   }
-
+/*
   setLang(lngActive: string) {
-    /*
-    this.lngActive = lngActive;
-    this.translocoService.setActiveLang(this.lngActive);
-    */
+
        this.translocoService.setActiveLang(lngActive);
   }
-
-  /*
-  public hitDetail($event: any): void {
-    this.currentHit = $event;
-    var words = this.currentHit.split('-');
-    this.hits = words;
-    switch (this.lngActive) {
-      case 'en':
-        this.lngHit = 'HITS';
-        break;
-      case 'es':
-        this.lngHit = 'LOGROS';
-        break;
-      case 'fr':
-        this.lngHit = 'SUCCÈS';
-        break;
-    }
-  }
-
-  public projectDetail($event: any): void {
-    this.currentProject = $event;
-    console.log('Project ID : ', $event);
-    this.service
-      .getProject('hv_' + this.lngActive, this.currentProject)
-      .subscribe((res) => {
-        this.detailProject = res;
-        console.log('Detalle Promesa : ', this.detailProject);
-      });
-    var wordsProject = this.currentHit;
-    this.hitsProject = wordsProject;
-    switch (this.lngActive) {
-      case 'en':
-        this.lngHit = 'HITS';
-        break;
-      case 'es':
-        this.lngHit = 'LOGROS';
-        break;
-      case 'fr':
-        this.lngHit = 'SUCCÈS';
-        break;
-    }
-  }
-    */
+*/
 }

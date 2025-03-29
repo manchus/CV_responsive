@@ -1,4 +1,4 @@
-import { Component,  Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component,  Input, OnInit, Output, OnDestroy, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience/experience.component';
 import { ActivatedRoute } from '@angular/router';
@@ -25,20 +25,21 @@ declare var $: any;
   templateUrl: './resume.component.html',
   styleUrl: './resume.component.css',
 })
-export class ResumeComponent implements OnInit{
+export class ResumeComponent implements OnInit, OnDestroy {
 
  /*Unificacion idiomas
   private languageSubscription: Subscription;
 */
   private destroyRef = inject(DestroyRef);
-  private transloco = inject(TranslocoService)
 
+  // private transloco = inject(TranslocoService)
+  currentLang: string = this.translocoService.getActiveLang();
 
   constructor(
     private readonly translocoService: TranslocoService,
     private service: SharedService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+   // private cdr: ChangeDetectorRef
   ) {
     /* Unificacion idiomas
     this.languageSubscription = this.service.currentLanguage$.subscribe(language =>  {
@@ -47,23 +48,23 @@ export class ResumeComponent implements OnInit{
       this.cdr.detectChanges();
     });
     console.log("Lenguaje Activo - Resume: ", this.lngActivate);
-
+*/
     this.translocoService.langChanges$
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(lang => {
       console.log('Transloco language changed to:', lang);
-      this.lngActivate = lang;
-
+      this.currentLang = lang;
+      this.refreshSkills();
     });
-*/
-this.translocoService.langChanges$
-.pipe(takeUntilDestroyed(this.destroyRef))
+/*
+this.transloco.langChanges$
+//.pipe(takeUntilDestroyed(this.destroyRef))
 .subscribe(lang => {
   this.currentLang = lang;
   console.log('Transloco language changed to:', lang);
   this.refreshSkills();
 });
-
+*/
 
   }
 
@@ -81,11 +82,7 @@ this.translocoService.langChanges$
   experiencePath :string="";
   volunt :any=[];
   voluntDetail :any=[];
-  /* Unificacion idiomas
-  lngActivate: string="";
-  */
- //Variable creada para unificar idiomas
-  currentLang: string="";
+
   target: string="";
 
 
@@ -94,11 +91,6 @@ this.translocoService.langChanges$
   }
 
   ngOnDestroy() {
-    /*Unificacion idiomas
-    if (this.languageSubscription) {
-      this.languageSubscription.unsubscribe();
-    }
-      */
   }
 
   detailSkills(activeHit : string){

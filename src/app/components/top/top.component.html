@@ -71,17 +71,17 @@
             <span class="text">Montreal, Canada</span>
             </li>
             <li class="nav-item mx-2">
-              <a  class="text-decoration-none text-light " target="_blank" href="assets\pdf\CV_Herrera_{{lngActive}}.pdf">
+              <a  class="text-decoration-none text-light " target="_blank" href="assets\pdf\CV_Herrera_{{currentLang}}.pdf">
                 <span class="icon"><i class="fa-solid fa-print"></i></span>&nbsp;
-                <span class="text">CV_Herrera_{{lngActive}}</span>
+                <span class="text">CV_Herrera_{{currentLang}}</span>
               </a>
             </li>
         </ul>
 
         <div class="d-flex flex-row flex-lg-row justify-content-end align-items-center gap-3">
-          <a href="#" (click)="mnuLang('en')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-primary bg-darken-xs" data-tor="hover:bg(light)">EN</a>
-          <a href="#" (click)="mnuLang('fr')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-danger bg-darken-xs" data-tor="hover:bg(light)">FR</a>
-          <a href="#" (click)="mnuLang('es')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-warning bg-darken-xs" data-tor="hover:bg(light)">ES</a>
+          <button (click)="mnuLang('en')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-primary bg-darken-xs" data-tor="hover:bg(light)">EN</button>
+          <button (click)="mnuLang('fr')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-danger bg-darken-xs" data-tor="hover:bg(light)">FR</button>
+          <button (click)="mnuLang('es')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-warning bg-darken-xs" data-tor="hover:bg(light)">ES</button>
         </div>
 
       </div>

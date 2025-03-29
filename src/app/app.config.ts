@@ -1,6 +1,6 @@
 import {
   ApplicationConfig,
-  isDevMode
+  isDevMode, provideZoneChangeDetection
 } from '@angular/core';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
@@ -21,14 +21,19 @@ import { AvailableLanguages, AvailablesLanguages } from './transloco-config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideZoneChangeDetection({ eventCoalescing: true}),
     provideRouter(routes),
     provideHttpClient(),
     provideTransloco({
       config: {
         availableLangs: AvailablesLanguages,
-        defaultLang: AvailableLanguages.EN,
+        defaultLang: AvailableLanguages.FR,
         reRenderOnLangChange: true,
         prodMode: !isDevMode(),
+        fallbackLang: AvailableLanguages.FR,
+        missingHandler: {
+          useFallbackTranslation: true,
+        },
         //prodMode: environment.production,
       },
       //loader: TranslocoHttpLoader,

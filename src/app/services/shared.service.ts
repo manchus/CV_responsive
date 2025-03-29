@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Firestore, collectionData, docData, orderBy } from '@angular/fire/firestore';
 import { addDoc, collection, deleteDoc, doc,  query, where, getDocs } from '@firebase/firestore';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { TranslocoService } from '@jsverse/transloco';
+//import { TranslocoService } from '@jsverse/transloco';
 
 
 @Injectable({
@@ -18,7 +18,7 @@ export class SharedService {
   workHit :string="";
 
   constructor(private fs:Firestore,
-    private translocoService: TranslocoService,
+   // private translocoService: TranslocoService,
   ) { }
 
   skillsRef = collection(this.fs, "skills.profile.p1");
