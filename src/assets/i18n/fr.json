@@ -5,6 +5,13 @@
   "volunteering": "Implication Sociale",
   "study": "Education",
   "bar": "Bar Fr",
+  "hit": "SUCCÈS",
+  "cv":"CV",
+  "info": "COORDONNÉES",
+  "lang": "LANGUES",
+  "langEs": "ESPAGNOL",
+  "langEn": "ANGLAIS",
+  "langFr": "FRANÇAIS",
   "dashboard": {
     "title": "Dashboard Title Fr",
     "desc": "Dashboard Desc Fr"

@@ -67,43 +67,15 @@ export class AppComponent  implements OnInit{
     { code: AvailableLanguages.ES, name: 'languajes.es'},
   ];
 
-  /*
-  public changeLang(lang: AvailableLanguages){
-    this.transloco.setActiveLang(lang);
-  }
-
-  public getLanguage(){
-    return 'languages.' + this.transloco.getActiveLang();
-  }
-*/
-  lngHit: string = 'HITS';
-
   ngOnInit() {
-    console.log('Hits OnInit', this.hits);
-
-
     this.service.hitDetailNew.subscribe((event) => {
       console.log('Evento Recibido Hit', event);
-      //this.hits = event;
       this.currentHit = event;
       var words = this.currentHit.split('-');
       this.hits = words;
-      switch (this.transloco.getActiveLang()) {
-        case 'en':
-          this.lngHit = 'HITS';
-          break;
-        case 'es':
-          this.lngHit = 'LOGROS';
-          break;
-        case 'fr':
-          this.lngHit = 'SUCCÈS';
-          break;
-      }
     });
     this.service.projectDetailNew.subscribe((event) => {
-      console.log('Evento Recibido Project', event);
-
-      this.currentProject = event;
+         this.currentProject = event;
       console.log('Project ID : ', event);
       this.service
         .getProject('hv_' + this.transloco.getActiveLang(), this.currentProject)
@@ -113,19 +85,7 @@ export class AppComponent  implements OnInit{
         });
       var wordsProject = this.currentHit;
       this.hitsProject = wordsProject;
-      switch (this.transloco.getActiveLang()) {
-        case 'en':
-          this.lngHit = 'HITS';
-          break;
-        case 'es':
-          this.lngHit = 'LOGROS';
-          break;
-        case 'fr':
-          this.lngHit = 'SUCCÈS';
-          break;
-      }
     });
-    console.log('Ejecuta ngOnInit');
   }
 
   ngOnChange() {
@@ -134,7 +94,6 @@ export class AppComponent  implements OnInit{
 
   refreshSkills() {
     this.service
-    //.getSkills(this.lngActive)
     .getSkills(this.transloco.getActiveLang())
     .subscribe((res) => (this.skills = res));
   }
@@ -152,10 +111,5 @@ export class AppComponent  implements OnInit{
       this.refreshSkills();
     });
   }
-/*
-  setLang(lngActive: string) {
 
-       this.translocoService.setActiveLang(lngActive);
-  }
-*/
 }

@@ -5,11 +5,14 @@ import { RouterLink } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
 import { Post } from '../../../models/post.model';
 import { Timestamp } from '@angular/fire/firestore';
+import { DestroyRef, inject } from '@angular/core';
+import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@jsverse/transloco';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-post-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [TranslocoModule,CommonModule, RouterLink, FormsModule],
   templateUrl: './post-list.component.html',
   styleUrls: ['./post-list.component.css'],
 })
@@ -17,8 +20,18 @@ export class PostListComponent implements OnInit {
   posts: Post[] = [];
   filteredPosts: Post[] = []; // Lista filtrada de posts
   searchTerm: string = '';
+  currentLang: string=this.translocoService.getActiveLang();
+  private destroyRef = inject(DestroyRef);
 
-  constructor(private blogService: BlogService) {}
+
+    constructor(private blogService: BlogService, private readonly translocoService: TranslocoService) {
+        this.translocoService.langChanges$
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(lang => {
+            this.currentLang = lang;
+
+        });
+      }
 
   async ngOnInit(): Promise<void> {
     this.loadPosts();
@@ -50,11 +63,4 @@ export class PostListComponent implements OnInit {
     }
   }
 
-  likePost(id : string | undefined){
-
-  }
-
-  dislikePost(id : string | undefined ){
-
-  }
 }

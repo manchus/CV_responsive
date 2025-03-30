@@ -1,10 +1,9 @@
 <div class="main">
-  <!-- Profile Section -->
-  <h1>{{'profile'  | transloco }}</h1>
   <div class="about">
-    <h2 class="title2">
+    <!-- <h2 class="title2">
       <ng-container *transloco="let t">{{ t('profile') }}</ng-container>
-    </h2>
+    </h2>-->
+    <h2 class="title2">{{'profile'  | transloco }}</h2>
     <span *ngFor="let prof of profile">
       <p class="text-justify">{{ prof.sentence }}</p>
     </span>
@@ -12,8 +11,7 @@
 
   <!-- Skills Section -->
   <div class="about">
-    <h2 class="title2">
-      <ng-container *transloco="let t">{{ t('skills') }}</ng-container>&nbsp;
+    <h2 class="title2">{{'skills'| transloco }}&nbsp;
       <span *ngFor="let project of projects">
         &nbsp;
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" (click)="detailProject(project.id)" data-bs-target="#projectModal">
@@ -27,9 +25,7 @@
   </div>
 
   <!-- Experience Section -->
-  <h2 class="title2">
-    <ng-container *transloco="let t">{{ t('experience') }}</ng-container>
-  </h2>
+  <h2 class="title2">{{ 'experience'| transloco  }} </h2>
   <div *ngFor="let experience of experiences" class="box">
     <div class="row">
       <div class="h3 col">{{ experience.job }}</div>
@@ -50,9 +46,7 @@
   </div>
 
   <!-- Volunteering Section -->
-  <h2 class="title2">
-    <ng-container *transloco="let t">{{ t('volunteering') }}</ng-container>
-  </h2>
+  <h2 class="title2">{{ 'volunteering'| transloco }}</h2>
   <div class="box">
     <div *ngFor="let v of volunt" class="list-inline">
       <h4 class="text-justify">{{ v.job }}</h4>
@@ -65,11 +59,9 @@
     </ul>
   </div>
 
-  <!-- Professional Skills Section -->
+  <!-- Professional Skills Section
   <div class="about skills">
-    <h2 class="title2">Professional Skills</h2>
-    <!-- Add skill progress bars here if needed -->
-  </div>
+  </div> -->
 
   <!-- Interests Section -->
   <div class="about interest">

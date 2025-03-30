@@ -11,7 +11,7 @@
         <div class="carousel-inner">
             <!-- Item 1 -->
             <div class="carousel-item active">
-              <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/resume"  routerLinkActive="active">📑 Resume</a>
+              <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/resume"  routerLinkActive="active">📑 {{ 'cv' | transloco }}</a>
             </div>
             <!-- Item 2 -->
             <div class="carousel-item">
@@ -33,7 +33,7 @@
     </div>
 
   <div class="contactInfo text-white">
-      <h3 class="title">Contact Info</h3>
+      <h3 class="title">{{ 'info' | transloco }}</h3>
       <ul class="list-inline justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
         <li class="nav-item mx-2">
           &nbsp;<span class="icon"><i class="fa-solid fa-phone"></i></span>&nbsp;<span class="text">+1 438 408 1220</span>
@@ -59,29 +59,29 @@
       </ul>
   </div>
   <div class="contactInfo text-white">
-      <h3 class="title"><ng-container *transloco="let t"> {{ t('study') }} </ng-container></h3>
+      <h3 class="title"> {{ 'study' | transloco }}</h3>
         <ul  class="list-inline" *ngFor="let study of studies">
           <li><h4>&nbsp;{{study.level}}&nbsp;- &nbsp;<span>{{study.name}}</span></h4></li>
           <li><h5>{{study.place}}&nbsp;<span>({{study.year}})</span></h5></li>
         </ul>
   </div>
   <div class="contactInfo language">
-      <h3 class="title">Languages</h3>
+      <h3 class="title">{{ 'lang' | transloco }}</h3>
       <ul  class="list-inline">
           <li>
-              <span class="text">French</span>
+              <span class="text">{{ 'langFr' | transloco }}</span>
               <span class="percent">
                   <div style="width: 85%;"></div>
               </span>
           </li>
           <li>
-              <span class="text">English</span>
+              <span class="text">{{ 'langEn' | transloco }}</span>
               <span class="percent">
                   <div style="width: 70%;"></div>
               </span>
           </li>
           <li>
-              <span class="text">Spanish</span>
+              <span class="text">{{ 'langEs' | transloco }}</span>
               <span class="percent">
                   <div style="width: 100%;"></div>
               </span>
