@@ -5,6 +5,13 @@
   "volunteering": "Volunteering",
   "study": "Studies",
   "bar": "Bar",
+  "hit": "HITS",
+  "cv":"Resume",
+  "info": "CONTACT INFO",
+  "lang": "LANGUAGES",
+  "langEs": "SPANISH",
+  "langEn": "ENGLISH",
+  "langFr": "FRENCH",
   "dashboard": {
     "title": "Dashboard Title",
     "desc": "Dashboard Desc"

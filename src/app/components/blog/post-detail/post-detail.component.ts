@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
 import { Post } from '../../../models/post.model';
 import { CommonModule } from '@angular/common';
@@ -19,23 +19,8 @@ import { MyAIService } from '../../../services/my-ai.service';
 
 export class PostDetailComponent implements OnInit {
   post: Post | null = null;
-/*
-  post: Post = {
-    title: '',
-    content: '',
-    isHtml: false,
-    author: '',
-    imageUrl: '', //this.imageUrl,
-    categories: [],
-    likes: 0,
-    dislikes: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  };*/
 
 
-
-  mensaje = 'Hola Como estas?';
   response = '';
   isLoading = false;
   tmp = '';
@@ -49,6 +34,7 @@ export class PostDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private blogService: BlogService,
     private myAIService: MyAIService,
     private sanitizer: DomSanitizer
@@ -102,6 +88,10 @@ export class PostDetailComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  searchByCategory(cat:  string){
+    this.router.navigate(['/posts'], { queryParams: { category: cat } });
   }
 }
 

@@ -1,22 +1,25 @@
 <div class="d-flex justify-content-center">
-  <!-- Contenedor de búsqueda -->
   <div class="search-container">
-      <!-- <input type="text"  class="form-control search-input"  [(ngModel)]="searchTerm"   (input)="filterPosts()" placeholder="Buscar..." aria-label="Buscar"> -->
-      <input type="text"  class="form-control search-input"  [(ngModel)]="searchTerm"   (input)="filterPosts()" placeholder="{{ 'cv' | transloco }}" aria-label="Buscar">
+      <input type="text"  class="form-control search-input"  [(ngModel)]="searchTerm"   (input)="filterPosts()" placeholder="{{ 'search' | transloco }}" aria-label="Buscar">
       <i class="fa-solid fa-magnifying-glass search-icon"></i>
   </div>
 </div>
 
 <div *ngFor="let post of filteredPosts">
   <h3 class="date-entry">{{ post.title }}</h3>
-  <p> <small class="date-entry">{{post.createdAt | date }}</small></p>
+  <p>
+    <small class="date-entry">{{post.createdAt | date }}</small>&nbsp;&nbsp;
+    <small class="date-entry fst-italic fw-lighter">{{post.author }}</small>
+  </p>
   <!-- <p class="date-entry">{{ post.content | slice:0:200 }}...</p> -->
   <p class="date-entry"> <div class="date-entry" [innerHTML]="post?.content | slice:0:200"></div>
   <a class="text-decoration-none fs-6 text-light" [routerLink]="['/post', post.id]">Leer más</a>
-  <p><strong>Categorías:</strong> {{ post.categories.join(', ') }}</p>
-  <div *ngFor="let cat of post.categories">
-    <p>{{cat}}</p>
+
+  <div>
+    <strong  class="date-entry">Categorías:</strong>
+    <button class="text-white px-10 py-1 rounded-5 btn btn-secondary" *ngFor="let cat of post.categories" (click)="searchCat(cat)">{{cat}}</button>
   </div>
+
    <p class="text-white px-10 py-1 rounded-5 btn btn-secondary">
     <i class="fa-solid fa-thumbs-up"></i> {{ post.likes || 0 }} |
     <i class="fa-solid fa-thumbs-down"></i> {{ post.dislikes || 0 }}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
 import { Post } from '../../../models/post.model';
 import { Timestamp } from '@angular/fire/firestore';
@@ -24,7 +24,7 @@ export class PostListComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
 
-    constructor(private blogService: BlogService, private readonly translocoService: TranslocoService) {
+    constructor(private blogService: BlogService, private readonly translocoService: TranslocoService, private route: ActivatedRoute) {
         this.translocoService.langChanges$
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(lang => {
@@ -35,6 +35,9 @@ export class PostListComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.loadPosts();
+    this.route.queryParams.subscribe( params => {
+      this.searchTerm = params['category'];
+    });
   }
 
   async loadPosts() {
@@ -61,6 +64,21 @@ export class PostListComponent implements OnInit {
           )
       );
     }
+  }
+
+  searchCat(cat:  string){
+    this.searchTerm = cat;
+    console.log("Categoria Seleccionada : ", cat);
+    const term = this.searchTerm.toLowerCase();
+    console.log('Termino de busqueda: ', term);
+    this.filteredPosts = this.posts.filter(
+      (post) =>
+        post.title.toLowerCase().includes(term) ||
+        post.content.toLowerCase().includes(term) ||
+        post.categories.some((category) =>
+          category.toLowerCase().includes(term)
+        )
+    );
   }
 
 }

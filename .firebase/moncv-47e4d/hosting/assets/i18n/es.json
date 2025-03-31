@@ -5,6 +5,13 @@
   "volunteering": "Trabajo Voluntario",
   "study": "Formación Académica",
   "bar": "Bar Esp",
+  "hit": "LOGROS",
+  "cv":"Hoja de Vida",
+  "info": "INFORMACIÓN DE CONTACTO",
+  "lang": "IDIOMAS",
+  "langEs": "ESPAÑOL",
+  "langEn": "INGLES",
+  "langFr": "FRANCES",
   "dashboard": {
     "title": "Dashboard Titulo",
     "desc": "Dashboard Desc Esp"

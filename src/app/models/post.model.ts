@@ -8,6 +8,7 @@ export interface Post {
   author: string;
   imageUrl?: string;
   categories: string[];
+  lang: string;
   likes: number;
   dislikes: number;
   createdAt: Date;

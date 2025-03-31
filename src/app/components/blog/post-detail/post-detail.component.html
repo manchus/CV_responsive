@@ -1,5 +1,8 @@
 <h3 class="date-entry">{{ post?.title }}</h3>
-<p> <small class="date-entry">{{post?.createdAt | date }}</small></p>
+<p>
+  <small class="date-entry">{{post?.createdAt | date }}</small>&nbsp;&nbsp;<strong class="date-entry">Autor:</strong>&nbsp;
+  <small class="date-entry fst-italic fw-lighter">{{post?.author }}</small>
+</p>
 <img class="image-post"
   *ngIf="post?.imageUrl"
   [src]="post?.imageUrl"
@@ -9,12 +12,10 @@
   <ng-template #textContent>
     <p class="date-entry">{{ post?.content }}</p>
   </ng-template>
-
-
-<!-- <p><strong>Categorías:</strong> {{ post.categories.join(', ') }}</p> -->
-<p  class="date-entry"><strong>Categorías:</strong> {{ post?.categories }}</p>
-<p><strong>Autor:</strong> {{ post?.author }}</p>
-
+<div>
+  <strong  class="date-entry">Categorías:</strong>
+  <button class="text-white px-10 py-1 rounded-5 btn btn-secondary cat-btn" *ngFor="let cat of post?.categories" (click)="searchByCategory(cat)">{{cat}}</button>
+</div>
 <button class="text-white px-10 py-1 rounded-5 btn btn-secondary" (click)="likePost()"><i class="fa-solid fa-thumbs-up"></i> {{ likes }}</button>
 <span>&nbsp;&nbsp;</span>
 <button class="text-white px-10 py-1 rounded-5 btn btn-secondary"(click)="dislikePost()"><i class="fa-solid fa-thumbs-down"></i> {{ dislikes }}</button>
