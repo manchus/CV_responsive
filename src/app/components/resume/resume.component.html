@@ -26,7 +26,7 @@
 
   <!-- Experience Section -->
   <h2 class="title2">{{ 'experience'| transloco  }} </h2>
-  <div *ngFor="let experience of experiences" class="box">
+  <div *ngFor="let experience of experiencesFull" class="box">
     <div class="row">
       <div class="h3 col">{{ experience.job }}</div>
       <div class="h4 col text-end">
@@ -72,4 +72,5 @@
       <li><i class="fa fa-language" aria-hidden="true"></i> Language</li>
     </ul>
   </div>
+  <button (click)="generatePDF()">Generate PDF</button>
 </div>

@@ -1,19 +1,16 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience/experience.component';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ChangeDetectorRef } from '@angular/core';
+import { TranslocoModule, TranslocoService,} from '@jsverse/transloco';
 
-import { TranslocoModule, TranslocoService, TRANSLOCO_SCOPE,} from '@jsverse/transloco';
-
-import { DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SharedService } from '../../services/shared.service';
+import { Post, Experience, Detail } from '../../models/post.model';
 
-
-declare var $: any;
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
 @Component({
   selector: 'app-resume',
@@ -27,15 +24,10 @@ export class ResumeComponent{
 
   currentLang: string = this.translocoService.getActiveLang();
 
-  constructor(
-    private readonly translocoService: TranslocoService,
-    private service: SharedService,
-  ) {
-
+  constructor( private readonly translocoService: TranslocoService, private service: SharedService,) {
     this.translocoService.langChanges$
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(lang => {
-      console.log('Transloco language changed to:', lang);
       this.currentLang = lang;
       this.refreshSkills();
     });
@@ -43,11 +35,27 @@ export class ResumeComponent{
   @Output() hitDetail = new EventEmitter<string>();
   @Output() projectDetail = new EventEmitter<string>();
 
+  post: Post = {
+    title: '',
+    content: '',
+    isHtml: false,
+    author: '',
+    imageUrl: '',
+    categories: [],
+    lang:'',
+    likes: 0,
+    dislikes: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+
+  };
+
 
   profile: any =[];
   projects: any =[];
   skills: any = [];
-  experiences: any = [];
+   experiencesFull: Experience[] =[];
+
   experiencePath :string="";
   volunt :any=[];
   voluntDetail :any=[];
@@ -68,10 +76,79 @@ export class ResumeComponent{
     this.service.getProfile("hv_"+this.currentLang).subscribe((res) => (this.profile = res));
     this.service.getProjects("hv_"+this.currentLang).subscribe((res) => (this.projects = res));
     this.service.getSkills("hv_"+this.currentLang).subscribe((res) => (this.skills = res));
-    this.service.getExperience("hv_"+this.currentLang).subscribe((res) => (this.experiences = res));
+
+    this.service.getExperienceWithDetails("hv_"+this.currentLang).subscribe((res) => {
+                    this.experiencesFull = res.map(item => this.service.mapToExperience(item));});
     this.experiencePath="hv_"+this.currentLang+"/experiences/experience/";
     this.service.getVolunt("hv_"+this.currentLang).subscribe((res) => (this.volunt = res));
     this.service.getVoluntDetail("hv_"+this.currentLang).subscribe((res) => (this.voluntDetail = res));
+
+  }
+
+  generatePDF() {
+
+    var docDefinition = {
+      header: ['\n',{text: ':  germanherrera75@hotmail.com', fontSize: 11,  color: '#BBBBBB'},],
+      content: [
+        {
+          columns: [
+                [
+                  {
+                    text: [
+                      ' ',
+                      {text: 'German ', style: 'header'},
+                      {text: 'Herrera ', style: 'header', bold: true},
+                    ]
+                  },
+                  {text: 'Analyste-Programmeur Full Stack', fontSize: 15, bold: true, color: '#44546A'},
+                ],
+                [
+                  { text: '+1 (438) 408-1220' , alignment:'right'},
+                  { text: 'germanherrera75@hotmail.com' , alignment:'right'},
+                  { text: 'LinkedIn/ in/german-herrera' , alignment:'right'},
+                ],
+            ]
+        },
+        { text: '\n', fontSize: 12 },
+
+    ...this.buildProfiPDF(),
+   ...this.buildExperiencePDF()
+      ],
+      styles:{
+        header:{
+          fontSize: 24, italics: true
+        }
+      }
+    };
+
+   pdfMake.createPdf(docDefinition).open();
+ //   pdfMake.createPdf(docDefinition).download("German"+this.currentLang+".pdf");
+  }
+
+private buildProfiPDF(): any[]{
+    return this.profile.map((p: any)=>[
+      {text:`${p.sentence} `,fontSize: 13, italics: true, alignment:'justify', margin: [20, 0, 20, 0] },
+      { text: '\n' }
+    ]) ;
+  }
+
+private buildExperiencePDF(): any[]{
+    return this.experiencesFull.map((e: Experience)=>[
+      {text:[
+        ` `,
+        { text: ` ${e.job} | `,fontSize: 14, bold: true },
+        { text: ` ${e.year} `,fontSize: 12, color: '#333333' }
+      ]},
+      { text: `${e.cia} |  ${e.city}`, italics: true },
+      { text: `${e.hit} \n`, italics: true },
+      {
+        ul:[
+              ...(e.details?.map((detail:Detail)=>
+              ({ text: detail.d, fontSize: 13, alignment:'justify'})) || [])
+        ]
+      },
+      { text: '\n' }
+    ]) ;
   }
 
 }

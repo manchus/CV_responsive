@@ -14,3 +14,19 @@ export interface Post {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface Experience {
+  id: string;
+  n: string;
+  job: string;
+  cia: string;
+  city: string;
+  year: string;
+  hit: string;
+  details?: Detail[];
+}
+
+export interface Detail {
+  id: string;
+  d: string;
+}

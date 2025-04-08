@@ -12,6 +12,7 @@
   "langEs": "SPANISH",
   "langEn": "ENGLISH",
   "langFr": "FRENCH",
+  "search": "Search ...",
   "dashboard": {
     "title": "Dashboard Title",
     "desc": "Dashboard Desc"

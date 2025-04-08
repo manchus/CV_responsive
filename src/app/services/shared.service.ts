@@ -1,8 +1,15 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Firestore, collectionData, docData, orderBy } from '@angular/fire/firestore';
 import { addDoc, collection, deleteDoc, doc,  query, where, getDocs } from '@firebase/firestore';
-import { Subject, BehaviorSubject } from 'rxjs';
-//import { TranslocoService } from '@jsverse/transloco';
+import { Subject, BehaviorSubject, switchMap, map, combineLatest } from 'rxjs';
+import { Post, Experience, Detail  } from '../models/post.model';
+import { Observable, forkJoin } from 'rxjs';
+
+
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
 
 @Injectable({
@@ -22,6 +29,25 @@ export class SharedService {
   ) { }
 
   skillsRef = collection(this.fs, "skills.profile.p1");
+
+
+  mapToExperience(data: any): Experience {
+    return {
+      id: data.id || '',
+      n: data.n || '',
+      job: data.job || '',
+      cia: data.cia || '',
+      city: data.city || '',
+      year: data.year || '',
+      hit: data.hit || '',
+      details: (data.details || []).map((detail: any) => ({
+        id: detail.id || '',
+        d: detail.d || ''
+      }))
+    };
+  }
+
+
 
   getWorkHit( ){
     return this.workHit;
@@ -44,6 +70,27 @@ export class SharedService {
     const q = query(experienceCollection, orderBy("n"))
     return collectionData( q ,{idField:'id'});
    }
+
+  getExperienceWithDetails(lng : string){
+    let experienceCollection = collection(this.fs, `${lng}/experiences/experience`); // /experiences/experience`);
+    const q = query(experienceCollection, orderBy("n"))
+    return collectionData( experienceCollection ,{idField:'id'}).pipe(
+      switchMap( experiences =>{
+        const experiencesWithDetails = experiences.map(exp =>{
+          const detailsCollection = collection(this.fs, `${lng}/experiences/experience/${exp.id}/details`);
+          return collectionData(detailsCollection, {idField: 'id'}).pipe(
+            map(details=>({
+              ...exp,
+              details:details
+            }))
+          );
+        });
+        return combineLatest(experiencesWithDetails);
+      })
+    );
+   }
+
+
 
   getProjects(lng : string){
     let experienceCollection = collection(this.fs, lng+"/projects/project");
