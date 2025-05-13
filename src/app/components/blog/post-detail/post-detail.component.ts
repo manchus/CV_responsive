@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MyAIService } from '../../../services/my-ai.service';
+//import { TranslationService } from '../../../services/translation.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -14,6 +15,7 @@ import { MyAIService } from '../../../services/my-ai.service';
   imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './post-detail.component.html',
   styleUrls: ['./post-detail.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 
@@ -31,13 +33,17 @@ export class PostDetailComponent implements OnInit {
   dislikes = 0;
   optEnable = true;
 
+  translatedContent: string = '';
+  isTranslating: boolean = false;
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private blogService: BlogService,
     private myAIService: MyAIService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+   // private translationService: TranslationService
   ) {}
 
   private id = '';
@@ -93,5 +99,20 @@ export class PostDetailComponent implements OnInit {
   searchByCategory(cat:  string){
     this.router.navigate(['/posts'], { queryParams: { category: cat } });
   }
+
+  /*
+  async translateTo(language: string) {
+    this.isTranslating = true;
+    try {
+      this.translatedContent = await this.translationService.translatePost(
+        'POST_ID_HERE', // Pass your post ID
+        language
+      );
+    } catch (error) {
+      console.error('Translation failed:', error);
+    } finally {
+      this.isTranslating = false;
+    }
+  } */
 }
 

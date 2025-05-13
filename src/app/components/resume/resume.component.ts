@@ -1,9 +1,13 @@
-import { Component, Output, EventEmitter, DestroyRef, inject } from '@angular/core';
+import { Component, Output, EventEmitter, DestroyRef, inject, OnDestroy } from '@angular/core';
+import { signal, computed, effect } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { ExperienceComponent } from './experience/experience.component';
 import { TranslocoModule, TranslocoService,} from '@jsverse/transloco';
 
+import { Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 
 import { SharedService } from '../../services/shared.service';
 import { Post, Experience, Detail } from '../../models/post.model';
@@ -19,18 +23,29 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   templateUrl: './resume.component.html',
   styleUrl: './resume.component.css',
 })
-export class ResumeComponent{
+export class ResumeComponent implements  OnDestroy{
   private destroyRef = inject(DestroyRef);
+
+  private subscriptions = new Subscription();
+
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
 
   currentLang: string = this.translocoService.getActiveLang();
 
-  constructor( private readonly translocoService: TranslocoService, private service: SharedService,) {
+  constructor( private readonly translocoService: TranslocoService, private service: SharedService
+  ) {
     this.translocoService.langChanges$
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(lang => {
       this.currentLang = lang;
       this.refreshSkills();
+
     });
+
   }
   @Output() hitDetail = new EventEmitter<string>();
   @Output() projectDetail = new EventEmitter<string>();
@@ -62,6 +77,7 @@ export class ResumeComponent{
 
   target: string="";
 
+
   detailSkills(activeHit : string){
     this.hitDetail.emit(activeHit);
     this.service.hitDetailNew.emit(activeHit);
@@ -72,22 +88,53 @@ export class ResumeComponent{
     this.service.projectDetailNew.emit(activeProject);
   }
 
-  refreshSkills() {
-    this.service.getProfile("hv_"+this.currentLang).subscribe((res) => (this.profile = res));
-    this.service.getProjects("hv_"+this.currentLang).subscribe((res) => (this.projects = res));
-    this.service.getSkills("hv_"+this.currentLang).subscribe((res) => (this.skills = res));
+ async refreshSkills(): Promise<void> {
+
+  this.service.getProfile("hv_"+this.currentLang).then((res) => (this.profile = res));
+  //this.profile = await this.service.getProfileP("hv_"+this.currentLang);
+ /*   this.subscriptions.add(
+
+
+      this.service.getProfile("hv_"+this.currentLang).subscribe({
+        next: (res:any) => this.profile = res,
+        error: (err:any) => console.error('Error loading profile:', err)
+      })
+
+
+      );
+*/
+    this.service.getProjects("hv_"+this.currentLang).then((res) => (this.projects = res));
+    this.service.getSkills("hv_"+this.currentLang).then((res) => (this.skills = res));
 
     this.service.getExperienceWithDetails("hv_"+this.currentLang).subscribe((res) => {
                     this.experiencesFull = res.map(item => this.service.mapToExperience(item));});
-    this.experiencePath="hv_"+this.currentLang+"/experiences/experience/";
+
+this.service.getExperienceWithDetails("hv_" + this.currentLang).subscribe((res) => {
+    this.experiencesFull = res.map(item => this.service.mapToExperience(item));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    this.experiencePath="hv_"+this.currentLang+"/experiences/experience/";
     this.service.getVolunt("hv_"+this.currentLang).subscribe((res) => (this.volunt = res));
     this.service.getVoluntDetail("hv_"+this.currentLang).subscribe((res) => (this.voluntDetail = res));
 
   }
 
   generatePDF() {
-
-    var docDefinition = {
+  var docDefinition = {
       header: ['\n',{text: ':  germanherrera75@hotmail.com', fontSize: 11,  color: '#BBBBBB'},],
       content: [
         {

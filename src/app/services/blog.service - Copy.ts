@@ -9,6 +9,7 @@ import { Post } from '../models/post.model';
 })
 export class BlogService {
   constructor(private db: Firestore) {}
+ // private db = getFirestore(); // Obtiene la instancia de Firestore
 
   // Obtener todas las publicaciones
   async getPosts(): Promise<Post[]> {
@@ -97,6 +98,3 @@ export class BlogService {
 
 
 }
-
-
-

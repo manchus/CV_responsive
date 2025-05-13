@@ -5,7 +5,7 @@ import {
   TranslocoService,
   TRANSLOCO_SCOPE,
 } from '@jsverse/transloco';
-import { VisitCounterService } from '../../services/visit-counter.service';
+//import { VisitCounterService } from '../../services/visit-counter.service';
 import { RouterLink } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
 
@@ -23,7 +23,7 @@ export class TopComponent implements OnInit {
 
   constructor(
     private readonly translocoService: TranslocoService,
-    private visitCounterService: VisitCounterService,
+    private sharedService: SharedService,
     /*  Unificacion idiomas
     private sharedService: SharedService
     */
@@ -31,9 +31,9 @@ export class TopComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
-    this.visitCount = await this.visitCounterService.getCounter();
+    this.visitCount = await this.sharedService.getCounter();
 
-    await this.visitCounterService.incrementCounter();
+    await this.sharedService.incrementCounter();
 
     this.translocoService.langChanges$.subscribe(lang => {
       this.currentLang = lang;

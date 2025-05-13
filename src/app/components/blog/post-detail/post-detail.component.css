@@ -6,8 +6,32 @@
 .image-post{
    max-width: 80%;
    height: auto;
+   margin: 20px;
+   border: grey;
+   border-radius: 20px;
+   border-width: 1px;
+   border-style: solid;
+
 }
 
 .cat-btn{
   margin: 10px;
+}
+
+pre {
+  margin: 20px;
+  background-color: #888888;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  font-family: Consolas, monospace;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+code {
+  font-family: inherit;
+  color: #333;
+
 }

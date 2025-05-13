@@ -34,10 +34,8 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
-    provideFirebaseApp(() =>
-      initializeApp(environment.firebase)
-    ),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
-    provideDatabase(() => getDatabase()),
+   // provideDatabase(() => getDatabase()),
   ],
 };

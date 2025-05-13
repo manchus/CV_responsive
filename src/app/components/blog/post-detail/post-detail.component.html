@@ -3,11 +3,13 @@
   <small class="date-entry">{{post?.createdAt | date }}</small>&nbsp;&nbsp;<strong class="date-entry">Autor:</strong>&nbsp;
   <small class="date-entry fst-italic fw-lighter">{{post?.author }}</small>
 </p>
-<img class="image-post"
-  *ngIf="post?.imageUrl"
-  [src]="post?.imageUrl"
-  alt="{{ post?.title }}"
-/>
+<div class="text-center">
+  <img class="image-post"
+    *ngIf="post?.imageUrl"
+    [src]="post?.imageUrl"
+    alt="{{ post?.title }}"
+  />
+</div>
   <div  class="date-entry" *ngIf="post?.isHtml; else textContent" [innerHTML]="content"></div>
   <ng-template #textContent>
     <p class="date-entry">{{ post?.content }}</p>

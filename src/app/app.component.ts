@@ -100,7 +100,7 @@ export class AppComponent  implements OnInit{
   refreshSkills() {
     this.service
     .getSkills(this.transloco.getActiveLang())
-    .subscribe((res) => (this.skills = res));
+    .then((res) => (this.skills = res));
   }
 
   addSkill(newSkill: string) {
