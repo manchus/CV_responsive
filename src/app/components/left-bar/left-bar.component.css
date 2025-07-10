@@ -78,7 +78,7 @@
 {
     position: relative;
     list-style: none;
-    margin: 10px 0;
+    margin: 5px 0;
     cursor: pointer;
 }
 
@@ -107,7 +107,6 @@
 }
 
 
-/* Estilos de prueba */
 ul {
   list-style: none; /* Removes default bullets */
   padding: 0;
@@ -132,8 +131,17 @@ a{
 }
 
 .button-item:hover {
-  background-color: gray; /* Darker grey on hover */
+  background-color: gray;
 }
 
-/* Fin Estilos de prueba */
+.email{
+position: absolute;
+top: 5px;
+display: inline-block;
+  /* color: white;  */
+  text-decoration: none;
+  font-size: 0.7em;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
 

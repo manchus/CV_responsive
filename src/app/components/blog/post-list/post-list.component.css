@@ -1,4 +1,9 @@
-        /* Contenedor de la barra de búsqueda */
+.main-list{
+  color: white;
+  padding: 0.5em;
+  width: 90%;
+}
+/* Contenedor de la barra de búsqueda */
         .search-container {
           position: relative;
           width: 220px;

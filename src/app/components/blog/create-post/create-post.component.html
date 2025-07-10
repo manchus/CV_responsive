@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="h3" >Content</label>
-      <textarea class="form-control" rows="5" [(ngModel)]="content" name="content" placeholder="Contenido" required></textarea>
+      <label class="h3" >Summary</label>
+      <textarea class="form-control" rows="5" [(ngModel)]="summary" name="content" placeholder="Contenido" required></textarea>
     </div>
 
     <div class="form-check">
@@ -44,7 +44,90 @@
   </div>
 
 
+
+
+
+
+<div *ngFor="let block of contentBlock; let i = index; trackBy: trackById" class="mb-3 border p-3">
+  {{ block.data }} , {{ block.type }}
+  <div [ngSwitch]="block.type">
+    <div *ngSwitchCase="'title'">
+
+      <label>Titre</label>
+      <input [(ngModel)]="block.data" type="text" [name] ="'block'+i" class="form-control" placeholder="Titre..." />
+    </div>
+    <div *ngSwitchCase="'paragraph'">
+      <label>Paragraphe</label>
+      <textarea [(ngModel)]="block.data" [name] ="'block'+i" class="form-control" rows="3" placeholder="Paragraphe..."></textarea>
+    </div>
+    <div *ngSwitchCase="'quote'">
+      <label>Citacion</label>
+      <input [(ngModel)]="block.data" [name] ="'block'+i" class="form-control" placeholder="Citation..." />
+    </div>
+    <div *ngSwitchCase="'code'">
+      <label>Code</label>
+      <textarea [(ngModel)]="block.data.content" [name] ="'codeContent'+i" class="form-control" placeholder="Code..."></textarea>
+      <input [(ngModel)]="block.data.language" [name] ="'codeLang'+i" class="form-control mt-1" placeholder="Langage (ts, js...)" />
+    </div>
+    <div *ngSwitchCase="'image'">
+      <label>Image URL</label>
+      <input [(ngModel)]="block.data.url" class="form-control" placeholder="https://..." />
+      <label>Légende</label>
+      <input [(ngModel)]="block.data.caption" class="form-control" placeholder="Description" />
+    </div>
+  </div>
+  <button class="btn btn-danger btn-sm mt-2" (click)="removeBlock(i)">🗑️ Supprimer</button>
+</div>
+
+<div class="mb-3">
+  {{ newBlockType }}
+  <select [(ngModel)]="newBlockType" name ="newBlockType" class="form-control w-50 d-inline">
+    <option value="title">Titre</option>
+    <option value="paragraph">Paragraphe</option>
+    <option value="image">Image</option>
+    <option value="quote">Citation</option>
+    <option value="code">Code</option>
+  </select>
+  <button class="btn btn-primary ml-2" (click)="addBlock()">Ajouter bloc</button>
+</div>
+
+
+
+<!-- <div *ngFor="let block of contentBlock; let i = index; trackBy: trackById" class="mb-3 border p-3">
+  <div [ngSwitch]="block.type">
+
+    <div *ngSwitchCase="'paragraph'">
+      <label>Paragraphe</label>
+      <textarea [(ngModel)]="block.data" [name]="'paragraph' + i" class="form-control" rows="3" placeholder="Paragraphe..."></textarea>
+    </div>
+
+    <div *ngSwitchCase="'image'">
+      <label>Image URL</label>
+      <input [(ngModel)]="block.data.url" [name]="'imageUrl' + i" class="form-control" placeholder="https://..." />
+      <label>Légende</label>
+      <input [(ngModel)]="block.data.caption" [name]="'imageCaption' + i" class="form-control" placeholder="Description" />
+    </div>
+
+  </div>
+  <p>⏺️ Données actuelles : {{ block | json }}</p>
+</div> -->
+
+
+
+
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
 <!--
 <h3>Select Your Skills:</h3>
 

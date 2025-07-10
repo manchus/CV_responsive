@@ -34,6 +34,7 @@ export class ResumeComponent{
   }
   @Output() hitDetail = new EventEmitter<string>();
   @Output() projectDetail = new EventEmitter<string>();
+/*
 
   post: Post = {
     title: '',
@@ -49,6 +50,7 @@ export class ResumeComponent{
     updatedAt: new Date(),
 
   };
+  */
 
 
   profile: any =[];
@@ -73,7 +75,7 @@ export class ResumeComponent{
   }
 
   refreshSkills() {
-    this.service.getProfile("hv_"+this.currentLang).subscribe((res) => (this.profile = res));
+    this.service.getProfile("hv_"+this.currentLang).subscribe((res) => {this.profile = res }, (error) => {  console.log("Error : ",error);});
     this.service.getProjects("hv_"+this.currentLang).subscribe((res) => (this.projects = res));
     this.service.getSkills("hv_"+this.currentLang).subscribe((res) => (this.skills = res));
 

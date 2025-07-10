@@ -1,24 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CheckboxControlValueAccessor, CheckboxRequiredValidator, FormsModule } from '@angular/forms';
-import { NgIf, Location } from '@angular/common';
+import { NgIf, Location, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
 import { RouterLink, ActivatedRoute, Routes, Router } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
 import { StorageService } from '../../../services/storage.service';
-import { Post } from '../../../models/post.model';
+import { Post,PostContentBlock } from '../../../models/post.model';
+import { v4 as uuidv4 } from 'uuid';
+
 
 import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-create-post',
   standalone: true,
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule, NgIf, NgSwitch, NgFor, NgSwitchCase],
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent {
   title: string = '';
-  content: string = '';
+ summary: string = '';
   isHtml: boolean = false;
   author: string = '';
   categories: string[] = [];
@@ -27,9 +29,18 @@ export class CreatePostComponent {
   aHtml: boolean = false;
   myCheck= '';
 
+  contentBlock: PostContentBlock[] = [];
+  newBlockType: PostContentBlock['type'] = 'paragraph';
+
   post: Post = {
     title: '',
-    content: '',
+    content: this.contentBlock,
+    summary: '',
+
+  //  contentBlocks: PostContentBlock[] = [];
+//newBlockType: PostContentBlock['type'] = 'paragraph';
+
+
     isHtml: false,
     author: '',
     imageUrl: '', //this.imageUrl,
@@ -52,6 +63,8 @@ export class CreatePostComponent {
     private location: Location,
     private sanitizer: DomSanitizer
   ) {}
+
+
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -77,6 +90,20 @@ export class CreatePostComponent {
   }
 
   async createPost(
+
+/*
+const post: Post = {
+  title,
+  content: this.contentBlocks, // <-- bloc enrichi
+  ...
+};
+
+
+*/
+
+
+
+
     title: string,
     author: string,
     categories: string[]
@@ -88,8 +115,10 @@ export class CreatePostComponent {
     try {
       const post: Post = {
         title,
-        content: this.content,
-        author,
+        content: this.contentBlock,
+        summary: this.summary,
+
+        author:'',
         imageUrl: this.imageUrl,
         categories,
         isHtml: this.isHtml,
@@ -117,6 +146,49 @@ export class CreatePostComponent {
     console.log("Valor Select :",  this.isHtml)
   }
 
+
+
+  addBlock() {
+    console.log("Cambio: ", this.contentBlock);
+  const block: PostContentBlock = {
+    id: uuidv4(),
+    type: this.newBlockType,
+    data: this.defaultDataForType(this.newBlockType)
+  };
+  this.contentBlock.push(block);
+}
+
+
+
+
+
+
+
+
+
+defaultDataForType(type: PostContentBlock['type']) {
+  switch (type) {
+    case 'title': return '';
+    case 'paragraph': return '';
+    case 'image': return { url: '', caption: '' };
+    case 'quote': return '';
+    case 'code': return { language: 'ts', content: '' };
+  }
+}
+
+removeBlock(index: number) {
+  this.contentBlock.splice(index, 1);
+}
+
+
+trackById(index: number, block: PostContentBlock): string | number {
+  return block.id ?? index;
+}
+
+
+
+
+ // si tu as uuid installé
 
 
 

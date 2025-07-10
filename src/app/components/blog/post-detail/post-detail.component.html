@@ -1,45 +1,48 @@
-<h3 class="date-entry">{{ post?.title }}</h3>
-<p>
-  <small class="date-entry">{{post?.createdAt | date }}</small>&nbsp;&nbsp;<strong class="date-entry">Autor:</strong>&nbsp;
-  <small class="date-entry fst-italic fw-lighter">{{post?.author }}</small>
-</p>
-<img class="image-post"
-  *ngIf="post?.imageUrl"
-  [src]="post?.imageUrl"
-  alt="{{ post?.title }}"
-/>
-  <div  class="date-entry" *ngIf="post?.isHtml; else textContent" [innerHTML]="content"></div>
+<div class="main-entry">
+  <h3 class="blog-title">{{ post?.title }}</h3>
+  <p>
+    <small class="date-entry">{{ post?.createdAt | date }}</small>
+    <strong class="date-entry">&nbsp;&nbsp;Autor:&nbsp;</strong>
+    <small class="date-entry fst-italic fw-lighter">{{ post?.author }}</small>
+  </p>
+  <img class="image-post"  *ngIf="post?.imageUrl"  [src]="post?.imageUrl"  alt="{{ post?.title }}"/>
+  <div  class="date-entry"  *ngIf="post?.isHtml; else textContent"  [innerHTML]="summary"></div>
   <ng-template #textContent>
-    <p class="date-entry">{{ post?.content }}</p>
+    <p class="date-entry">{{ post?.summary }}</p>
   </ng-template>
-<div>
-  <strong  class="date-entry">Categorías:</strong>
-  <button class="text-white px-10 py-1 rounded-5 btn btn-secondary cat-btn" *ngFor="let cat of post?.categories" (click)="searchByCategory(cat)">{{cat}}</button>
+  <div>
+    <div *ngFor="let block of post?.content">
+      <ng-container [ngSwitch]="block.type">
+          <h2 class="blog-title" *ngSwitchCase="'title'">{{ block.data }}</h2>
+          <p class="blog-paragraph" *ngSwitchCase="'paragraph'">{{ block.data }}</p>
+          <blockquote class="blog-quote" *ngSwitchCase="'quote'">"{{ block.data }}"</blockquote>
+          <div class="text-center" *ngSwitchCase="'image'">
+            <img class="blog-image" [src]="block.data.url" [alt]="block.data.caption" />
+            <small class="blog-image-caption">{{ block.data.caption }}</small>
+          </div>
+          <pre class="blog-code" *ngSwitchCase="'code'">
+            <code [attr.data-lang]="block.data.language">{{ block.data.content }}</code>
+          </pre>
+      </ng-container>
+    </div>
+
+    <strong class="date-entry">Categorías:</strong>
+    <button class="text-white px-10 py-1 rounded-5 btn btn-secondary cat-btn"
+      *ngFor="let cat of post?.categories"
+      (click)="searchByCategory(cat)">
+        {{ cat }}
+    </button>
+  </div>
+  <button class="text-white px-10 py-1 rounded-5 btn btn-secondary"  (click)="likePost()" >
+    <i class="fa-solid fa-thumbs-up"></i> {{ likes }}
+  </button>
+  <span>&nbsp;&nbsp;</span>
+  <button class="text-white px-10 py-1 rounded-5 btn btn-secondary"  (click)="dislikePost()">
+    <i class="fa-solid fa-thumbs-down"></i> {{ dislikes }}
+  </button>
 </div>
-<button class="text-white px-10 py-1 rounded-5 btn btn-secondary" (click)="likePost()"><i class="fa-solid fa-thumbs-up"></i> {{ likes }}</button>
-<span>&nbsp;&nbsp;</span>
-<button class="text-white px-10 py-1 rounded-5 btn btn-secondary"(click)="dislikePost()"><i class="fa-solid fa-thumbs-down"></i> {{ dislikes }}</button>
 
 
-<!-- <div>
-  <h1>Chat con OpenAI</h1>
-  <textarea [(ngModel)]="mensaje"></textarea>
-  <button (click)="obtenerRespuesta()">Enviar</button>
-  <p>Respuesta: {{ response }}</p>
-</div>
 
-<button (click)="obtenerRespuesta()" [disabled]="isLoading">
-  Analizar datos
-</button>
 
-<div *ngIf="isLoading">Cargando...</div>
 
-<div *ngIf="response">
-  <h3>Respuesta de DeepSeek:</h3>
-  <pre>{{ response | json }}</pre>
-</div>
-
-<div *ngIf="error">
-  <h3>Error:</h3>
-  <p>{{ error }}</p>
-</div> -->

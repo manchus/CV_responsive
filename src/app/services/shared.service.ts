@@ -55,13 +55,17 @@ export class SharedService {
 
   getProfile(lng : string){
     let profileCollection = collection(this.fs, lng+"/profile/profile");
-    const q = query(profileCollection, orderBy("id"))
+       const q = query(profileCollection,
+                    where('position','==','developper'),
+                    orderBy("id"))
     return collectionData(q,{idField:'id'});
   }
 
   getSkills(lng : string){
     let skillsCollection = collection(this.fs, lng+"/skills/skill");
-    const q = query(skillsCollection, orderBy("id"))
+    const q = query(skillsCollection,
+      //where("position","==","developper"),
+       orderBy("id"))
     return collectionData(q,{idField:'id'});
   }
 
@@ -73,7 +77,7 @@ export class SharedService {
 
   getExperienceWithDetails(lng : string){
     let experienceCollection = collection(this.fs, `${lng}/experiences/experience`); // /experiences/experience`);
-    const q = query(experienceCollection, orderBy("n"))
+    //const q = query(experienceCollection,where("position","==","developper"), orderBy("n"))
     return collectionData( experienceCollection ,{idField:'id'}).pipe(
       switchMap( experiences =>{
         const experiencesWithDetails = experiences.map(exp =>{

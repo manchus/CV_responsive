@@ -58,7 +58,7 @@ export class PostListComponent implements OnInit {
       this.filteredPosts = this.posts.filter(
         (post) =>
           post.title.toLowerCase().includes(term) ||
-          post.content.toLowerCase().includes(term) ||
+          post.summary.toLowerCase().includes(term) ||
           post.categories.some((category) =>
             category.toLowerCase().includes(term)
           )
@@ -74,7 +74,7 @@ export class PostListComponent implements OnInit {
     this.filteredPosts = this.posts.filter(
       (post) =>
         post.title.toLowerCase().includes(term) ||
-        post.content.toLowerCase().includes(term) ||
+        //post.content.toLowerCase().includes(term) ||
         post.categories.some((category) =>
           category.toLowerCase().includes(term)
         )
