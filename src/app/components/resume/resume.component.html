@@ -6,7 +6,7 @@
     <!-- <h2 class="title2">
       <ng-container *transloco="let t">{{ t('profile') }}</ng-container>
     </h2>-->
-    <h3 class="title3">{{'profile'  | transloco }} &nbsp;
+    <h3 class="title3">{{'profile'  | transloco }} &nbsp;&nbsp;
       <span>
             <button class="profile-button" title="Developper" (click)="updateProfil('dev')"><i class="fa-solid fa-code"></i></button>&nbsp;
             <button class="profile-button" title="Database" (click)="updateProfil('db')"><i class="fa-solid fa-database"></i></button>&nbsp;
@@ -16,7 +16,7 @@
 <h2 class="title2">{{positionTitles[profSelected]}} &nbsp;</h2>
 
     <span *ngFor="let prof of profile">
-      <span *ngIf="profSelected == prof.position || profSelected == 'general'" class="text-justify">
+      <span *ngIf="profSelected == prof.position || prof.position == 'general'" class="text-justify">
         <p class="text-justify">{{ prof.sentence }}</p>
       </span>
 
@@ -25,7 +25,8 @@
 
   <!-- Skills Section -->
   <div class="about">
-    <h2 class="title2">{{'skills'| transloco }}&nbsp;
+    <h2 class="title2">{{'skills'| transloco }}</h2>
+    <h2>
       <span *ngFor="let project of projects">
         &nbsp;
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" (click)="detailProject(project.id)" data-bs-target="#projectModal">
@@ -34,7 +35,12 @@
       </span>
     </h2>
     <ul class="list-inline">
-      <li *ngFor="let skill of skills" class="text-justify">{{ skill.p }}</li>
+      <li *ngFor="let skill of skills" class="text-justify">
+        <span *ngIf="profSelected === skill.position || skill.position === 'general'" >
+          <i class="fa-solid fa-gear"></i>  {{ skill.p }}
+        </span>
+
+      </li>
     </ul>
   </div>
 

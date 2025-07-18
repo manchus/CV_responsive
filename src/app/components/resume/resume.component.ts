@@ -61,7 +61,6 @@ positionTitles: { [key: string]: string } = {
 
   updateProfil(selected : string){
     this.profSelected = selected;
-    console.log("Selected profile: ", this.profSelected);
   }
 
   detailProject(activeProject : string){
@@ -117,6 +116,12 @@ positionTitles: { [key: string]: string } = {
         { text: '\n', fontSize: 12 },
 
     ...this.buildProfiPDF(),
+    { text: 'Skills', fontSize: 14, bold: true, color: '#44546A' },
+    { text: '\n ', fontSize: 2 },
+    ...this.buildSkillsPDF(),
+       { text: '\n ', fontSize: 5 },
+    { text: 'Experience', fontSize: 14, bold: true, color: '#44546A' },
+    { text: '\n ', fontSize: 2},
    ...this.buildExperiencePDF()
       ],
       styles:{
@@ -134,6 +139,13 @@ private buildProfiPDF(): any[]{
     return this.profile.filter((p: any) => p.position == this.profSelected).map((p: any)=>[
       {text:`${p.sentence} `,fontSize: 13, italics: true, alignment:'justify', margin: [20, 0, 20, 0] },
       { text: '\n' }
+    ]) ;
+  }
+
+private buildSkillsPDF(): any[]{
+    return this.skills.filter((p: any) => p.position === this.profSelected || p.position === 'general' ).map((p: any)=>[
+      {text:`- ${p.p} `,fontSize: 11.5, italics: true, alignment:'justify', margin: [15, 0, 15, 0] },
+      // { text: '\n' }
     ]) ;
   }
 
