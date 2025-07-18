@@ -24,9 +24,6 @@ export class TopComponent implements OnInit {
   constructor(
     private readonly translocoService: TranslocoService,
     private visitCounterService: VisitCounterService,
-    /*  Unificacion idiomas
-    private sharedService: SharedService
-    */
   ) {}
 
   async ngOnInit(): Promise<void> {

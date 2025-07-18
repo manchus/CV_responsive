@@ -1,11 +1,25 @@
 <div class="main">
   <div class="about">
+    <p class="text-justify">{{'entry'  | transloco }}</p>
+
+
     <!-- <h2 class="title2">
       <ng-container *transloco="let t">{{ t('profile') }}</ng-container>
     </h2>-->
-    <h2 class="title2">{{'profile'  | transloco }}</h2>
+    <h3 class="title3">{{'profile'  | transloco }} &nbsp;
+      <span>
+            <button class="profile-button" title="Developper" (click)="updateProfil('dev')"><i class="fa-solid fa-code"></i></button>&nbsp;
+            <button class="profile-button" title="Database" (click)="updateProfil('db')"><i class="fa-solid fa-database"></i></button>&nbsp;
+            <button class="profile-button" title="Support" (click)="updateProfil('tech')"><i class="fa-solid fa-screwdriver-wrench"></i></button>
+      </span>
+    </h3>
+<h2 class="title2">{{positionTitles[profSelected]}} &nbsp;</h2>
+
     <span *ngFor="let prof of profile">
-      <p class="text-justify">{{ prof.sentence }}</p>
+      <span *ngIf="profSelected == prof.position || profSelected == 'general'" class="text-justify">
+        <p class="text-justify">{{ prof.sentence }}</p>
+      </span>
+
     </span>
   </div>
 
@@ -40,7 +54,7 @@
     <div class="row">
       <div class="col h5">{{ experience.city }}</div>
       <div class="list-inline">
-        <app-experience [detailsExperience]="experiencePath + experience.id"></app-experience>
+        <app-experience [detailsExperience]="experiencePath + experience.id" [position]="profSelected"></app-experience>
       </div>
     </div>
   </div>
@@ -72,5 +86,8 @@
       <li><i class="fa fa-language" aria-hidden="true"></i> Language</li>
     </ul>
   </div>
-  <button (click)="generatePDF()">Generate PDF</button>
+  <div class="text-center">
+      <button title="Generate PDF" class="pdf-button h1"  (click)="generatePDF()"> <i class="fa-solid fa-file-pdf"></i></button>
+  </div>
+
 </div>

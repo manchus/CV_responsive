@@ -1,5 +1,32 @@
 .main{
   color: white;
   padding: 0.5em;
-  width: 80%;
+  max-width: 800px;
+  width: 100%;
+
+}
+
+
+.profile-button {
+    filter: invert(100%);
+    border: none;
+    padding: 0.1em 0.5em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button:hover {
+    background-color: #666666;
+}
+
+
+.pdf-button {
+  color: white;
+  background-color: #111111;
+    text-align: center;
+    border: none;
+    padding: 0.2em 0.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
 }

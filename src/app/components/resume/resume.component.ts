@@ -34,24 +34,8 @@ export class ResumeComponent{
   }
   @Output() hitDetail = new EventEmitter<string>();
   @Output() projectDetail = new EventEmitter<string>();
-/*
 
-  post: Post = {
-    title: '',
-    content: '',
-    isHtml: false,
-    author: '',
-    imageUrl: '',
-    categories: [],
-    lang:'',
-    likes: 0,
-    dislikes: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-
-  };
-  */
-
+  profSelected: string = "dev";
 
   profile: any =[];
   projects: any =[];
@@ -64,9 +48,20 @@ export class ResumeComponent{
 
   target: string="";
 
+positionTitles: { [key: string]: string } = {
+  dev: 'Full Stack Developer',
+  db: 'Database Analyst',
+  tech: 'Technical Support',
+};
+
   detailSkills(activeHit : string){
     this.hitDetail.emit(activeHit);
     this.service.hitDetailNew.emit(activeHit);
+  }
+
+  updateProfil(selected : string){
+    this.profSelected = selected;
+    console.log("Selected profile: ", this.profSelected);
   }
 
   detailProject(activeProject : string){
@@ -78,9 +73,17 @@ export class ResumeComponent{
     this.service.getProfile("hv_"+this.currentLang).subscribe((res) => {this.profile = res }, (error) => {  console.log("Error : ",error);});
     this.service.getProjects("hv_"+this.currentLang).subscribe((res) => (this.projects = res));
     this.service.getSkills("hv_"+this.currentLang).subscribe((res) => (this.skills = res));
-
     this.service.getExperienceWithDetails("hv_"+this.currentLang).subscribe((res) => {
-                    this.experiencesFull = res.map(item => this.service.mapToExperience(item));});
+                      this.experiencesFull = res.map(item => ({
+        ...this.service.mapToExperience(item),
+        details: item.details ? item.details.map((d: any) => ({
+            id: d.id,
+            d: d.d,
+            position: d.position
+        })) : []
+    }));
+});
+
     this.experiencePath="hv_"+this.currentLang+"/experiences/experience/";
     this.service.getVolunt("hv_"+this.currentLang).subscribe((res) => (this.volunt = res));
     this.service.getVoluntDetail("hv_"+this.currentLang).subscribe((res) => (this.voluntDetail = res));
@@ -102,7 +105,7 @@ export class ResumeComponent{
                       {text: 'Herrera ', style: 'header', bold: true},
                     ]
                   },
-                  {text: 'Analyste-Programmeur Full Stack', fontSize: 15, bold: true, color: '#44546A'},
+                  {text: this.positionTitles[this.profSelected], fontSize: 15, bold: true, color: '#44546A'},
                 ],
                 [
                   { text: '+1 (438) 408-1220' , alignment:'right'},
@@ -124,11 +127,11 @@ export class ResumeComponent{
     };
 
    pdfMake.createPdf(docDefinition).open();
- //   pdfMake.createPdf(docDefinition).download("German"+this.currentLang+".pdf");
+    //pdfMake.createPdf(docDefinition).download("German"+this.currentLang+".pdf")
   }
 
 private buildProfiPDF(): any[]{
-    return this.profile.map((p: any)=>[
+    return this.profile.filter((p: any) => p.position == this.profSelected).map((p: any)=>[
       {text:`${p.sentence} `,fontSize: 13, italics: true, alignment:'justify', margin: [20, 0, 20, 0] },
       { text: '\n' }
     ]) ;
@@ -144,8 +147,9 @@ private buildExperiencePDF(): any[]{
       { text: `${e.cia} |  ${e.city}`, italics: true },
       { text: `${e.hit} \n`, italics: true },
       {
-        ul:[
-              ...(e.details?.map((detail:Detail)=>
+        ul:[ ...(e.details?.filter(detail =>
+                detail.position === this.profSelected || detail.position === 'general'
+                     ).map((detail:Detail)=>
               ({ text: detail.d, fontSize: 13, alignment:'justify'})) || [])
         ]
       },

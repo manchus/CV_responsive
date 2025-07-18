@@ -42,4 +42,5 @@ export interface Experience {
 export interface Detail {
   id: string;
   d: string;
+  position: string;
 }

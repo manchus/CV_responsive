@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 export class ExperienceComponent {
   @Input()  detailsExperience: any = [];
   detailsExperiences: any = [];
+  @Input()  position: string = '';
 
   ngOnInit() {
     this.service.getDetailsExperience( this.detailsExperience ).subscribe((res) => (this.detailsExperiences = res));
