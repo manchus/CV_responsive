@@ -1,14 +1,12 @@
 import { Component, OnChanges } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CheckboxControlValueAccessor, CheckboxRequiredValidator, FormsModule } from '@angular/forms';
-import { NgIf, Location, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
-import { RouterLink, ActivatedRoute, Routes, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
 import { StorageService } from '../../../services/storage.service';
 import { Post,PostContentBlock } from '../../../models/post.model';
 import { v4 as uuidv4 } from 'uuid';
-
-
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -26,41 +24,14 @@ export class CreatePostComponent {
   categories: string[] = [];
   selectedFile: File | null = null;
   imageUrl: string | null = null;
-  aHtml: boolean = false;
-  myCheck= '';
-
   contentBlock: PostContentBlock[] = [];
   newBlockType: PostContentBlock['type'] = 'paragraph';
-
-  post: Post = {
-    title: '',
-    content: this.contentBlock,
-    summary: '',
-
-  //  contentBlocks: PostContentBlock[] = [];
-//newBlockType: PostContentBlock['type'] = 'paragraph';
-
-
-    isHtml: false,
-    author: '',
-    imageUrl: '', //this.imageUrl,
-    categories: [],
-    lang:'',
-    likes: 0,
-    dislikes: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-
-  };
-
-  nombre: string = ''; // Definir la propiedad
 
   constructor(
     private blogService: BlogService,
     private storageService: StorageService,
     private route: ActivatedRoute,
     private routes: Router,
-    private location: Location,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -90,20 +61,6 @@ export class CreatePostComponent {
   }
 
   async createPost(
-
-/*
-const post: Post = {
-  title,
-  content: this.contentBlocks, // <-- bloc enrichi
-  ...
-};
-
-
-*/
-
-
-
-
     title: string,
     author: string,
     categories: string[]
@@ -145,8 +102,6 @@ const post: Post = {
     this.isHtml = !this.isHtml;
     console.log("Valor Select :",  this.isHtml)
   }
-
-
 
   addBlock() {
     console.log("Cambio: ", this.contentBlock);

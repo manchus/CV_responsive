@@ -6,7 +6,7 @@ import { TranslocoModule, TranslocoService,} from '@jsverse/transloco';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { SharedService } from '../../services/shared.service';
-import { Post, Experience, Detail } from '../../models/post.model';
+import { Experience, Detail } from '../../models/post.model';
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -89,13 +89,28 @@ positionTitles: { [key: string]: string } = {
 
   }
 
-  generatePDF() {
+  async generatePDF() {
+    const imageDataUrl = await this.getImageAsBase64('assets/img/competency.png');
+    const imageHeadUrl = await this.getImageAsBase64('assets/img/'+this.profSelected+'.png');
 
     var docDefinition = {
       header: ['\n',{text: ':  germanherrera75@hotmail.com', fontSize: 11,  color: '#BBBBBB'},],
       content: [
         {
           columns: [
+            {
+              width: '12%', stack:
+                  [
+                  {
+                    image: imageHeadUrl,
+                    width: 50,
+                    // ... other image properties
+                  },
+                  // ... rest of your content
+                ]
+            },
+            {
+              width: '48%', stack:
                 [
                   {
                     text: [
@@ -104,19 +119,47 @@ positionTitles: { [key: string]: string } = {
                       {text: 'Herrera ', style: 'header', bold: true},
                     ]
                   },
-                  {text: this.positionTitles[this.profSelected], fontSize: 15, bold: true, color: '#44546A'},
-                ],
+                  {text: this.positionTitles[this.profSelected], fontSize: 18, bold: true, color: '#44546A'},
+                ]
+            },
+            {
+              width: '40%', stack:
                 [
                   { text: '+1 (438) 408-1220' , alignment:'right'},
                   { text: 'germanherrera75@hotmail.com' , alignment:'right'},
                   { text: 'LinkedIn/ in/german-herrera' , alignment:'right'},
-                ],
-            ]
+                ]
+            }
+          ],
+          columnGap: 0
         },
         { text: '\n', fontSize: 12 },
 
     ...this.buildProfiPDF(),
-    { text: 'Skills', fontSize: 14, bold: true, color: '#44546A' },
+
+  {
+ columns: [
+   {
+    width: '8%',
+    stack:  [
+        {
+          image: imageDataUrl,
+          width: 30,
+        },
+      ],
+   },
+   {
+    width: '*',
+    stack:  [
+        { text: [{text: 'Skills', fontSize: 15, bold: true, color: '#44546A' }],
+          margin: [0, 4, 0, 0]
+        },
+      ],
+   }
+  ],
+  columnGap: 0
+},
+
     { text: '\n ', fontSize: 2 },
     ...this.buildSkillsPDF(),
        { text: '\n ', fontSize: 5 },
@@ -168,5 +211,22 @@ private buildExperiencePDF(): any[]{
       { text: '\n' }
     ]) ;
   }
+
+  private getImageAsBase64(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        resolve(reader.result as string);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.onerror = reject;
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  });
+}
 
 }
