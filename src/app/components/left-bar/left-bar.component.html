@@ -9,17 +9,19 @@
 
     <div id="textCarousel" class="carousel slide">
         <div class="carousel-inner">
-            <!-- Item 1 -->
             <div class="carousel-item active">
               <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/resume"  routerLinkActive="active">📑 {{ 'cv' | transloco }}</a>
             </div>
-            <!-- Item 2 -->
             <div class="carousel-item">
               <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/posts"  routerLinkActive="active">📓  Posts</a>
             </div>
-            <!-- Item 3 -->
-            <div class="carousel-item">
+            <div class="carousel-item" *ngIf="authService.isAuthenticated$ | async">
+            <!-- <div class="carousel-item"> -->
               <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/create"  routerLinkActive="active">✏️  Create</a>
+            </div>
+            <div class="carousel-item" *ngIf="!(authService.isAuthenticated$ | async)">
+            <!-- <div class="carousel-item"> -->
+              <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/login"  routerLinkActive="active">🔒 Login</a>
             </div>
         </div>
 

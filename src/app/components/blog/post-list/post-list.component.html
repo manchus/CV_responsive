@@ -1,30 +1,36 @@
 <div class="main-list">
-  <div class="d-flex justify-content-center">
+  <div class="d-flex justify-content-center" style="margin-bottom: 5px;">
     <div class="search-container">
         <input type="text"  class="form-control search-input"  [(ngModel)]="searchTerm"   (input)="filterPosts()" placeholder="{{ 'search' | transloco }}" aria-label="Buscar">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
     </div>
   </div>
-
   <div *ngFor="let post of filteredPosts">
-    <h3 class="date-entry">{{ post.title }}</h3>
-    <p>
-      <small class="date-entry">{{post.createdAt | date }}</small>&nbsp;&nbsp;
-      <small class="date-entry fst-italic fw-lighter">{{post.author }}</small>
-    </p>
-    <!-- <p class="date-entry">{{ post.content | slice:0:200 }}...</p> -->
-    <p class="date-entry"> <div class="date-entry" [innerHTML]="post?.summary | slice:0:200"></div>
-    <a class="text-decoration-none fs-6 text-light" [routerLink]="['/post', post.id]">Leer más</a>
-
-    <div>
-      <strong  class="date-entry">Categorías:</strong>
-      <button class="text-white px-10 py-1 rounded-5 btn btn-secondary" *ngFor="let cat of post.categories" (click)="searchCat(cat)">{{cat}}</button>
-    </div>
-
-    <p class="text-white px-10 py-1 rounded-5 btn btn-secondary">
-      <i class="fa-solid fa-thumbs-up"></i> {{ post.likes || 0 }} |
-      <i class="fa-solid fa-thumbs-down"></i> {{ post.dislikes || 0 }}
-    </p>
+      <div class="card mb-3 text-white bg-dark" style="max-width: 100%;">
+        <div class="row no-gutters">
+          <div class="col-md-4" *ngIf="post?.imageUrl">
+            <img [src]="post?.imageUrl" class ="d-block mx-auto my-3" style ="max-width: 90%; height: auto;" alt="{{ post?.title }}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.title }}</h5>
+                  <p>
+                    <small class="card-text">{{post.createdAt | date }}</small>&nbsp;&nbsp;
+                    <small class="card-text fst-italic fw-lighter">{{post.author }}</small>
+                  </p><a class="text-decoration-none fs-6 text-light" [routerLink]="['/post', post.id]">
+                  <p class="card-text"><div class="date-entry" [innerHTML]="post?.summary | slice:0:400"></div>...</a>
+                  <div>
+                    <strong  class="date-entry">Categorías:</strong>
+                    <button class="text-white px-10 py-1 rounded-5 btn btn-secondary" *ngFor="let cat of post.categories" (click)="searchCat(cat)">{{cat}}</button>
+                  </div>
+                  <p class="text-white px-10 py-1 rounded-5 btn btn-secondary"><small>
+                    <i class="fa-solid fa-thumbs-up"></i> {{ post.likes || 0 }} |
+                    <i class="fa-solid fa-thumbs-down"></i> {{ post.dislikes || 0 }}</small>
+                  </p>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </div>
 

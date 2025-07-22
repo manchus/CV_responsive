@@ -16,10 +16,8 @@ import { MyAIService } from '../../../services/my-ai.service';
   styleUrls: ['./post-detail.component.css'],
 })
 
-
 export class PostDetailComponent implements OnInit {
   post: Post | null = null;
-
 
   response = '';
   isLoading = false;

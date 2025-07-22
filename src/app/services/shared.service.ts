@@ -1,16 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Firestore, collectionData, docData, orderBy } from '@angular/fire/firestore';
-import { addDoc, collection, deleteDoc, doc,  query, where, getDocs } from '@firebase/firestore';
-import { Subject, BehaviorSubject, switchMap, map, combineLatest } from 'rxjs';
-import { Post, Experience, Detail  } from '../models/post.model';
-import { Observable, forkJoin } from 'rxjs';
-
-
+import { addDoc, collection, deleteDoc, doc,  query, where } from '@firebase/firestore';
+import { Subject, switchMap, map, combineLatest } from 'rxjs';
+import { Experience,   } from '../models/post.model';
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).addVirtualFileSystem(pdfFonts);
-
 
 @Injectable({
   providedIn: 'root'

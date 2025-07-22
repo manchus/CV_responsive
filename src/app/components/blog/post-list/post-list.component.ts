@@ -6,7 +6,7 @@ import { BlogService } from '../../../services/blog.service';
 import { Post } from '../../../models/post.model';
 import { Timestamp } from '@angular/fire/firestore';
 import { DestroyRef, inject } from '@angular/core';
-import { TranslocoModule,TranslocoService,TRANSLOCO_SCOPE } from '@jsverse/transloco';
+import { TranslocoModule,TranslocoService } from '@jsverse/transloco';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -18,7 +18,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class PostListComponent implements OnInit {
   posts: Post[] = [];
-  filteredPosts: Post[] = []; // Lista filtrada de posts
+  filteredPosts: Post[] = [];
   searchTerm: string = '';
   currentLang: string=this.translocoService.getActiveLang();
   private destroyRef = inject(DestroyRef);
@@ -72,9 +72,7 @@ export class PostListComponent implements OnInit {
     const term = this.searchTerm.toLowerCase();
     console.log('Termino de busqueda: ', term);
     this.filteredPosts = this.posts.filter(
-      (post) =>
-        post.title.toLowerCase().includes(term) ||
-        //post.content.toLowerCase().includes(term) ||
+      (post) => post.title.toLowerCase().includes(term) ||
         post.categories.some((category) =>
           category.toLowerCase().includes(term)
         )

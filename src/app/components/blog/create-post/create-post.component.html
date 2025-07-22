@@ -118,7 +118,18 @@
 </form>
 
 
-
+<!-- Add to create-post.component.html -->
+<div class="modal-overlay" *ngIf="showLoginModal">
+  <div class="modal">
+    <h2>Login Required</h2>
+    <form (ngSubmit)="onLoginSubmit()">
+      <input type="text" [(ngModel)]="loginUsername" name="username" placeholder="Username">
+      <input type="password" [(ngModel)]="loginPassword" name="password" placeholder="Password">
+      <button type="submit">Login</button>
+      <p class="error" *ngIf="loginError">{{ loginError }}</p>
+    </form>
+  </div>
+</div>
 
 
 

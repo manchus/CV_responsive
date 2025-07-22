@@ -6,10 +6,6 @@ import { SharedService } from './services/shared.service';
 import { LeftBarComponent } from './components/left-bar/left-bar.component';
 import { TopComponent } from './components/top/top.component';
 
-import pdfMake from "pdfmake/build/pdfmake";
-import pdfFonts from "pdfmake/build/vfs_fonts";
-//pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
 
 import {
   TranslocoModule,

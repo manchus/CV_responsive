@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   TranslocoModule,
@@ -7,7 +7,6 @@ import {
 } from '@jsverse/transloco';
 import { VisitCounterService } from '../../services/visit-counter.service';
 import { RouterLink } from '@angular/router';
-import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'app-top',
@@ -27,24 +26,14 @@ export class TopComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-
     this.visitCount = await this.visitCounterService.getCounter();
-
     await this.visitCounterService.incrementCounter();
-
     this.translocoService.langChanges$.subscribe(lang => {
       this.currentLang = lang;
     });
 
   }
   mnuLang(lang: string) {
-
     this.translocoService.setActiveLang(lang)
-console.log("Lenguaje recien cambiado : ",this.translocoService.getActiveLang());
-    /* Unificacion idiomas
-    this.lngActive = lang;
-    this.sharedService.setLanguage(lang);
-
-    */
   }
 }
