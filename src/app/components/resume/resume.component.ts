@@ -41,6 +41,7 @@ export class ResumeComponent{
   projects: any =[];
   skills: any = [];
    experiencesFull: Experience[] =[];
+  studies: any = [];
 
   experiencePath :string="";
   volunt :any=[];
@@ -49,9 +50,9 @@ export class ResumeComponent{
   target: string="";
 
 positionTitles: { [key: string]: string } = {
-  dev: 'Full Stack Developer',
-  db: 'Database Analyst',
-  tech: 'Technical Support',
+  dev: 'profiles.dev',
+  db: 'profiles.db',
+  tech: 'profiles.tech',
 };
 
   detailSkills(activeHit : string){
@@ -69,7 +70,7 @@ positionTitles: { [key: string]: string } = {
   }
 
   refreshSkills() {
-    this.service.getProfile("hv_"+this.currentLang).subscribe((res) => {this.profile = res }, (error) => {  console.log("Error : ",error);});
+    this.service.getProfile("hv_"+this.currentLang).subscribe((res) => {this.profile = res });
     this.service.getProjects("hv_"+this.currentLang).subscribe((res) => (this.projects = res));
     this.service.getSkills("hv_"+this.currentLang).subscribe((res) => (this.skills = res));
     this.service.getExperienceWithDetails("hv_"+this.currentLang).subscribe((res) => {
@@ -86,6 +87,7 @@ positionTitles: { [key: string]: string } = {
     this.experiencePath="hv_"+this.currentLang+"/experiences/experience/";
     this.service.getVolunt("hv_"+this.currentLang).subscribe((res) => (this.volunt = res));
     this.service.getVoluntDetail("hv_"+this.currentLang).subscribe((res) => (this.voluntDetail = res));
+    this.service.getStudy("hv_"+this.currentLang).subscribe((res) => (this.studies = res));
 
   }
 
@@ -119,7 +121,7 @@ positionTitles: { [key: string]: string } = {
                       {text: 'Herrera ', style: 'header', bold: true},
                     ]
                   },
-                  {text: this.positionTitles[this.profSelected], fontSize: 18, bold: true, color: '#44546A'},
+                  {text: this.translocoService.translate(this.positionTitles[this.profSelected]) , fontSize: 18, bold: true, color: '#44546A'},
                 ]
             },
             {
@@ -151,7 +153,7 @@ positionTitles: { [key: string]: string } = {
    {
     width: '*',
     stack:  [
-        { text: [{text: 'Skills', fontSize: 15, bold: true, color: '#44546A' }],
+        { text: [{text: this.translocoService.translate('skills'), fontSize: 15, bold: true, color: '#44546A' }],
           margin: [0, 4, 0, 0]
         },
       ],
@@ -163,9 +165,12 @@ positionTitles: { [key: string]: string } = {
     { text: '\n ', fontSize: 2 },
     ...this.buildSkillsPDF(),
        { text: '\n ', fontSize: 5 },
-    { text: 'Experience', fontSize: 14, bold: true, color: '#44546A' },
+    { text: this.translocoService.translate('experience'), fontSize: 14, bold: true, color: '#44546A' },
     { text: '\n ', fontSize: 2},
-   ...this.buildExperiencePDF()
+   ...this.buildExperiencePDF(),
+       { text: this.translocoService.translate('study'), fontSize: 14, bold: true, color: '#44546A' },
+      { text: '\n ', fontSize: 2},
+   ...this.buildStudiesPDF()
       ],
       styles:{
         header:{
@@ -175,7 +180,11 @@ positionTitles: { [key: string]: string } = {
     };
 
    pdfMake.createPdf(docDefinition).open();
-    //pdfMake.createPdf(docDefinition).download("German"+this.currentLang+".pdf")
+   // pdfMake.createPdf(docDefinition).download("German"+this.currentLang+".pdf");
+
+
+
+
   }
 
 private buildProfiPDF(): any[]{
@@ -189,6 +198,24 @@ private buildSkillsPDF(): any[]{
     return this.skills.filter((p: any) => p.position === this.profSelected || p.position === 'general' ).map((p: any)=>[
       {text:`- ${p.p} `,fontSize: 11.5, italics: true, alignment:'justify', margin: [15, 0, 15, 0] },
       // { text: '\n' }
+    ]) ;
+  }
+
+private buildStudiesPDF(): any[]{
+    return this.studies.map((p: any)=>[
+      {text:[
+          ` `,
+          {text:  `- ${p.level} `,fontSize: 12.5, italics: true },
+          {text:`${p.name} `,fontSize: 13.5, bold: true },
+          {text:` - ${p.year} `,fontSize: 13.5, color: '#333333'},
+      ]},
+      {text:[
+          `    `,
+          {text:` ${p.place} `,fontSize: 11.5, italics: false, color: '#333333' },
+          {text:`, ${p.city} `,fontSize: 11.5, italics: true, color: '#333333' },
+          {text:` - `,fontSize: 13, color: '#FFFFFF' },
+      ]},
+
     ]) ;
   }
 

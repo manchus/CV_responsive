@@ -4,9 +4,6 @@ import { addDoc, collection, deleteDoc, doc,  query, where } from '@firebase/fir
 import { Subject, switchMap, map, combineLatest } from 'rxjs';
 import { Experience,   } from '../models/post.model';
 
-import * as pdfMake from "pdfmake/build/pdfmake";
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-(<any>pdfMake).addVirtualFileSystem(pdfFonts);
 
 @Injectable({
   providedIn: 'root'
@@ -100,11 +97,9 @@ export class SharedService {
    }
 
   getProject(lng : string, item: string){
-    console.log("Ruta :",lng+"/projects/project","    ID: ",item)
     let docRef = doc(this.fs,lng+'/projects/project/'+item);
-    console.log("Documento : ",docRef);
     return docData(docRef);
-   }
+    }
 
   getDetailsExperience(idExp: string){
     let experienceCollection = collection(this.fs, idExp+"/details");
@@ -124,7 +119,7 @@ export class SharedService {
     return collectionData(profileCollection,{idField:'id'});
   }
 
-  get(lng : string){
+  getVoluntItem(lng : string){
     let skillsCollection = collection(this.fs, lng+"/volunteering/volunteering");
     return collectionData(skillsCollection,{idField:'id'});
   }

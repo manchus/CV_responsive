@@ -6,6 +6,14 @@
 
 }
 
+.study-place {
+  font-style: italic;
+  margin-top: -1em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+
+
+}
 
 .profile-button {
     filter: invert(100%);

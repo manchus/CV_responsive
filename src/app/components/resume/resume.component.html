@@ -13,8 +13,7 @@
             <button class="profile-button" title="Support" (click)="updateProfil('tech')"><i class="fa-solid fa-screwdriver-wrench"></i></button>
       </span>
     </h3>
-<h2 class="title2">{{positionTitles[profSelected]}} &nbsp;</h2>
-
+<h2 class="title2">{{ positionTitles[profSelected]  | transloco}} &nbsp;</h2>
     <span *ngFor="let prof of profile">
       <span *ngIf="profSelected == prof.position || prof.position == 'general'" class="text-justify">
         <p class="text-justify">{{ prof.sentence }}</p>
@@ -79,9 +78,14 @@
     </ul>
   </div>
 
-  <!-- Professional Skills Section
-  <div class="about skills">
-  </div> -->
+  <!-- Studies Section -->
+  <h2 class="title2">{{ 'study'| transloco }}</h2>
+  <div class="about study">
+    <div *ngFor="let study of studies" class="list-inline">
+      <p class="text-justify"><i class="fa-solid fa-graduation-cap"></i> <span class="text-justify h4"> {{ study.level }}  {{ study.name }} - {{ study.year }}</span></p>
+      <p class="study-place">{{ study.place }} | {{ study.city }}</p>
+    </div>
+  </div>
 
   <!-- Interests Section -->
   <div class="about interest">

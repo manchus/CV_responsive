@@ -48,7 +48,6 @@ export class PostDetailComponent implements OnInit {
       this.tmp = this.post?.summary ?? '';
       this.summary= this.post?.isHtml ? this.sanitizer.bypassSecurityTrustHtml(this.tmp) : this.tmp;
       this.dislikes = this.post?.dislikes ? this.post?.dislikes : 0;
-      console.log("isHtml value:", this.post?.isHtml);
     }
   }
 
@@ -79,7 +78,6 @@ export class PostDetailComponent implements OnInit {
       (result) => {
         this.response = result;
         this.isLoading = false;
-        console.log('Respuesta de DeepSeek:', result);
       },
       (error) => {
         console.error('Error al llamar a la API de DeepSeek:', error);

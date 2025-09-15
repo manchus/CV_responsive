@@ -43,14 +43,12 @@ export class CreatePostComponent {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log('Imagen seleccionada :', this.selectedFile);
   }
 
   uploadImage() {
     if (this.selectedFile) {
       this.storageService.uploadImage(this.selectedFile).subscribe(
         (response: string) => {
-          console.log('Respuesta del backend:', response);
           this.imageUrl = response;
         },
         (error) => {
@@ -108,11 +106,9 @@ export class CreatePostComponent {
 
   is_Html() {
     this.isHtml = !this.isHtml;
-    console.log('Valor Select :', this.isHtml);
   }
 
   addBlock() {
-    console.log('Cambio: ', this.contentBlock);
     const block: PostContentBlock = {
       id: uuidv4(),
       type: this.newBlockType,

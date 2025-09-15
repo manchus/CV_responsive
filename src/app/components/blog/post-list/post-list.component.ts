@@ -54,7 +54,6 @@ export class PostListComponent implements OnInit {
       this.filteredPosts = this.posts;
     } else {
       const term = this.searchTerm.toLowerCase();
-      console.log('Termino de busqueda: ', term);
       this.filteredPosts = this.posts.filter(
         (post) =>
           post.title.toLowerCase().includes(term) ||
@@ -68,9 +67,7 @@ export class PostListComponent implements OnInit {
 
   searchCat(cat:  string){
     this.searchTerm = cat;
-    console.log("Categoria Seleccionada : ", cat);
     const term = this.searchTerm.toLowerCase();
-    console.log('Termino de busqueda: ', term);
     this.filteredPosts = this.posts.filter(
       (post) => post.title.toLowerCase().includes(term) ||
         post.categories.some((category) =>

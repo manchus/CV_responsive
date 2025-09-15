@@ -1,6 +1,11 @@
 {
   "entry": "Como profesional, he tenido la oportunidad de desempeñarme en múltiples roles, desarrollando diversas competencias de forma integral. Sin embargo, cuando se requiere especialización, puedes explorar cómo he aplicado mis habilidades en contextos más específicos según el rol: desarrollador, analista de datos y encargado de soporte técnico.",
   "profile": "Perfil Profesional",
+  "profiles":{
+  "dev": "Desarrollador Full Stack",
+  "db": " Analista de Bases de Datos",
+  "tech": "Soporte Tecnico"
+  },
   "skills": "Competencias",
   "experience": "Experiencia",
   "volunteering": "Trabajo Voluntario",
