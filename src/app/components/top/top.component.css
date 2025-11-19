@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: calc(var(--spacing-unit) * 1.25);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .profileText .imgBx
@@ -26,18 +26,18 @@
 }
 .profileText h2
 {
-  color: #fff;
-  font-size: 1.5em;
-  margin-top: 15px;
+  color: var(--text-color-primary);
+  font-size: var(--font-size-lg);
+  margin-top: calc(var(--spacing-unit) * 1.875);
   text-transform: uppercase;
   text-align: center;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold);
   line-height: 1.4em;
 }
 .profileText h2 span
 {
   font-size: 0.8em;
-  font-weight: 200px;
+  font-weight: var(--font-weight-light);
 }
 
 /* Estilos de prueba */
@@ -48,61 +48,67 @@ ul {
 
 a{
   text-decoration: none;
-  color: white;
+  color: var(--text-color-primary);
 }
 
 .button-item {
   display: block; /* Makes it behave like a button */
-  padding: 5px 10px; /* Adds spacing inside the button */
-  background-color: lightgray; /* Light grey background */
-  color: white; /* White text */
+  padding: calc(var(--spacing-unit) * 0.625) calc(var(--spacing-unit) * 1.25);
+  background-color: var(--bg-color-tertiary);
+  color: var(--text-color-primary);
   text-align: center; /* Centers the text */
   border-radius: 12px; /* Rounds the corners */
   cursor: pointer; /* Changes the cursor to indicate it's clickable */
   transition: background 0.3s ease; /* Smooth hover effect */
   width: 100px; /* Set a fixed width (optional) */
-  margin-bottom: 10px; /* Adds spacing between items */
+  margin-bottom: var(--spacing-unit);
 }
 
 .button-item:hover {
-  background-color: gray; /* Darker grey on hover */
+  background-color: var(--secondary-color);
+  color: var(--text-color-light);
 }
 
 /* @media (max-width: 420px) { */
   .buttons{
-   margin-top:5px;
+   margin-top:calc(var(--spacing-unit) * 0.625);
    display: center; /* Makes it behave like a button */
    justify-content:center;
-   gap: 20px;
+   gap: calc(var(--spacing-unit) * 2.5);
   }
 
   .button-item-2 {
     /* display: inline-flex; /*Makes it behave like a button */
-    margin-inline: 20px;
+    margin-inline: calc(var(--spacing-unit) * 2.5);
     justify-content: center;
-    padding: 3px 10px; /* Adds spacing inside the button */
-    background-color: darkgray; /* Light grey background */
-    color: white; /* White text */
+    padding: calc(var(--spacing-unit) * 0.375) calc(var(--spacing-unit) * 1.25);
+    background-color: var(--bg-color-tertiary);
+    color: var(--text-color-primary);
     text-align: center; /* Centers the text */
     border-radius: 12px; /* Rounds the corners */
     cursor: pointer; /* Changes the cursor to indicate it's clickable */
     transition: background 0.3s ease; /* Smooth hover effect */
     width: min-width; /* Set a fixed width (optional) */
-    margin-bottom: 8px; /* Adds spacing between items */
-    /* margin-left: 5px; */
+    margin-bottom: var(--spacing-unit);
   }
 
   .button-item-2:hover {
-    background-color: gray; /* Darker grey on hover */
+    background-color: var(--secondary-color);
+    color: var(--text-color-light);
   }
-/* }
 
-@media (min-width: 421px) {
-  .buttons{
-    margin-top: 10px;
-    display: none;
-    justify-content:space-around;
-  }
-   } */
+.server-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  display: inline-block;
+}
+
+.server-status.running {
+  background-color: green;
+}
+
+
 
 

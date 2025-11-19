@@ -30,7 +30,7 @@ export class LeftBarComponent{
       this.translocoService.langChanges$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(lang => {
-          this.currentLang = lang;
+           this.service.getStudy("hv_"+this.currentLang).subscribe((res) => (this.studies = res));
       });
 
     this.authService.isAuthenticated$.subscribe(isAuth => {
@@ -38,7 +38,4 @@ export class LeftBarComponent{
     });
     }
 
-  refreshSkills() {
-    this.service.getStudy("hv_"+this.translocoService.getActiveLang()).subscribe((res) => (this.studies = res));
-  }
 }

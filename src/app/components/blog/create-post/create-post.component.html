@@ -1,86 +1,95 @@
-
 <form>
   <div class="form-group">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="h3 form-group row">
+          <label class="col-md-2 col-form-label">Title</label>
+          <div class="col-md-10">
+            <input type="text" class="form-control-plaintext mytxt" [(ngModel)]="title" name="title" placeholder="Title" required>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="h3 form-group row">
+          <label class="col-md-2 col-form-label">Autor</label>
+          <div class="col-md-8">
+            <input type="text" class="form-control-plaintext mytxt" [(ngModel)]="author" name="author" placeholder="Author" required>
+          </div>
+        </div>
+      </div>
 
-    <div class="h3 form-group row">
-      <label class="col-sm-2 col-form-label">Title</label>
-      <div class="col-sm-8">
-        <input type="text" class="form-control-plaintext mytxt" [(ngModel)]="title" name="title" placeholder="Title" required>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label class="h3" >Summary</label>
+          <textarea class="form-control" rows="4" [(ngModel)]="summary" name="content" placeholder="Contenido" required></textarea>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="chkIsHtml" name="isHtml" [(ngModel)]="isHtml" >
+          <label class="h5" for="chkIsHtml">HTML</label>
+        </div>
+      </div>
+      <div class="form-group col-md-4">
+        <label class="h3 " for="categoriesSelector">Categories</label>
+        <select multiple class="form-control" id="categoriesSelector" [(ngModel)]="categories" name="categories">
+          <option value="tecnologia">Tecnología</option>
+          <option value="programacion">Programación</option>
+          <option value="diseño">Diseño</option>
+          <option value="educacion">Educación</option>
+        </select>
       </div>
     </div>
-    <div class="form-group">
-      <label class="h3" >Summary</label>
-      <textarea class="form-control" rows="5" [(ngModel)]="summary" name="content" placeholder="Contenido" required></textarea>
-    </div>
 
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="chkIsHtml" name="isHtml" [(ngModel)]="isHtml" (change)="is_Html()">
-      <label class="h3" for="chkIsHtml">HTML {{isHtml}} </label>
-    </div>
-
-
-    <div class="h3 form-group row">
-      <label class="col-sm-2 col-form-label">Autor</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control-plaintext mytxt" [(ngModel)]="author" name="author" placeholder="Author" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="h3" for="categoriesSelector">Categories</label>
-      <select multiple class="form-control" id="categoriesSelector" [(ngModel)]="categories" name="categories">
-        <option value="tecnologia">Tecnología</option>
-        <option value="programacion">Programación</option>
-        <option value="diseño">Diseño</option>
-        <option value="educacion">Educación</option>
-      </select>
-    </div>
     <div class="h4 form-group">
-      <label class="" for="fileUpload">Example file input</label>
-      <input  class="btn btn-secondary" type="file" class="form-control-file" id="fileUpload"  (change)="onFileSelected($event)" accept="image/*">
-      <button  class="btn btn-secondary" (click)="uploadImage()">Subir Imagen</button>
+      <label class="" for="fileUpload">Image post</label>
+      <div class="drop-zone"
+           (dragover)="onDragOver($event)"
+           (dragleave)="onDragLeave($event)"
+           (drop)="onDrop($event)"
+           (click)="fileUpload.click()"
+           [class.dragging]="isDragging">
+        <p>Drag and drop an image here or click to select</p>
+        <input type="file" #fileUpload id="fileUpload" (change)="onFileSelected($event)" accept="image/*" style="display: none">
+      </div>
       <p *ngIf="imageUrl">Imagen subida: {{ imageUrl }}</p>
     </div>
-    <button  class="btn btn-secondary" (click)="createPost(title,author, categories)">Publicar</button>
+    <button  class="btn btn-secondary" (click)="createPost(title,author, categories)"><i class="fa-solid fa-bookmark"></i>&nbsp;Post</button>&nbsp;
+    <button class="btn btn-info" (click)="quit()"><i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;Quit</button>
   </div>
+  <br />
 
-
-
-
-
-
-<div *ngFor="let block of contentBlock; let i = index; trackBy: trackById" class="mb-3 border p-3">
-  {{ block.data }} , {{ block.type }}
-  <div [ngSwitch]="block.type">
-    <div *ngSwitchCase="'title'">
-
-      <label>Titre</label>
-      <input [(ngModel)]="block.data" type="text" [name] ="'block'+i" class="form-control" placeholder="Titre..." />
+  <div *ngFor="let block of contentBlock; let i = index; trackBy: trackById" class="mb-3 border p-3">
+    <div [ngSwitch]="block.type">
+      <div *ngSwitchCase="'title'">
+        <label>Titre</label>
+        <input [(ngModel)]="block.data" type="text" [name] ="'block'+i" class="form-control" placeholder="Titre..." />
+      </div>
+      <div *ngSwitchCase="'paragraph'">
+        <label>Paragraphe</label>
+        <textarea [(ngModel)]="block.data" [name] ="'block'+i" class="form-control" rows="3" placeholder="Paragraphe..."></textarea>
+      </div>
+      <div *ngSwitchCase="'quote'">
+        <label>Citacion</label>
+        <input [(ngModel)]="block.data" [name] ="'block'+i" class="form-control" placeholder="Citation..." />
+      </div>
+      <div *ngSwitchCase="'code'">
+        <label>Code</label>
+        <textarea [(ngModel)]="block.data.content" [name] ="'codeContent'+i" class="form-control" placeholder="Code..."></textarea>
+        <input [(ngModel)]="block.data.language" [name] ="'codeLang'+i" class="form-control mt-1" placeholder="Langage (ts, js...)" />
+      </div>
+      <div *ngSwitchCase="'image'">
+        <label>Image URL</label>
+        <input [(ngModel)]="block.data.url" class="form-control" placeholder="https://..." />
+        <label>Légende</label>
+        <input [(ngModel)]="block.data.caption" class="form-control" placeholder="Description" />
+      </div>
     </div>
-    <div *ngSwitchCase="'paragraph'">
-      <label>Paragraphe</label>
-      <textarea [(ngModel)]="block.data" [name] ="'block'+i" class="form-control" rows="3" placeholder="Paragraphe..."></textarea>
-    </div>
-    <div *ngSwitchCase="'quote'">
-      <label>Citacion</label>
-      <input [(ngModel)]="block.data" [name] ="'block'+i" class="form-control" placeholder="Citation..." />
-    </div>
-    <div *ngSwitchCase="'code'">
-      <label>Code</label>
-      <textarea [(ngModel)]="block.data.content" [name] ="'codeContent'+i" class="form-control" placeholder="Code..."></textarea>
-      <input [(ngModel)]="block.data.language" [name] ="'codeLang'+i" class="form-control mt-1" placeholder="Langage (ts, js...)" />
-    </div>
-    <div *ngSwitchCase="'image'">
-      <label>Image URL</label>
-      <input [(ngModel)]="block.data.url" class="form-control" placeholder="https://..." />
-      <label>Légende</label>
-      <input [(ngModel)]="block.data.caption" class="form-control" placeholder="Description" />
-    </div>
+    <button class="btn btn-danger btn-sm mt-2" (click)="removeBlock(i)">🗑️ Supprimer</button>
   </div>
-  <button class="btn btn-danger btn-sm mt-2" (click)="removeBlock(i)">🗑️ Supprimer</button>
-</div>
 
 <div class="mb-3">
-  {{ newBlockType }}
+  <label class="h4">Content type</label>
   <select [(ngModel)]="newBlockType" name ="newBlockType" class="form-control w-50 d-inline">
     <option value="title">Titre</option>
     <option value="paragraph">Paragraphe</option>
@@ -91,32 +100,7 @@
   <button class="btn btn-primary ml-2" (click)="addBlock()">Ajouter bloc</button>
 </div>
 
-
-
-<!-- <div *ngFor="let block of contentBlock; let i = index; trackBy: trackById" class="mb-3 border p-3">
-  <div [ngSwitch]="block.type">
-
-    <div *ngSwitchCase="'paragraph'">
-      <label>Paragraphe</label>
-      <textarea [(ngModel)]="block.data" [name]="'paragraph' + i" class="form-control" rows="3" placeholder="Paragraphe..."></textarea>
-    </div>
-
-    <div *ngSwitchCase="'image'">
-      <label>Image URL</label>
-      <input [(ngModel)]="block.data.url" [name]="'imageUrl' + i" class="form-control" placeholder="https://..." />
-      <label>Légende</label>
-      <input [(ngModel)]="block.data.caption" [name]="'imageCaption' + i" class="form-control" placeholder="Description" />
-    </div>
-
-  </div>
-  <p>⏺️ Données actuelles : {{ block | json }}</p>
-</div> -->
-
-
-
-
 </form>
-
 
 <!-- Add to create-post.component.html -->
 <div class="modal-overlay" *ngIf="showLoginModal">
@@ -130,43 +114,4 @@
     </form>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-<!--
-<h3>Select Your Skills:</h3>
-
-<label *ngFor="let skill of skills">
-  <input type="checkbox" [(ngModel)]="selectedSkills[skill]" (change)="updateSelectedSkills()"> {{ skill }}
-</label>
-
-<!-- Display selected values
- <p><strong>Selected Skills:</strong> {{ selectedSkillList }}</p> -->
-
-
-
-
-<!--
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-checkbox-example',
-  templateUrl: './checkbox-example.component.html'
-})
-export class CheckboxExampleComponent {
-  skills = ['Angular', 'React', 'Vue', 'Node.js'];
-  selectedSkills: { [key: string]: boolean } = {}; // Store checked values
-  selectedSkillList: string[] = [];
-
-  updateSelectedSkills() {
-    this.selectedSkillList = Object.keys(this.selectedSkills)
-      .filter(skill => this.selectedSkills[skill]);
-  }
-} -->
 

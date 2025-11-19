@@ -1,4 +1,4 @@
-import {  ApplicationConfig,  isDevMode, provideZoneChangeDetection} from '@angular/core';
+import {  APP_INITIALIZER, ApplicationConfig,  isDevMode, provideZoneChangeDetection} from '@angular/core';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -10,10 +10,21 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 
 import { provideHttpClient } from '@angular/common/http';
-import { provideTransloco } from '@jsverse/transloco';
+import { TranslocoService, provideTransloco } from '@jsverse/transloco';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { AvailableLanguages, AvailablesLanguages } from './transloco-config';
 
+export function initializeTransloco(translocoService: TranslocoService) {
+  return () => {
+    const browserLang = navigator.language.split('-')[0];
+    const availableLangs = translocoService.getAvailableLangs() as string[];
+    if (availableLangs.includes(browserLang)) {
+      translocoService.setActiveLang(browserLang);
+    } else {
+      translocoService.setActiveLang(AvailableLanguages.FR);
+    }
+  };
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,6 +45,12 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeTransloco,
+      deps: [TranslocoService],
+      multi: true,
+    },
     provideFirebaseApp(() =>
       initializeApp(environment.firebase)
     ),

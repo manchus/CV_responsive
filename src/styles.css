@@ -1,14 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #563e7c;
+  --accent-color: #ffc3df;
+
+  --text-color-primary: #212529;
+  --text-color-secondary: #6c757d;
+  --text-color-light: #f8f9fa;
+
+  --bg-color-primary: rgba(255, 255, 255, 0.9);
+  --bg-color-secondary: #f8f9fa;
+  --bg-color-tertiary: #e9ecef;
+
+  --border-color: #dee2e6;
+
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  --spacing-unit: 8px;
+
+  --left-bar-bg: #f8f9fa;
+  --left-bar-text: #212529;
+}
+
+[data-theme='dark'] {
+  --primary-color: #007bff;
+  --secondary-color: #563e7c;
+  --accent-color: #ffc3df;
+
+  --text-color-primary: #f8f9fa;
+  --text-color-secondary: #adb5bd;
+  --text-color-light: #212529;
+
+  --bg-color-primary: rgba(0, 0, 0, 0.8);
+  --bg-color-secondary: #212529;
+  --bg-color-tertiary: #343a40;
+
+  --border-color: #495057;
+
+  --left-bar-bg: #212529;
+  --left-bar-text: #f8f9fa;
+}
+
 body{
-	/*background: url('./../images/images.png') rgba(0,0,0,0.3); */
-	background: rgba(0,0,0,0.8);
+	background: var(--bg-color-primary);
 	background-blend-mode: multiply;
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;
+  color: var(--text-color-primary);
+  font-size: var(--font-size-md);
 }
+
 .sidebar{
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);

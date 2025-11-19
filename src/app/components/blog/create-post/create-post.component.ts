@@ -27,6 +27,7 @@ export class CreatePostComponent {
   contentBlock: PostContentBlock[] = [];
   newBlockType: PostContentBlock['type'] = 'paragraph';
 
+  isDragging = false;
   showLoginModal = false;
   loginUsername = '';
   loginPassword = '';
@@ -43,6 +44,26 @@ export class CreatePostComponent {
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
+    this.uploadImage();
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+    if (event.dataTransfer?.files) {
+      this.selectedFile = event.dataTransfer.files[0];
+      this.uploadImage();
+    }
   }
 
   uploadImage() {
@@ -104,8 +125,9 @@ export class CreatePostComponent {
     }
   }
 
-  is_Html() {
-    this.isHtml = !this.isHtml;
+  quit() {
+    this.authService.logout();
+    this.routes.navigate(['/posts']);
   }
 
   addBlock() {
