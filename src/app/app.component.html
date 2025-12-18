@@ -1,35 +1,79 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script  src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-  crossorigin="anonymous"></script>
+  crossorigin="anonymous"
+></script>
 
 <body class="overflow-hidden">
-    <app-top/>
-    <div class="row">
-      <div class="col-lg-3 d-none d-lg-block">
-        <app-left-bar />
+  <app-top />
+  <div class="row">
+    <div class="col-lg-3 d-none d-lg-block">
+      <app-left-bar />
+    </div>
+    <div class="col-12 col-lg-9">
+      <router-outlet></router-outlet>
+    </div>
+
+
+    <div class="lang-dock shadow-sm">
+      <div class="lang-handle bg-dark text-white">
+        <span>{{ currentLang | uppercase }}</span>
       </div>
-      <div class="col-12 col-lg-9">
-        <router-outlet></router-outlet>
+
+      <div class="lang-options">
+        <button (click)="mnuLang('en')" class="btn-lang en">EN</button>
+        <button (click)="mnuLang('fr')" class="btn-lang fr">FR</button>
+        <button (click)="mnuLang('es')" class="btn-lang es">ES</button>
       </div>
     </div>
 
+
+    <div class="side-settings-dock">
+      <div class="dock-handle">
+        <i class="icon-settings">⚙️</i>
+      </div>
+
+      <div class="dock-content">
+        <div class="d-flex flex-row flex-lg-row gap-2">
+          <button (click)="toggleTheme()" class="btn btn-sm btn-outline-secondary">
+            <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+          </button>
+          <button (click)="setTextSize('sm')" class="btn btn-sm btn-outline-secondary">A-</button>
+          <button (click)="setTextSize('md')" class="btn btn-sm btn-outline-secondary">A</button>
+          <button (click)="setTextSize('lg')" class="btn btn-sm btn-outline-secondary">A+</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">&nbsp;<i class="fa-solid fa-flag-checkered"></i>&nbsp;&nbsp;{{'hit' | transloco}}</h5>
+          <h5 class="modal-title" id="exampleModalLabel">
+            &nbsp;<i class="fa-solid fa-flag-checkered"></i>&nbsp;&nbsp;{{
+              "hit" | transloco
+            }}
+          </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <ul *ngFor="let hit of hits">
-            <li>{{hit}}</li>
+            <li>{{ hit }}</li>
           </ul>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -44,23 +88,33 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-
-            <p><i class="fa-solid fa-circle-info"></i>&nbsp;{{detailProject.description}}</p>
-            <p><i class="fa-regular fa-file-code"></i>&nbsp;{{detailProject.lang}}</p>
-            <p><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;{{detailProject.tools}}</p>
-            <p><a class="text-decoration-none text-dark" target="_blank" href="https://{{detailProject.repos}}"><i class="fa-brands fa-github"></i>&nbsp;{{detailProject.repos}}</a></p>
-            <p><a class="text-decoration-none text-dark " target="_blank" href="https://{{detailProject.deploy}}"><i class="fa-regular fa-window-restore"></i>&nbsp;{{detailProject.deploy}}</a></p>
-
-
+          <p><i class="fa-solid fa-circle-info"></i>&nbsp;{{detailProject.description}}</p>
+          <p><i class="fa-regular fa-file-code"></i>&nbsp;{{detailProject.lang}}</p>
+          <p><i class="fa-solid fa-screwdriver-wrench"></i>&nbsp;{{detailProject.tools}}</p>
+          <p>
+            <a class="text-decoration-none text-dark"
+              target="_blank"
+              href="https://{{ detailProject.repos }}"
+              ><i class="fa-brands fa-github"></i>&nbsp;{{
+                detailProject.repos
+              }}</a>
+          </p>
+          <p>
+            <a class="text-decoration-none text-dark"
+              target="_blank"
+              href="https://{{ detailProject.deploy }}"
+              ><i class="fa-regular fa-window-restore"></i>&nbsp;{{
+                detailProject.deploy
+              }}</a
+            >
+          </p>
         </div>
         <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
     </div>
   </div>
 </body>
-
-
-
-

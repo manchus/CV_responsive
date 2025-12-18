@@ -46,6 +46,7 @@ ul {
   padding: 0;
 }
 
+
 a{
   text-decoration: none;
   color: var(--text-color-primary);
@@ -108,6 +109,9 @@ a{
 .server-status.running {
   background-color: green;
 }
+
+
+
 
 
 

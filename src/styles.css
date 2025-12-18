@@ -27,7 +27,8 @@
 
   --spacing-unit: 8px;
 
-  --left-bar-bg: #f8f9fa;
+  /* --left-bar-bg: #f8f9fa; */
+  --left-bar-bg: #e8e9ea;
   --left-bar-text: #212529;
 }
 
@@ -63,4 +64,8 @@ body{
 .sidebar{
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
+}
+
+.sidebar .offcanvas-body {
+  overflow-y: auto;
 }

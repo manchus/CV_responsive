@@ -30,11 +30,13 @@ import { AvailableLanguages } from './transloco-config';
 export class AppComponent  implements OnInit{
   private transloco = inject(TranslocoService);
   constructor(
-  //  private readonly translocoService: TranslocoService,
+  private readonly translocoService: TranslocoService,
     private service: SharedService
   ) {}
 
+
   currentLang: string = this.transloco.getActiveLang();
+   isDarkMode: boolean = false;
 
   title = 'personal';
   skills: any = [];
@@ -74,6 +76,9 @@ export class AppComponent  implements OnInit{
       var wordsProject = this.currentHit;
       this.hitsProject = wordsProject;
     });
+
+        this.initializeTheme();
+    this.initializeTextSize();
   }
 
   public languajes: { code: AvailableLanguages; name: string}[] = [
@@ -99,6 +104,53 @@ export class AppComponent  implements OnInit{
     this.service.deleteSkill(id).then(() => {
       this.refreshSkills();
     });
+  }
+
+
+   initializeTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      this.isDarkMode = true;
+      document.body.setAttribute('data-theme', 'dark');
+    } else {
+      this.isDarkMode = false;
+      document.body.removeAttribute('data-theme');
+    }
+  }
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      document.body.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.body.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  initializeTextSize() {
+    const savedSize = localStorage.getItem('font-size');
+    if (savedSize) {
+      this.setTextSize(savedSize);
+    } else {
+      this.setTextSize('md');
+    }
+  }
+
+  setTextSize(size: string) {
+    let fontSize = '16px'; // Default medium
+    if (size === 'sm') {
+      fontSize = '14px';
+    } else if (size === 'lg') {
+      fontSize = '18px';
+    }
+    document.documentElement.style.fontSize = fontSize;
+    localStorage.setItem('font-size', size);
+  }
+
+  mnuLang(lang: string) {
+    this.translocoService.setActiveLang(lang);
   }
 
 }

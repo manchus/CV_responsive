@@ -7,31 +7,6 @@
       <h2>German Herrera<br><span>Web Developer</span></h2>
   </div>
 
-    <div id="textCarousel" class="carousel slide">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-              <a class="d-block text-center text-decoration-none fs-4 fw-bold" routerLink="/resume"  routerLinkActive="active">📑 {{ 'cv' | transloco }}</a>
-            </div>
-            <div class="carousel-item">
-              <a class="d-block text-center text-decoration-none fs-4 fw-bold" routerLink="/posts"  routerLinkActive="active">📓  Posts</a>
-            </div>
-            <div class="carousel-item" *ngIf="authService.isAuthenticated$ | async">
-              <a class="d-block text-center text-decoration-none fs-4 fw-bold" routerLink="/create"  routerLinkActive="active">✏️  Create</a>
-            </div>
-            <div class="carousel-item" *ngIf="!(authService.isAuthenticated$ | async)">
-              <a class="d-block text-center text-decoration-none fs-4 fw-bold" routerLink="/login"  routerLinkActive="active">🔒 Login</a>
-            </div>
-        </div>
-
-        <!-- Carousel Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#textCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#textCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </button>
-    </div>
-
   <div class="contactInfo">
       <h3 class="title">{{ 'info' | transloco }}</h3>
       <ul class="list-inline justify-content-center align-items-center fs-5 flex-grow-1 pe-3">

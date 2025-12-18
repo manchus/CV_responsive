@@ -5,20 +5,39 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="sidebar offcanvas offcanvas-start row" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/resume"  routerLinkActive="active">{{ 'cv' | transloco }} <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/posts"  routerLinkActive="active">Posts</a>
+      </li>
+      @if ( isServerRunning$ |async) {
+        @if (authService.isAuthenticated$ | async) {
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/create"  routerLinkActive="active">Create</a>
+      </li>
+      } @else {
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login"  routerLinkActive="active">Login</a>
+      </li>
+      }
+    }
+    </ul>
+  </div>
+
+  <div class="sidebar offcanvas offcanvas-start row" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 
       <div class="offcanvas-header text-white border-bottom">
 				<h5 class="offcanvas-title" id="offcanvasNavbarLabel">German Herrera</h5>
 				<button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
 
-
       <div class="buttons d-lg-none">
-        <!-- <div  > -->
         <a class="button-item-2" routerLink="/resume"  routerLinkActive="active">Resume</a>
-          <a class="button-item-2" routerLink="/posts"  routerLinkActive="active">Posts</a>
-          <!-- <a class="button-item-2" routerLink="/create"  routerLinkActive="active">Create</a> -->
-        </div>
+        <a class="button-item-2" routerLink="/posts"  routerLinkActive="active">Posts</a>
+      </div>
 
       <div class="offcanvas-body d-flex flex-column flex-lg-row p-4 p-lg-0">
 
@@ -60,28 +79,11 @@
             </li>
         </ul>
 
-        <div class="d-flex flex-column flex-lg-row justify-content-end align-items-center gap-3">
-          <div class="d-flex flex-row flex-lg-row gap-3">
-            <button (click)="mnuLang('en')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-primary bg-darken-xs" data-tor="hover:bg(light)">EN</button>
-            <button (click)="mnuLang('fr')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-danger bg-darken-xs" data-tor="hover:bg(light)">FR</button>
-            <button (click)="mnuLang('es')" class="text-white text-decoration-none px-3 py-1 rounded-4 bg-warning bg-darken-xs" data-tor="hover:bg(light)">ES</button>
-          </div>
-
-          <div class="d-flex flex-row flex-lg-row gap-2">
-            <button (click)="toggleTheme()" class="btn btn-sm btn-outline-secondary">
-              <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
-            </button>
-            <button (click)="setTextSize('sm')" class="btn btn-sm btn-outline-secondary">A-</button>
-            <button (click)="setTextSize('md')" class="btn btn-sm btn-outline-secondary">A</button>
-            <button (click)="setTextSize('lg')" class="btn btn-sm btn-outline-secondary">A+</button>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 </nav>
 <div class="d-flex align-items-center" style="position: absolute; top: 10px; right: 10px; z-index: 1050;">
   <!-- <p class="mb-0 me-2">Visitas: {{ visitCount }}</p> -->
-  <div class="server-status" [class.running]="isServerRunning"></div>
+  <div class="server-status" [class.running]="isServerRunning$ | async"></div>
 </div>

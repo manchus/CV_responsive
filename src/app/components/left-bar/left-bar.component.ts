@@ -7,6 +7,9 @@ import { AuthService } from '../../services/auth.service';
 
 import { RouterLink } from '@angular/router';
 
+import { Observable } from 'rxjs';
+import { HealthCheckService } from '../../services/health-check.service';
+
 import { SharedService } from '../../services/shared.service';
 
 @Component({
@@ -18,24 +21,24 @@ import { SharedService } from '../../services/shared.service';
 })
 export class LeftBarComponent{
   private destroyRef = inject(DestroyRef);
+    isServerRunning$: Observable<boolean>;
 
 
   studies: any =[];
   currentLang: string=this.translocoService.getActiveLang();
 
-  isAuthenticated = false;
+
 
   constructor(private readonly translocoService: TranslocoService,
-    private service: SharedService, public authService: AuthService) {
-      this.translocoService.langChanges$
-      .pipe(takeUntilDestroyed(this.destroyRef))
+    private service: SharedService,
+    private healthCheckService: HealthCheckService) {
+      this.isServerRunning$ = this.healthCheckService.isServerRunning$;
+      this.translocoService.langChanges$.pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(lang => {
            this.service.getStudy("hv_"+this.currentLang).subscribe((res) => (this.studies = res));
       });
 
-    this.authService.isAuthenticated$.subscribe(isAuth => {
-      this.isAuthenticated = isAuth;
-    });
+
     }
 
 }
