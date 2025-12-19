@@ -1,7 +1,12 @@
-.date-entry {
-  color:lightgray;
+.main-entry {
+  color: var(--text-color-primary);
+  padding: var(--spacing-unit);
+  width: 90%;
 }
 
+.date-entry {
+  color: var(--text-color-secondary);
+}
 
 .image-post{
    max-width: 80%;
@@ -15,7 +20,82 @@
 }
 
 .cat-btn{
-  margin: 10px;
+  margin: var(--spacing-unit);
+}
+
+.blog-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color-primary);
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: calc(var(--spacing-unit) * 2.5) var(--spacing-unit);
+}
+
+.blog-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-top: calc(var(--spacing-unit) * 2.5);
+  margin-bottom: var(--spacing-unit);
+  color: var(--text-color-primary);
+  border-left: 5px solid var(--primary-color);
+  padding-left: calc(var(--spacing-unit) * 1.5);
+}
+
+.blog-paragraph {
+  font-size: var(--font-size-md);
+  margin-bottom: calc(var(--spacing-unit) * 1.875);
+  text-align: justify;
+}
+
+.blog-quote {
+  font-style: italic;
+  background-color: var(--bg-color-secondary);
+  border-left: 4px solid var(--primary-color);
+  padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.25);
+  margin: calc(var(--spacing-unit) * 1.25) 0;
+  color: var(--text-color-secondary);
+}
+
+.blog-code {
+  background-color: var(--bg-color-tertiary);
+  color: var(--text-color-light);
+  padding: var(--spacing-unit);
+  border-radius: 6px;
+  font-family: 'Courier New', Courier, monospace;
+  overflow-x: auto;
+  font-size: var(--font-size-sm);
+  margin-bottom: calc(var(--spacing-unit) * 1.875);
+  white-space: pre-wrap;
+}
+
+.blog-image {
+  display: block;
+  margin: calc(var(--spacing-unit) * 2.5) auto;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+}
+
+.blog-image-caption {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  margin-top: var(--spacing-unit);
+}
+
+@media (max-width: 600px) {
+  .blog-title {
+    font-size: var(--font-size-lg);
+  }
+
+  .blog-paragraph {
+    font-size: var(--font-size-sm);
+  }
+
+  .blog-code {
+    font-size: 0.85rem; /* Keeping this slightly different for now */
+  }
 }
 
 pre {

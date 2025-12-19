@@ -42,8 +42,13 @@
               "budgets": [
                 {
                   "type": "initial",
+<<<<<<< HEAD
                   "maximumWarning": "5mb",
                   "maximumError": "8mb"
+=======
+                  "maximumWarning": "4mb",
+                  "maximumError": "6mb"
+>>>>>>> recovery-work
                 },
                 {
                   "type": "anyComponentStyle",

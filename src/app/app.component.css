@@ -1,0 +1,102 @@
+@media (max-width: 991.98px) {
+  app-left-bar {
+    display: none;
+  }
+}
+
+
+@media (max-width: 991.98px) {
+  .col-lg-9 {
+    width: 100%;
+  }
+}
+
+
+.modal-content{
+  background-color: var(--bg-color-secondary);
+}
+
+
+
+
+.side-settings-dock {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) translateX(97%); /* Hide 80% of the dock */
+  transition: transform 0.3s ease-in-out;
+  display: flex;
+  background: #333;
+  border-radius: 8px 0 0 8px;
+  padding: 10px;
+  z-index: 1000;
+}
+
+.side-settings-dock:hover {
+  transform: translateY(-50%) translateX(85%); /* Slide in on hover */
+}
+
+.dock-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dock-handle {
+  padding-right: 15px;
+  align-self: center;
+  cursor: pointer;
+}
+
+
+
+.lang-dock {
+  position: fixed;
+  right: 0;
+  top: 30%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 1100;
+  transition: transform 0.3s ease;
+  transform: translateX(calc(100% - 50px));
+}
+
+.lang-dock:hover {
+  transform: translateX(calc(100% - 200px));
+}
+
+.lang-handle {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px 0 0 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.lang-options {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  border-radius: 8px 0 0 8px;
+  backdrop-filter: blur(5px);
+}
+
+.btn-lang {
+  border: none;
+  padding: 5px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.btn-lang:hover { opacity: 0.8; }
+.btn-lang.en { background-color: #0d6efd; } /* bg-primary */
+.btn-lang.fr { background-color: #dc3545; } /* bg-danger */
+.btn-lang.es { background-color: #ffc107; } /* bg-warning */

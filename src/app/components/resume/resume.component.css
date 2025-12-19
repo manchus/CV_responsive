@@ -1,4 +1,40 @@
 .main{
-  color: white;
-  padding: 0.5em;
+  color: var(--text-color-primary);
+  padding: var(--spacing-unit);
+  max-width: 800px;
+  width: 100%;
+
+}
+
+.study-place {
+  font-style: italic;
+  margin-top: calc(var(--spacing-unit) * -1.25);
+  margin-bottom: var(--spacing-unit);
+  margin-left: var(--spacing-unit);
+
+
+}
+
+.profile-button {
+    filter: invert(100%);
+    border: none;
+    padding: calc(var(--spacing-unit) * 0.125) calc(var(--spacing-unit) * 0.625);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button:hover {
+    background-color: var(--bg-color-tertiary);
+}
+
+
+.pdf-button {
+  color: var(--text-color-light);
+  background-color: var(--bg-color-secondary);
+    text-align: center;
+    border: none;
+    padding: calc(var(--spacing-unit) * 0.25) calc(var(--spacing-unit) * 0.25);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
 }

@@ -5,7 +5,7 @@ import { collection, query, orderBy, Firestore, collectionData, docData, addDoc,
 
 
 
-import { Subject, BehaviorSubject, switchMap, map, combineLatest, Observable, forkJoin } from 'rxjs';
+import { Subject, BehaviorSubject, switchMap, map, combineLatest, Observable, forkJoin, from } from 'rxjs';
 import { Post, Experience, Detail  } from '../models/post.model';
 
 
@@ -72,12 +72,12 @@ getProfile(lng : string): Observable<Profile[]>{
     return collectionData(q,{idField:'id'}) as Observable<Profile[]>;
   }
 */
-getProfile(lng : string): Promise<Profile[]>{
+getProfile(lng : string): Observable<Profile[]>{
   const profileCollection = collection(this.fs, `${lng}/profile/profile`);
    const q = query(profileCollection, orderBy("id"))
-   return getDocs(q).then(snapshot =>
+   return from(getDocs(q).then(snapshot =>
      snapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Profile))
-   );
+   ));
  }
 
     /*
@@ -90,12 +90,12 @@ getProfile(lng : string): Promise<Profile[]>{
 
 
 
-  getSkills(lng : string): Promise<any[]>{
+  getSkills(lng : string): Observable<any[]>{
     let skillsCollection = collection(this.fs, `${lng}/skills/skill`);
     const q = query(skillsCollection, orderBy("id"))
-    return getDocs(q).then(snapshot =>
+    return from(getDocs(q).then(snapshot =>
       snapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as any))
-    );
+    ));
   }
 
   getExperience(lng : string){
@@ -119,28 +119,27 @@ getProfile(lng : string): Promise<Profile[]>{
             }))
           );
         });
-        //return combineLatest(experiencesWithDetails);
-        return forkJoin(experiencesWithDetails);
+        return combineLatest(experiencesWithDetails);
+        //return forkJoin(experiencesWithDetails);
       })
     );
    }
 
 
 
-   getProjects(lng : string): Promise<any[]>{
+   getProjects(lng : string): Observable<any[]>{
     let experienceCollection = collection(this.fs, `${lng}/projects/project`);
     const q = query(experienceCollection, orderBy("n"))
-    return getDocs(q).then(snapshot =>
+    return from(getDocs(q).then(snapshot =>
       snapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as any))
-    );
+    ));
    }
 
    getProject(lng : string, item: string){
     console.log("Ruta :",`${lng}/projects/project`,"    ID: ",item)
     let docRef = doc(this.fs,lng+'/projects/project/'+item);
-    console.log("Documento : ",docRef);
     return docData(docRef);
-   }
+    }
 
    getDetailsExperience(idExp: string){
     let experienceCollection = collection(this.fs, idExp+"/details");

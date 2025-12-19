@@ -7,63 +7,39 @@
       <h2>German Herrera<br><span>Web Developer</span></h2>
   </div>
 
-    <div id="textCarousel" class="carousel slide">
-        <div class="carousel-inner">
-            <!-- Item 1 -->
-            <div class="carousel-item active">
-              <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/resume"  routerLinkActive="active">📑 {{ 'cv' | transloco }}</a>
-            </div>
-            <!-- Item 2 -->
-            <div class="carousel-item">
-              <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/posts"  routerLinkActive="active">📓  Posts</a>
-            </div>
-            <!-- Item 3 -->
-            <div class="carousel-item">
-              <a class="d-block text-center text-decoration-none fs-4 text-light fw-bold" routerLink="/create"  routerLinkActive="active">✏️  Create</a>
-            </div>
-        </div>
-
-        <!-- Carousel Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#textCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#textCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        </button>
-    </div>
-
-  <div class="contactInfo text-white">
+  <div class="contactInfo">
       <h3 class="title">{{ 'info' | transloco }}</h3>
       <ul class="list-inline justify-content-center align-items-center fs-5 flex-grow-1 pe-3">
         <li class="nav-item mx-2">
-          &nbsp;<span class="icon"><i class="fa-solid fa-phone"></i></span>&nbsp;<span class="text">+1 438 408 1220</span>
+          &nbsp;<span class="icon"><i class="fa-solid fa-phone"></i></span>&nbsp;<span>+1 438 408 1220</span>
         </li>
         <li class="nav-item mx-2">
-          &nbsp;<span class="icon"><i class="fa-solid fa-envelope"></i></span>&nbsp;<span class="text">germanherrera75&#64;hotmail.com</span>
+          &nbsp;<span class="icon"><i class="fa-solid fa-envelope"></i></span>&nbsp;<span class="email">germanherrera75&#64;hotmail.com</span>
         </li>
         <li class="nav-item mx-2">
-          &nbsp;<span class="icon"><i class="fa-solid fa-globe"></i></span>&nbsp;<span class="text"><a class="text-decoration-none text-light " target="_blank" href="https://germanherrera.co">germanherrera.co</a></span>
+          &nbsp;<span class="icon"><i class="fa-solid fa-globe"></i></span>&nbsp;<span><a target="_blank" href="https://germanherrera.co">germanherrera.co</a></span>
         </li>
         <li class="nav-item mx-2">
-          &nbsp;<span class="icon"><i class="fa-brands fa-linkedin"></i></span>&nbsp;<span class="text"><a class="text-decoration-none text-light " target="_blank" href="https://www.linkedin.com/in/german-herrera/">/in/german-herrera/</a></span>
+          &nbsp;<span class="icon"><i class="fa-brands fa-linkedin"></i></span>&nbsp;<span><a target="_blank" href="https://www.linkedin.com/in/german-herrera/">/in/german-herrera/</a></span>
         </li>
         <li class="nav-item mx-2">
-          &nbsp;<span class="icon"><i class="fa-solid fa-location-dot"></i></span>&nbsp;<span class="text">Montreal, Canada</span>
+          &nbsp;<span class="icon"><i class="fa-solid fa-location-dot"></i></span>&nbsp;<span>Montreal, Canada</span>
         </li>
         <li class="nav-item mx-2">
-          <a  class="text-decoration-none text-light " target="_blank" href="assets\pdf\CV_Herrera_{{currentLang}}.pdf">
-            <span class="icon"><i class="fa-solid fa-print"></i></span>&nbsp;
+          <span class="icon"><i class="fa-solid fa-print"></i></span>&nbsp;
+          <a target="_blank" href="assets\pdf\CV_Herrera_{{currentLang}}.pdf">
             <span class="text">CV_Herrera_{{currentLang}}</span>
           </a>
         </li>
       </ul>
   </div>
-  <div class="contactInfo text-white">
+  <div class="contactInfo">
       <h3 class="title"> {{ 'study' | transloco }}</h3>
         <ul  class="list-inline" *ngFor="let study of studies">
-          <li><h4>&nbsp;{{study.level}}&nbsp;- &nbsp;<span>{{study.name}}</span></h4></li>
-          <li><h5>{{study.place}}&nbsp;<span>({{study.year}})</span></h5></li>
+          <li><h5>&nbsp;{{study.level}}&nbsp;- &nbsp;<span>{{study.name}}</span></h5></li>
+          <li><h6>{{study.place}}&nbsp;<span>({{study.year}})</span></h6></li>
         </ul>
+
   </div>
   <div class="contactInfo language">
       <h3 class="title">{{ 'lang' | transloco }}</h3>

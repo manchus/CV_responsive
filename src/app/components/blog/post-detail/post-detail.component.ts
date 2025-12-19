@@ -18,15 +18,13 @@ import { MyAIService } from '../../../services/my-ai.service';
   encapsulation: ViewEncapsulation.None,
 })
 
-
 export class PostDetailComponent implements OnInit {
   post: Post | null = null;
-
 
   response = '';
   isLoading = false;
   tmp = '';
-  content: SafeHtml  ='';
+  summary: SafeHtml  ='';
   error: string | null = null;
   tmpdate: Date = new Date();
   likes = 0;
@@ -53,10 +51,9 @@ export class PostDetailComponent implements OnInit {
       this.id = id;
       this.post = await this.blogService.getPostById(id);
       this.likes = this.post?.likes ? this.post?.likes : 0;
-      this.tmp = this.post?.content ?? '';
-      this.content= this.post?.isHtml ? this.sanitizer.bypassSecurityTrustHtml(this.tmp) : this.tmp;
+      this.tmp = this.post?.summary ?? '';
+      this.summary= this.post?.isHtml ? this.sanitizer.bypassSecurityTrustHtml(this.tmp) : this.tmp;
       this.dislikes = this.post?.dislikes ? this.post?.dislikes : 0;
-      console.log("isHtml value:", this.post?.isHtml);
     }
   }
 
@@ -87,7 +84,6 @@ export class PostDetailComponent implements OnInit {
       (result) => {
         this.response = result;
         this.isLoading = false;
-        console.log('Respuesta de DeepSeek:', result);
       },
       (error) => {
         console.error('Error al llamar a la API de DeepSeek:', error);

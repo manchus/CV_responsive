@@ -1,4 +1,9 @@
-        /* Contenedor de la barra de búsqueda */
+.main-list{
+  color: var(--text-color-primary);
+  padding: var(--spacing-unit);
+  width: 90%;
+}
+/* Contenedor de la barra de búsqueda */
         .search-container {
           position: relative;
           width: 220px;
@@ -8,20 +13,22 @@
       /* Input de búsqueda */
       .search-input {
           width: 100%;
-          padding: 8px 35px 8px 10px;
-          border: 2px solid #ccc;
+          padding: var(--spacing-unit) calc(var(--spacing-unit) * 4.375) var(--spacing-unit) calc(var(--spacing-unit) * 1.25);
+          border: 2px solid var(--border-color);
           border-radius: 20px;
           outline: none;
           transition: all 0.4s ease-in-out;
+          background-color: var(--bg-color-secondary);
+          color: var(--text-color-primary);
       }
 
       /* Ícono de búsqueda */
       .search-icon {
           position: absolute;
-          right: 10px;
+          right: calc(var(--spacing-unit) * 1.25);
           top: 50%;
           transform: translateY(-50%);
-          color: #555;
+          color: var(--text-color-secondary);
           cursor: pointer;
           transition: color 0.3s ease-in-out;
       }
@@ -29,17 +36,17 @@
       /* Efecto al hacer foco */
       .search-input:focus {
           width: 280px;
-          border-color: #007bff;
+          border-color: var(--primary-color);
       }
 
       .search-input:focus + .search-icon {
-          color: #007bff;
+          color: var(--primary-color);
       }
 
 .date-entry {
-  color:lightgray;
+  color: var(--text-color-secondary);
 }
 
 button{
-  margin: 10px;
+  margin: var(--spacing-unit);
 }

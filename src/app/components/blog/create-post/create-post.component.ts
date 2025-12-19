@@ -1,71 +1,76 @@
-import { Component } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { CheckboxControlValueAccessor, CheckboxRequiredValidator, FormsModule } from '@angular/forms';
-import { NgIf, Location } from '@angular/common';
-import { RouterLink, ActivatedRoute, Routes, Router } from '@angular/router';
+import { Component,  } from '@angular/core';
+import { DomSanitizer,  } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
 import { StorageService } from '../../../services/storage.service';
-import { Post } from '../../../models/post.model';
-
-import { lastValueFrom } from 'rxjs';
+import { Post, PostContentBlock } from '../../../models/post.model';
+import { v4 as uuidv4 } from 'uuid';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-create-post',
   standalone: true,
-  imports: [FormsModule, NgIf],
+  imports: [FormsModule, NgIf, NgSwitch, NgFor, NgSwitchCase],
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
 })
 export class CreatePostComponent {
   title: string = '';
-  content: string = '';
+  summary: string = '';
   isHtml: boolean = false;
   author: string = '';
   categories: string[] = [];
   selectedFile: File | null = null;
   imageUrl: string | null = null;
-  aHtml: boolean = false;
-  myCheck= '';
+  contentBlock: PostContentBlock[] = [];
+  newBlockType: PostContentBlock['type'] = 'paragraph';
 
-  post: Post = {
-    title: '',
-    content: '',
-    isHtml: false,
-    author: '',
-    imageUrl: '', //this.imageUrl,
-    categories: [],
-    lang:'',
-    likes: 0,
-    dislikes: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-
-  };
-
-  nombre: string = ''; // Definir la propiedad
+  isDragging = false;
+  showLoginModal = false;
+  loginUsername = '';
+  loginPassword = '';
+  loginError = '';
 
   constructor(
     private blogService: BlogService,
     private storageService: StorageService,
     private route: ActivatedRoute,
     private routes: Router,
-    private location: Location,
+    private authService: AuthService,
     private sanitizer: DomSanitizer
   ) {}
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log('Imagen seleccionada :', this.selectedFile);
+    this.uploadImage();
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    this.isDragging = false;
+    if (event.dataTransfer?.files) {
+      this.selectedFile = event.dataTransfer.files[0];
+      this.uploadImage();
+    }
   }
 
   uploadImage() {
     if (this.selectedFile) {
       this.storageService.uploadImage(this.selectedFile).subscribe(
-        //console.log('Respuesta del backend:', response);
         (response: string) => {
-          console.log('Respuesta del backend:', response); // Verifica la respuesta
-
-          this.imageUrl = response; // Asigna la URL de la imagen
+          this.imageUrl = response;
         },
         (error) => {
           console.error('Error al subir la imagen:', error);
@@ -76,11 +81,7 @@ export class CreatePostComponent {
     }
   }
 
-  async createPost(
-    title: string,
-    author: string,
-    categories: string[]
-  ) {
+  async createPost(title: string, author: string, categories: string[]) {
     if (!this.imageUrl) {
       alert('Please, add an image');
       return;
@@ -88,18 +89,19 @@ export class CreatePostComponent {
     try {
       const post: Post = {
         title,
-        content: this.content,
-        author,
+        content: this.contentBlock,
+        summary: this.summary,
+        author: '',
         imageUrl: this.imageUrl,
         categories,
         isHtml: this.isHtml,
-        lang:'en',
+        lang: 'en',
         likes: 0,
         dislikes: 0,
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-         await this.blogService.createPost(post);
+      await this.blogService.createPost(post);
       this.routes.navigate(['/posts']);
     } catch (error) {
       console.error('Error publishing te post:', error);
@@ -107,17 +109,56 @@ export class CreatePostComponent {
   }
 
   async onSubmit(): Promise<void> {
+    if (!this.authService.checkAuthStatus()) {
+      this.showLoginModal = true;
+      return;
+    }
     this.createPost(this.title, this.author, this.categories);
-    //await this.blogService.createPost(this.post);
-    alert('Publicación creada exitosamente!');
   }
 
-  is_Html(){
-    this.isHtml = !this.isHtml;
-    console.log("Valor Select :",  this.isHtml)
+  onLoginSubmit() {
+    if (this.authService.login(this.loginUsername, this.loginPassword)) {
+      this.showLoginModal = false;
+      this.createPost(this.title, this.author, this.categories);
+    } else {
+      this.loginError = 'Invalid credentials';
+    }
   }
 
+  quit() {
+    this.authService.logout();
+    this.routes.navigate(['/posts']);
+  }
 
+  addBlock() {
+    const block: PostContentBlock = {
+      id: uuidv4(),
+      type: this.newBlockType,
+      data: this.defaultDataForType(this.newBlockType),
+    };
+    this.contentBlock.push(block);
+  }
 
+  defaultDataForType(type: PostContentBlock['type']) {
+    switch (type) {
+      case 'title':
+        return '';
+      case 'paragraph':
+        return '';
+      case 'image':
+        return { url: '', caption: '' };
+      case 'quote':
+        return '';
+      case 'code':
+        return { language: 'ts', content: '' };
+    }
+  }
 
+  removeBlock(index: number) {
+    this.contentBlock.splice(index, 1);
+  }
+
+  trackById(index: number, block: PostContentBlock): string | number {
+    return block.id ?? index;
+  }
 }

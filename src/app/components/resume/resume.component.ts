@@ -10,7 +10,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 
 import { SharedService } from '../../services/shared.service';
-import { Post, Experience, Detail } from '../../models/post.model';
+import { Experience, Detail } from '../../models/post.model';
 
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -50,26 +50,13 @@ export class ResumeComponent implements  OnDestroy{
   @Output() hitDetail = new EventEmitter<string>();
   @Output() projectDetail = new EventEmitter<string>();
 
-  post: Post = {
-    title: '',
-    content: '',
-    isHtml: false,
-    author: '',
-    imageUrl: '',
-    categories: [],
-    lang:'',
-    likes: 0,
-    dislikes: 0,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-
-  };
-
+  profSelected: string = "dev";
 
   profile: any =[];
   projects: any =[];
   skills: any = [];
    experiencesFull: Experience[] =[];
+  studies: any = [];
 
   experiencePath :string="";
   volunt :any=[];
@@ -77,10 +64,19 @@ export class ResumeComponent implements  OnDestroy{
 
   target: string="";
 
+positionTitles: { [key: string]: string } = {
+  dev: 'profiles.dev',
+  db: 'profiles.db',
+  tech: 'profiles.tech',
+};
 
   detailSkills(activeHit : string){
     this.hitDetail.emit(activeHit);
     this.service.hitDetailNew.emit(activeHit);
+  }
+
+  updateProfil(selected : string){
+    this.profSelected = selected;
   }
 
   detailProject(activeProject : string){
@@ -88,57 +84,50 @@ export class ResumeComponent implements  OnDestroy{
     this.service.projectDetailNew.emit(activeProject);
   }
 
- async refreshSkills(): Promise<void> {
-
-  this.service.getProfile("hv_"+this.currentLang).then((res) => (this.profile = res));
-  //this.profile = await this.service.getProfileP("hv_"+this.currentLang);
- /*   this.subscriptions.add(
-
-
-      this.service.getProfile("hv_"+this.currentLang).subscribe({
-        next: (res:any) => this.profile = res,
-        error: (err:any) => console.error('Error loading profile:', err)
-      })
-
-
-      );
-*/
-    this.service.getProjects("hv_"+this.currentLang).then((res) => (this.projects = res));
-    this.service.getSkills("hv_"+this.currentLang).then((res) => (this.skills = res));
-
+  refreshSkills() {
+    this.service.getProfile("hv_"+this.currentLang).subscribe((res) => {this.profile = res });
+    this.service.getProjects("hv_"+this.currentLang).subscribe((res) => (this.projects = res));
+    this.service.getSkills("hv_"+this.currentLang).subscribe((res) => (this.skills = res));
     this.service.getExperienceWithDetails("hv_"+this.currentLang).subscribe((res) => {
-                    this.experiencesFull = res.map(item => this.service.mapToExperience(item));});
-
-this.service.getExperienceWithDetails("hv_" + this.currentLang).subscribe((res) => {
-    this.experiencesFull = res.map(item => this.service.mapToExperience(item));
+                      this.experiencesFull = res.map(item => ({
+        ...this.service.mapToExperience(item),
+        details: item.details ? item.details.map((d: any) => ({
+            id: d.id,
+            d: d.d,
+            position: d.position
+        })) : []
+    }));
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    this.experiencePath="hv_"+this.currentLang+"/experiences/experience/";
+    this.experiencePath="hv_"+this.currentLang+"/experiences/experience/";
     this.service.getVolunt("hv_"+this.currentLang).subscribe((res) => (this.volunt = res));
     this.service.getVoluntDetail("hv_"+this.currentLang).subscribe((res) => (this.voluntDetail = res));
+    this.service.getStudy("hv_"+this.currentLang).subscribe((res) => (this.studies = res));
 
   }
 
-  generatePDF() {
-  var docDefinition = {
+  async generatePDF() {
+    const imageDataUrl = await this.getImageAsBase64('assets/img/competency.png');
+    const imageHeadUrl = await this.getImageAsBase64('assets/img/'+this.profSelected+'.png');
+
+    var docDefinition = {
       header: ['\n',{text: ':  germanherrera75@hotmail.com', fontSize: 11,  color: '#BBBBBB'},],
       content: [
         {
           columns: [
+            {
+              width: '12%', stack:
+                  [
+                  {
+                    image: imageHeadUrl,
+                    width: 50,
+                    // ... other image properties
+                  },
+                  // ... rest of your content
+                ]
+            },
+            {
+              width: '48%', stack:
                 [
                   {
                     text: [
@@ -147,19 +136,56 @@ this.service.getExperienceWithDetails("hv_" + this.currentLang).subscribe((res) 
                       {text: 'Herrera ', style: 'header', bold: true},
                     ]
                   },
-                  {text: 'Analyste-Programmeur Full Stack', fontSize: 15, bold: true, color: '#44546A'},
-                ],
+                  {text: this.translocoService.translate(this.positionTitles[this.profSelected]) , fontSize: 18, bold: true, color: '#44546A'},
+                ]
+            },
+            {
+              width: '40%', stack:
                 [
                   { text: '+1 (438) 408-1220' , alignment:'right'},
                   { text: 'germanherrera75@hotmail.com' , alignment:'right'},
                   { text: 'LinkedIn/ in/german-herrera' , alignment:'right'},
-                ],
-            ]
+                ]
+            }
+          ],
+          columnGap: 0
         },
         { text: '\n', fontSize: 12 },
 
     ...this.buildProfiPDF(),
-   ...this.buildExperiencePDF()
+
+  {
+ columns: [
+   {
+    width: '8%',
+    stack:  [
+        {
+          image: imageDataUrl,
+          width: 30,
+        },
+      ],
+   },
+   {
+    width: '*',
+    stack:  [
+        { text: [{text: this.translocoService.translate('skills'), fontSize: 15, bold: true, color: '#44546A' }],
+          margin: [0, 4, 0, 0]
+        },
+      ],
+   }
+  ],
+  columnGap: 0
+},
+
+    { text: '\n ', fontSize: 2 },
+    ...this.buildSkillsPDF(),
+       { text: '\n ', fontSize: 5 },
+    { text: this.translocoService.translate('experience'), fontSize: 14, bold: true, color: '#44546A' },
+    { text: '\n ', fontSize: 2},
+   ...this.buildExperiencePDF(),
+       { text: this.translocoService.translate('study'), fontSize: 14, bold: true, color: '#44546A' },
+      { text: '\n ', fontSize: 2},
+   ...this.buildStudiesPDF()
       ],
       styles:{
         header:{
@@ -169,13 +195,42 @@ this.service.getExperienceWithDetails("hv_" + this.currentLang).subscribe((res) 
     };
 
    pdfMake.createPdf(docDefinition).open();
- //   pdfMake.createPdf(docDefinition).download("German"+this.currentLang+".pdf");
+   // pdfMake.createPdf(docDefinition).download("German"+this.currentLang+".pdf");
+
+
+
+
   }
 
 private buildProfiPDF(): any[]{
-    return this.profile.map((p: any)=>[
+    return this.profile.filter((p: any) => p.position == this.profSelected).map((p: any)=>[
       {text:`${p.sentence} `,fontSize: 13, italics: true, alignment:'justify', margin: [20, 0, 20, 0] },
       { text: '\n' }
+    ]) ;
+  }
+
+private buildSkillsPDF(): any[]{
+    return this.skills.filter((p: any) => p.position === this.profSelected || p.position === 'general' ).map((p: any)=>[
+      {text:`- ${p.p} `,fontSize: 11.5, italics: true, alignment:'justify', margin: [15, 0, 15, 0] },
+      // { text: '\n' }
+    ]) ;
+  }
+
+private buildStudiesPDF(): any[]{
+    return this.studies.map((p: any)=>[
+      {text:[
+          ` `,
+          {text:  `- ${p.level} `,fontSize: 12.5, italics: true },
+          {text:`${p.name} `,fontSize: 13.5, bold: true },
+          {text:` - ${p.year} `,fontSize: 13.5, color: '#333333'},
+      ]},
+      {text:[
+          `    `,
+          {text:` ${p.place} `,fontSize: 11.5, italics: false, color: '#333333' },
+          {text:`, ${p.city} `,fontSize: 11.5, italics: true, color: '#333333' },
+          {text:` - `,fontSize: 13, color: '#FFFFFF' },
+      ]},
+
     ]) ;
   }
 
@@ -189,13 +244,31 @@ private buildExperiencePDF(): any[]{
       { text: `${e.cia} |  ${e.city}`, italics: true },
       { text: `${e.hit} \n`, italics: true },
       {
-        ul:[
-              ...(e.details?.map((detail:Detail)=>
+        ul:[ ...(e.details?.filter(detail =>
+                detail.position === this.profSelected || detail.position === 'general'
+                     ).map((detail:Detail)=>
               ({ text: detail.d, fontSize: 13, alignment:'justify'})) || [])
         ]
       },
       { text: '\n' }
     ]) ;
   }
+
+  private getImageAsBase64(url: string): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        resolve(reader.result as string);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.onerror = reject;
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  });
+}
 
 }

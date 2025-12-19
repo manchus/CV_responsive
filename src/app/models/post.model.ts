@@ -1,9 +1,15 @@
 import { Timestamp } from 'firebase/firestore';
 
+export interface PostContentBlock {
+  type: 'paragraph' | 'image' | 'title' | 'quote' | 'code';
+  data: any;
+}
+
 export interface Post {
   id?: string;
   title: string;
-  content: string;
+  content: PostContentBlock[];
+  summary: string;
   isHtml: boolean;
   author: string;
   imageUrl?: string;
@@ -13,6 +19,13 @@ export interface Post {
   dislikes: number;
   createdAt: Date;
   updatedAt: Date;
+}
+
+
+export interface PostContentBlock {
+  id?: string;
+  type: 'paragraph' | 'image' | 'title' | 'quote' | 'code';
+  data: any;
 }
 
 export interface Experience {
@@ -29,4 +42,5 @@ export interface Experience {
 export interface Detail {
   id: string;
   d: string;
+  position: string;
 }

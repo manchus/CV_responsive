@@ -1,3 +1,6 @@
+<br>
 <ul  class="list-inline" *ngFor="let detail of detailsExperiences">
-  &nbsp;<li class="text-justify" style="margin-top: -1.7em;"><i class="fa-solid fa-caret-right"></i>&nbsp;{{detail.d}}</li>
+  <span *ngIf="position == detail.position || detail.position == 'general'">
+    &nbsp;<li class="text-justify" style="margin-top: -1.7em;"><i class="fa-solid fa-caret-right"></i>&nbsp;{{detail.d}}</li>
+  </span>
 </ul>
