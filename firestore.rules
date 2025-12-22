@@ -1,7 +1,7 @@
 rules_version = '2';
 
 service cloud.firestore {
-  match /databases/monCV{database}/documents {
+  match /databases/{database}/documents {
 
     // This rule allows anyone with your Firestore database reference to view, edit,
     // and delete all data in your Firestore database. It is useful for getting
@@ -13,7 +13,7 @@ service cloud.firestore {
     // all client requests to your Firestore database will be denied until you Update
     // your rules
     match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2025, 12, 12);
+      allow read, write: if request.time < timestamp.date(2026, 12, 12);
     }
   }
 }

@@ -14,36 +14,38 @@
       <router-outlet></router-outlet>
     </div>
 
-
-    <div class="lang-dock shadow-sm">
-      <div class="lang-handle bg-dark text-white">
-        <span>{{ currentLang | uppercase }}</span>
-      </div>
-
-      <div class="lang-options">
-        <button (click)="mnuLang('en')" class="btn-lang en">EN</button>
-        <button (click)="mnuLang('fr')" class="btn-lang fr">FR</button>
-        <button (click)="mnuLang('es')" class="btn-lang es">ES</button>
-      </div>
+<div class="floating-dock lang-pos">
+  <div class="dock-handle bg-dark">
+    <span>{{ currentLang | uppercase }}</span>
+  </div>
+  <div class="dock-content-wrapper">
+    <div class="d-flex gap-2">
+      <button (click)="mnuLang('en')" class="btn-lang en">EN</button>
+      <button (click)="mnuLang('fr')" class="btn-lang fr">FR</button>
+      <button (click)="mnuLang('es')" class="btn-lang es">ES</button>
     </div>
+  </div>
+</div>
 
-
-    <div class="side-settings-dock">
-      <div class="dock-handle">
-        <i class="icon-settings">⚙️</i>
-      </div>
-
-      <div class="dock-content">
-        <div class="d-flex flex-row flex-lg-row gap-2">
-          <button (click)="toggleTheme()" class="btn btn-sm btn-outline-secondary">
-            <i class="fa-solid" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
-          </button>
-          <button (click)="setTextSize('sm')" class="btn btn-sm btn-outline-secondary">A-</button>
-          <button (click)="setTextSize('md')" class="btn btn-sm btn-outline-secondary">A</button>
-          <button (click)="setTextSize('lg')" class="btn btn-sm btn-outline-secondary">A+</button>
-        </div>
-      </div>
+<div class="floating-dock settings-pos">
+  <div class="dock-handle bg-dark">
+    <i class="fa-solid fa-gear"></i>
+  </div>
+  <div class="dock-content-wrapper">
+    <div class="d-flex gap-2">
+      <button (click)="toggleTheme()" class="btn btn-sm btn-outline-secondary">
+        @if (isDarkMode) {
+          <span><i class="fa-solid fa-sun"></i></span>
+        } @else {
+          <span><i class="fa-solid fa-moon"></i></span>
+     }
+      </button>
+      <button (click)="setTextSize('sm')" class="btn btn-sm btn-outline-secondary">A-</button>
+      <button (click)="setTextSize('md')" class="btn btn-sm btn-outline-secondary">A</button>
+      <button (click)="setTextSize('lg')" class="btn btn-sm btn-outline-secondary">A+</button>
     </div>
+  </div>
+</div>
 
   </div>
 
