@@ -3,45 +3,50 @@
   padding: var(--spacing-unit);
   width: 90%;
 }
-/* Contenedor de la barra de búsqueda */
-        .search-container {
-          position: relative;
-          width: 220px;
-          transition: width 0.4s ease-in-out;
-      }
 
-      /* Input de búsqueda */
-      .search-input {
-          width: 100%;
-          padding: var(--spacing-unit) calc(var(--spacing-unit) * 4.375) var(--spacing-unit) calc(var(--spacing-unit) * 1.25);
-          border: 2px solid var(--border-color);
-          border-radius: 20px;
-          outline: none;
-          transition: all 0.4s ease-in-out;
-          background-color: var(--bg-color-secondary);
-          color: var(--text-color-primary);
-      }
+.bg-card{
+  background-color: var(--bg-color-secondary) !important;
+}
 
-      /* Ícono de búsqueda */
-      .search-icon {
-          position: absolute;
-          right: calc(var(--spacing-unit) * 1.25);
-          top: 50%;
-          transform: translateY(-50%);
-          color: var(--text-color-secondary);
-          cursor: pointer;
-          transition: color 0.3s ease-in-out;
-      }
+.card-title-color{
+  color: var(--text-color-primary) !important;
+}
 
-      /* Efecto al hacer foco */
-      .search-input:focus {
-          width: 280px;
-          border-color: var(--primary-color);
-      }
+.search-container {
+  position: relative;
+  width: 220px;
+  transition: width 0.4s ease-in-out;
+}
 
-      .search-input:focus + .search-icon {
-          color: var(--primary-color);
-      }
+.search-input {
+  width: 100%;
+  padding: var(--spacing-unit) calc(var(--spacing-unit) * 4.375) var(--spacing-unit) calc(var(--spacing-unit) * 1.25);
+  border: 2px solid var(--border-color);
+  border-radius: 20px;
+  outline: none;
+  transition: all 0.4s ease-in-out;
+  background-color: var(--bg-color-secondary);
+  color: var(--text-color-primary);
+}
+
+.search-icon {
+  position: absolute;
+  right: calc(var(--spacing-unit) * 1.25);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-secondary);
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.search-input:focus {
+  width: 280px;
+  border-color: var(--primary-color);
+}
+
+.search-input:focus + .search-icon {
+  color: var(--primary-color);
+}
 
 .date-entry {
   color: var(--text-color-secondary);

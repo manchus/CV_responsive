@@ -1,44 +1,35 @@
-// translation.service.ts
 import { Injectable } from '@angular/core';
-import { Translate } from '@google-cloud/translate/build/src/v2';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { Observable,map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslationService {
-  private translateClient: Translate;
+  private apiUrl = environment.backendUrl + '/api';
 
-  constructor(private firestore: Firestore) {
-    this.translateClient = new Translate({
-      projectId: 'YOUR_PROJECT_ID',
-      keyFilename: 'PATH_TO_SERVICE_ACCOUNT_KEY.json'
-    });
+  constructor(private http: HttpClient) {
+    console.log("Is this production?", environment.production);
   }
 
-  async translatePost(postId: string, targetLanguage: string): Promise<string> {
-    // Get the original post from Firestore
-    const postRef = doc(this.firestore, 'posts', postId);
-    const postSnap = await getDoc(postRef);
+translateText(text: string, targetLang: string): Observable<string> {
+    const body = { text, targetLang }; // Matches your backend: { text, targetLang }
 
-    if (!postSnap.exists()) {
-      throw new Error('Post not found');
-    }
+let headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
-    const postData = postSnap.data();
-    /*
-    const originalText = postData.content; // Adjust based on your field name
-    const originalLanguage = postData.lang; // The field storing origin language
-
-
-    // Perform translation
-    const [translation] = await this.translateClient.translate(originalText, {
-      from: originalLanguage,
-      to: targetLanguage
-    });
-
-    return translation;
-    */
-    return "exit";
+  // Only add ngrok header if we are actually using the ngrok URL
+  if (this.apiUrl.includes('ngrok-free.app')) {
+    headers = headers.set('ngrok-skip-browser-warning', 'true');
   }
+
+    return this.http.post<{translation: string}>(`${this.apiUrl}/translate`, body, { headers })
+      .pipe(
+        map(response => response.translation) // Extract the string from the JSON response
+      );
+  }
+
 }
+

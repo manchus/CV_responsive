@@ -29,8 +29,8 @@ button:hover {
 
 
 .pdf-button {
-  color: var(--text-color-light);
-  background-color: var(--bg-color-secondary);
+  color: var(--text-color-secondary);
+  background-color: var(--bg-color-primary);
     text-align: center;
     border: none;
     padding: calc(var(--spacing-unit) * 0.25) calc(var(--spacing-unit) * 0.25);

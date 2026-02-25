@@ -43,10 +43,10 @@
 }
 
 .dock-content-wrapper {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--bg-color-secondary);
   padding: 10px;
   display: flex;
-  border-left: 1px solid #ddd;
+  border-left: 1px solid var(--border-color);
   backdrop-filter: blur(5px);
   box-shadow: -2px 0 5px rgba(0,0,0,0.1);
 }

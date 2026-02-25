@@ -5,7 +5,31 @@
     <strong class="date-entry">&nbsp;&nbsp;Autor:&nbsp;</strong>
     <small class="date-entry fst-italic fw-lighter">{{ post?.author }}</small>
   </p>
+  <p>
+    @if (lang != currentLang) {
+       <p>
+        <button class="text-white px-10 py-1 rounded-5 btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+           <h5> <i class="fa-solid fa-language"></i> Summary</h5>
+        </button>
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          @if(summaryTranslated && (translatedLang == currentLang)) {
+            <h4 >{{translatedTitle}} </h4>
+            <div  class="date-entry"  *ngIf="post?.isHtml; else textContentTranslated"  [innerHTML]="summaryTranslated"></div>
+            <ng-template #textContentTranslated>
+              <p class="date-entry">{{ summaryTranslated }}</p>
+            </ng-template>
+          }
+        </div>
+      </div>
+    }
+  </p>
+
+
+
   <img class="image-post"  *ngIf="post?.imageUrl"  [src]="post?.imageUrl"  alt="{{ post?.title }}"/>
+
   <div  class="date-entry"  *ngIf="post?.isHtml; else textContent"  [innerHTML]="summary"></div>
   <ng-template #textContent>
     <p class="date-entry">{{ post?.summary }}</p>

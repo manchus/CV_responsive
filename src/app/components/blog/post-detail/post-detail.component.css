@@ -100,18 +100,18 @@
 
 pre {
   margin: 20px;
-  background-color: #888888;
-  border: 1px solid #ddd;
+  background-color: var(--bg-color-tertiary);
+  border: 1px solid var(--border-color);
   padding: 10px;
   border-radius: 5px;
   overflow-x: auto;
   font-family: Consolas, monospace;
   font-size: 0.95rem;
   line-height: 1.4;
+  color: var(--text-color-primary);
 }
 
 code {
   font-family: inherit;
-  color: #333;
-
+  color: inherit;
 }

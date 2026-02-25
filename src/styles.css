@@ -2,7 +2,7 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 :root {
-  --primary-color: #007bff;
+  --primary-color: #003049;
   --secondary-color: #563e7c;
   --accent-color: #ffc3df;
 
@@ -12,7 +12,7 @@
 
   --bg-color-primary: rgba(255, 255, 255, 0.9);
   --bg-color-secondary: #f8f9fa;
-  --bg-color-tertiary: #e9ecef;
+  --bg-color-tertiary: #b0aeb1;
 
   --border-color: #dee2e6;
 
@@ -33,21 +33,21 @@
 }
 
 [data-theme='dark'] {
-  --primary-color: #007bff;
-  --secondary-color: #563e7c;
-  --accent-color: #ffc3df;
+  --primary-color: #d62828;
+  --secondary-color: #6366f1;
+  --accent-color: #f472b6;
 
-  --text-color-primary: #f8f9fa;
-  --text-color-secondary: #adb5bd;
-  --text-color-light: #212529;
+  --text-color-primary: #14213d;
+  --text-color-secondary: #cbd5e1;
+  --text-color-light: #1e293b;
 
-  --bg-color-primary: rgba(0, 0, 0, 0.8);
-  --bg-color-secondary: #212529;
-  --bg-color-tertiary: #343a40;
+  --bg-color-primary: #0f172a;
+  --bg-color-secondary: #1e293b;
+  --bg-color-tertiary: #334155;
 
-  --border-color: #495057;
+  --border-color: #334155;
 
-  --left-bar-bg: #212529;
+  --left-bar-bg: #1e293b;
   --left-bar-text: #f8f9fa;
 }
 
@@ -62,7 +62,8 @@ body{
 }
 
 .sidebar{
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--bg-color-secondary);
+  opacity: 0.8;
   backdrop-filter: blur(10px);
 }
 

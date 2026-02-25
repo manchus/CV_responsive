@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SharedService } from './services/shared.service';
+import { MyAIService } from './services/my-ai.service';
 
 import { LeftBarComponent } from './components/left-bar/left-bar.component';
 import { TopComponent } from './components/top/top.component';
@@ -31,7 +32,8 @@ export class AppComponent  implements OnInit{
   private transloco = inject(TranslocoService);
   constructor(
   private readonly translocoService: TranslocoService,
-    private service: SharedService
+    private service: SharedService,
+    private myAIService: MyAIService,
   ) {}
 
 
@@ -79,6 +81,12 @@ export class AppComponent  implements OnInit{
 
         this.initializeTheme();
     this.initializeTextSize();
+    this.myAIService.requestAI('Hello, AI! Can you provide a brief introduction about yourself?', 'tinyllama')
+      .subscribe(response => {
+        console.log('AI Response:', response);
+      }, error => {
+        console.error('Error:', error);
+      });
   }
 
   public languajes: { code: AvailableLanguages; name: string}[] = [

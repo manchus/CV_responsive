@@ -6,18 +6,18 @@
     </div>
   </div>
   <div *ngFor="let post of filteredPosts">
-      <div class="card mb-3 text-white bg-dark" style="max-width: 100%;">
+      <div class="card mb-3 text-white bg-card" style="max-width: 100%;">
         <div class="row no-gutters">
           <div class="col-md-4" *ngIf="post?.imageUrl">
             <img [src]="post?.imageUrl" class ="d-block mx-auto my-3" style ="max-width: 90%; height: auto;" alt="{{ post?.title }}">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
+              <h5 class="card-title-color">{{ post.title }}</h5>
                   <p>
-                    <small class="card-text">{{post.createdAt | date }}</small>&nbsp;&nbsp;
-                    <small class="card-text fst-italic fw-lighter">{{post.author }}</small>
-                  </p><a class="text-decoration-none fs-6 text-light" [routerLink]="['/post', post.id]">
+                    <small class="card-text card-title-color">{{post.createdAt | date }}</small>&nbsp;&nbsp;
+                    <small class="card-text fst-italic fw-lighter card-title-color">{{post.author }}</small>
+                  </p><a class="text-decoration-none fs-6 card-title-color" [routerLink]="['/post', post.id]">
                   <p class="card-text"><div class="date-entry" [innerHTML]="post?.summary | slice:0:400"></div>...</a>
                   <div>
                     <strong  class="date-entry">Categorías:</strong>
