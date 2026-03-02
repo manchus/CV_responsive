@@ -22,7 +22,9 @@
   "dashboard": {
     "title": "Dashboard Title",
     "desc": "Dashboard Desc"
-  }
+  },
+  "assistantIA": "Germán's assistant",
+  "writingIA": "Writing"
 }
 
 

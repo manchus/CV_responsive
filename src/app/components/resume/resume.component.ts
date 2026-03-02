@@ -1,14 +1,15 @@
-import { Component, Output, EventEmitter, DestroyRef, inject, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { signal, computed, effect } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ExperienceComponent } from './experience/experience.component';
 import { TranslocoModule, TranslocoService,} from '@jsverse/transloco';
 
 import { Subscription } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-
+import { MyAIService } from '../../services/my-ai.service';
 import { SharedService } from '../../services/shared.service';
 import { Experience, Detail } from '../../models/post.model';
 
@@ -19,15 +20,27 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 @Component({
   selector: 'app-resume',
   standalone: true,
-  imports: [TranslocoModule, CommonModule, ExperienceComponent ],
+  imports: [TranslocoModule, CommonModule, ExperienceComponent, FormsModule ],
   templateUrl: './resume.component.html',
   styleUrl: './resume.component.css',
 })
-export class ResumeComponent implements  OnDestroy{
+export class ResumeComponent implements OnInit, OnDestroy{
   private destroyRef = inject(DestroyRef);
-
   private subscriptions = new Subscription();
 
+isOpen: boolean = false;
+isLoading: boolean = false;
+messages: any[] = [{ text: "Hola, ¿en qué puedo ayudarte?", type: 'ai' }];
+query: string = '';
+
+  ngOnInit() {
+        this.myAIService.requestAI('Hello, AI! Can you provide a brief introduction about yourself?', this.currentLang, 'tinyllama')
+      .subscribe(response => {
+        console.log('AI Response:', response);
+      }, error => {
+        console.error('Error:', error);
+      });
+  }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
@@ -36,7 +49,7 @@ export class ResumeComponent implements  OnDestroy{
 
   currentLang: string = this.translocoService.getActiveLang();
 
-  constructor( private readonly translocoService: TranslocoService, private service: SharedService
+  constructor( private readonly translocoService: TranslocoService, private service: SharedService, private myAIService: MyAIService
   ) {
     this.translocoService.langChanges$
     .pipe(takeUntilDestroyed(this.destroyRef))
@@ -45,7 +58,6 @@ export class ResumeComponent implements  OnDestroy{
       this.refreshSkills();
 
     });
-
   }
   @Output() hitDetail = new EventEmitter<string>();
   @Output() projectDetail = new EventEmitter<string>();
@@ -104,6 +116,22 @@ positionTitles: { [key: string]: string } = {
     this.service.getVoluntDetail("hv_"+this.currentLang).subscribe((res) => (this.voluntDetail = res));
     this.service.getStudy("hv_"+this.currentLang).subscribe((res) => (this.studies = res));
 
+  }
+
+  ask() {
+    if (!this.query.trim()) return;
+    const userMsg = this.query;
+    this.messages.push({ text: userMsg, type: 'user' });
+    this.query = '';
+    this.isLoading = true;
+    this.myAIService.requestAI(userMsg, this.currentLang, 'tinyllama')
+      .subscribe(answer => {
+        this.messages.push({ text: answer, type: 'ai' });
+        this.isLoading = false;
+      }, error => {
+        this.messages.push({ text: 'Error al obtener respuesta del AI.', type: 'error' });
+        this.isLoading = false;
+      });
   }
 
   async generatePDF() {

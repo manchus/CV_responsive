@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SharedService } from './services/shared.service';
-import { MyAIService } from './services/my-ai.service';
 
 import { LeftBarComponent } from './components/left-bar/left-bar.component';
 import { TopComponent } from './components/top/top.component';
+import { AiAgentComponent } from './components/ai-agent/ai-agent.component';
 
 
 import {
@@ -19,21 +20,17 @@ import { AvailableLanguages } from './transloco-config';
   selector: 'app-root',
   standalone: true,
   imports: [
-    CommonModule,
-    RouterOutlet,
-    LeftBarComponent,
-    TopComponent,
-    TranslocoModule,
+    CommonModule, RouterOutlet, LeftBarComponent, TopComponent, AiAgentComponent, TranslocoModule, FormsModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent  implements OnInit{
   private transloco = inject(TranslocoService);
+
   constructor(
   private readonly translocoService: TranslocoService,
     private service: SharedService,
-    private myAIService: MyAIService,
   ) {}
 
 
@@ -81,12 +78,6 @@ export class AppComponent  implements OnInit{
 
         this.initializeTheme();
     this.initializeTextSize();
-    this.myAIService.requestAI('Hello, AI! Can you provide a brief introduction about yourself?', 'tinyllama')
-      .subscribe(response => {
-        console.log('AI Response:', response);
-      }, error => {
-        console.error('Error:', error);
-      });
   }
 
   public languajes: { code: AvailableLanguages; name: string}[] = [

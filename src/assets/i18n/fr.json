@@ -22,5 +22,7 @@
   "dashboard": {
     "title": "Dashboard Title Fr",
     "desc": "Dashboard Desc Fr"
-  }
+  },
+  "assistantIA": "L'assistant de German",
+  "writingIA": "En écrivant"
 }
